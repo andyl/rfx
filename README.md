@@ -1,4 +1,4 @@
-# Re Factor Elixir (Rfx)
+# Rfx / ReFactor Elixir
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.
