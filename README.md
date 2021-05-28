@@ -1,7 +1,7 @@
 # Rfx / ReFactor Elixir
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
-code.
+code.  
 
 Project Operations:
 
@@ -46,6 +46,9 @@ applications:
 - Generators (eg phx.gen, phx.gen.auth)
 - Editor Plugins, ElixirLs
 - Credo
+
+Rfx depends on the excellent (Sourceror)[http://github.com/doorgan/sourceror]
+written by (@doorgan)[http://github.com/doorgan].
 
 ## Installation
 

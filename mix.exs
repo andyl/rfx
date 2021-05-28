@@ -3,7 +3,7 @@ defmodule Rfx.MixProject do
 
   def project do
     [
-      app: :refactex,
+      app: :rfx,
       version: "0.0.1",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
