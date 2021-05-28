@@ -52,7 +52,7 @@ applications:
 ```elixir
 def deps do
   [
-    {:rfx, "~> 0.0.1"}
+    {:rfx, github: "andyl/rfx"}
   ]
 end
 ```
