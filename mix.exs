@@ -21,7 +21,8 @@ defmodule Rfx.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:sourceror, "~> 0.2"}
+      # {:sourceror, "~> 0.2"}
+      {:sourceror, github: "doorgan/sourceror"}
     ]
   end
 end
