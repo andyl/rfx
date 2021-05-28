@@ -36,11 +36,11 @@ Credo Operations:
 
 - [ ] multi_alias
 
-Rfx Operations are designed to be embedded into editors, tools and end-user
+Rfx Operations are intended to be embedded into editors, tools and end-user
 applications:
 
 - Examples and Tests
-- Scripts and Livebook Notebooks
+- Elixir Scripts and LiveNotebooks
 - Mix tasks
 - Cli (rx)
 - Generators (eg phx.gen, phx.gen.auth)
@@ -52,7 +52,7 @@ applications:
 ```elixir
 def deps do
   [
-    {:rfx, "~> 0.1.0"}
+    {:rfx, "~> 0.0.1"}
   ]
 end
 ```
