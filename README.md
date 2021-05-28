@@ -1,21 +1,60 @@
-# Refactex
+# Re Factor Elixir (Rfx)
 
-**TODO: Add description**
+Rfx provides a catalog of automated refactoring operations for Elixir source
+code.
+
+Project Operations:
+
+- [ ] add dependency
+- [ ] increment version
+
+Module Operations:
+
+- [ ] rename module
+- [ ] rename module attribute
+- [ ] extract function
+- [ ] inline function
+
+Function Operations:
+
+- [ ] rename function
+- [ ] rename function parameter
+- [ ] rename variable
+- [ ] extract variable
+- [ ] inline variable
+
+PhxGen Operations:
+
+- [ ] Add route
+- [ ] Add controller
+
+PhxGenAuth Operations:
+
+- [ ] Add controller
+
+Credo Operations:
+
+- [ ] multi_alias
+
+## Rfx Consumers
+
+Rfx Operations are designed to be embedded into editors, tools and end-user
+applications:
+
+- Examples and Tests
+- Scripts and Livebook Notebooks
+- Mix tasks
+- Cli (rx)
+- Generators (eg phx.gen, phx.gen.auth)
+- Editor Plugins, ElixirLs
+- Credo
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `refactex` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:refactex, "~> 0.1.0"}
+    {:rfx, "~> 0.1.0"}
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/refactex](https://hexdocs.pm/refactex).
-
