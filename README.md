@@ -36,8 +36,6 @@ Credo Operations:
 
 - [ ] multi_alias
 
-## Rfx Consumers
-
 Rfx Operations are designed to be embedded into editors, tools and end-user
 applications:
 

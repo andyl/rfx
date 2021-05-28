@@ -1,4 +1,4 @@
-defmodule Refactex.MixProject do
+defmodule Rfx.MixProject do
   use Mix.Project
 
   def project do
