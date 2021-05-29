@@ -65,8 +65,12 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   - applies the `multi_alias` transformation to the source
   - writes the file
   """
-  def rfx_file!(_file_name) do
-    :ok
+  def rfx_file!(file_name) do
+    new_source = file_name
+    |> File.read!()
+    |> rfx_source()
+
+    File.write(file_name, new_source)
   end
 
   @doc """
