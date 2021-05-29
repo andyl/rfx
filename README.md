@@ -1,9 +1,9 @@
 # Rfx : ReFactor Elixir
 
 ```
-NOTE at the moment this code absolutely does not work!  Right now we're working
-out the overall organizataion of the code.  Once this is done, we'll build out
-the refactoring operations step by step.
+NOTE at the moment this absolutely does not work!  Right now we're working out
+the overall organizataion of the code.  Once this is done, we'll build out the
+refactoring operations step by step.
 ```
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
@@ -31,16 +31,16 @@ Function Operations:
 
 PhxGen Operations:
 
-- [ ] Add route
-- [ ] Add controller
+- [ ] add route
+- [ ] add controller
 
 PhxGenAuth Operations:
 
-- [ ] Add controller
+- [ ] add controller
 
 Credo Operations:
 
-- [ ] multi_alias
+- [ ] multi-alias
 
 Rfx Operations are intended to be embedded into editors, tools and end-user
 applications:
@@ -52,7 +52,6 @@ applications:
 - Generators (eg phx.gen, phx.gen.auth)
 - Editor Plugins, ElixirLs
 - Credo
-- Etc.
 
 Rfx depends on the excellent [Sourceror](http://github.com/doorgan/sourceror)
 written by [@doorgan](http://github.com/doorgan).
@@ -72,13 +71,14 @@ end
 We desire to have an extensible catalog of refactoring operations.  It seems
 like putting each refactoring operation into a standalone module would be good.
 
-We expect that a given refactoring operation may be applied to multiple scopes:
+We expect that a given refactoring operation may be applied to different scopes:
+
 - Scope1: a chunk of code
 - Scope2: a single file
 - Scope3: an umbrella sub-application
 - Scope4: an entire project
 
-Furthermore, different scopes will require different behavior.  Consider for
+Furthermore, different scopes will require different actions.  Consider for
 example the operation `Rfx.Ops.Module.RenameModule`.
 
 Within Scope1, the `RenameModule` operation would change the name of the
@@ -108,12 +108,14 @@ according to the Operation rules.
 @callback rfx_file!(input_file_name, args) :: {:ok, output_file_name} | {:error, String.t}
 
 @doc """
-Only works within Umbrella applications.  Updates all relevant files within a subapp, according to the Operation rules.
+Only works within Umbrella applications.  Updates all relevant files within a
+subapp, according to the Operation rules.
 """
 @callback rfx_subapp!(input_subapp_dir, args) :: {:ok, output_subapp_dir, [updated_file_list]} | {:error, String.t}
 
 @doc """
-Updates all relevant files within an entire project, according to the Operation rules.
+Updates all relevant files within an entire project, according to the Operation
+rules.
 """
 @callback rfx_subapp!(input_project_dir, args) :: {:ok, output_project_dir, [updated_file_list]} | {:error, String.t}
 ```
