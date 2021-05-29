@@ -117,7 +117,7 @@ subapp, according to the Operation rules.
 Updates all relevant files within an entire project, according to the Operation
 rules.
 """
-@callback rfx_subapp!(input_project_dir, args) :: {:ok, output_project_dir, [updated_file_list]} | {:error, String.t}
+@callback rfx_project!(input_project_dir, args) :: {:ok, output_project_dir, [updated_file_list]} | {:error, String.t}
 ```
 
 Here's a pseudo-code example using this behavior:
