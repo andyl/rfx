@@ -1,10 +1,10 @@
 # Rfx : ReFactor Elixir
 
-NOTE at this point this code absolutely does not work!  Right now we're working
+```
+NOTE at the moment this code absolutely does not work!  Right now we're working
 out the overall organizataion of the code.  Once this is done, we'll build out
 the refactoring operations step by step.
-
----
+```
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
