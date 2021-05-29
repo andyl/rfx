@@ -1,0 +1,24 @@
+# Rfx.Ops.Credo.MultiAlias
+
+## Overview
+
+This operation breaks out multi-alias lines (like `alias X.{A, B}`) so 
+that each alias is on it's own line.
+
+To get started, install the `rfx` dependency:
+
+```elixir
+Mix.install([
+  {:rfx, github: "andyl/rfx"}
+])
+```
+
+Now we can give it a try:
+
+```elixir
+source = """
+alias X.Y.{A, B, C}
+"""
+
+Rfx.Ops.Credo.MultiAlias.rfx_source(source)
+```
