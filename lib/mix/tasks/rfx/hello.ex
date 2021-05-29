@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Hello do
+defmodule Mix.Tasks.Rfx.Hello do
   use Mix.Task
 
   @shortdoc "A test task HELLO"
