@@ -46,6 +46,7 @@ applications:
 - Generators (eg phx.gen, phx.gen.auth)
 - Editor Plugins, ElixirLs
 - Credo
+- Etc.
 
 Rfx depends on the excellent [Sourceror](http://github.com/doorgan/sourceror)
 written by [@doorgan](http://github.com/doorgan).

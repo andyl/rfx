@@ -1,4 +1,4 @@
-defmodule Example.MultiAliasTest do
+defmodule Example.Credo.MultiAliasTest do
   use ExUnit.Case
 
   test "expands multi alias" do

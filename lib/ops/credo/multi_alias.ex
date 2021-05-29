@@ -1,5 +1,9 @@
-defmodule Examples.MultiAlias do
-  @doc """
+defmodule Rfx.Ops.Credo.MultiAlias do
+
+  @moduledoc """
+  Refactoring Operations to automatically fix the Credo 'multi-alias'
+  recommendations.
+
   Walks the source code and expands instances of multi alias syntax like
   ```elixir
   alias Foo.{Bar, Baz.Qux}
@@ -19,6 +23,7 @@ defmodule Examples.MultiAlias do
     Baz.Qux # With a Qux!
   }
   ```
+
   ```elixir
   # Multi alias example
   # Opening the multi alias
@@ -29,8 +34,12 @@ defmodule Examples.MultiAlias do
   alias Foo.Baz.Qux
   ```
   """
-  def fix(source) do
-    source
+
+  @doc """
+  Applies the Multi-Alias transformation to a block of Elixir source code.
+  """
+  def rfx_source(source_code) do
+    source_code
     |> Sourceror.parse_string()
     |> Sourceror.postwalk(fn
       {:alias, _, [{{:., _, [_, :{}]}, _, _}]} = quoted, state ->
@@ -47,6 +56,29 @@ defmodule Examples.MultiAlias do
         {quoted, state}
     end)
     |> Sourceror.to_string()
+  end
+
+  @doc """
+  Applies the `multi_alias` transformation to an Elixir source code file.
+
+  - reads the file
+  - applies the `multi_alias` transformation to the source
+  - writes the file
+  """
+  def rfx_file!(_file_name) do
+    :ok
+  end
+
+  @doc """
+  Applies the `multi_alias` transformation to every source file in an Elixir project.
+
+  - walk the project directory, and for each source code file:
+    - read the file
+    - apply the `multi_alias` transformation to the source
+    - write the file
+  """
+  def rfx_project!(_project_root) do
+    :ok
   end
 
   defp expand_alias({:alias, alias_meta, [{{:., _, [left, :{}]}, _, right}]}, line_correction) do
