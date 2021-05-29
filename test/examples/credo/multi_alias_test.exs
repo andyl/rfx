@@ -13,7 +13,7 @@ defmodule Example.Credo.MultiAliasTest do
       """
       |> String.trim()
 
-    actual = Examples.MultiAlias.fix(source)
+    actual = Examples.Credo.MultiAlias.fix(source)
 
     assert actual == expected
   end
@@ -73,7 +73,7 @@ defmodule Example.Credo.MultiAliasTest do
       """
       |> String.trim()
 
-    actual = Examples.MultiAlias.fix(source)
+    actual = Examples.Credo.MultiAlias.fix(source)
 
     assert actual == expected
   end
