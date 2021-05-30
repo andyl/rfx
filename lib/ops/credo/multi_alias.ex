@@ -1,20 +1,23 @@
 defmodule Rfx.Ops.Credo.MultiAlias do
 
   @moduledoc """
-  Refactoring Operations to automatically fix the Credo 'multi-alias'
-  recommendations.
+  Refactoring Operations to automatically apply the Credo `multi-alias`
+  recommendation.
 
-  Walks the source code and expands instances of multi alias syntax like
+  Walks the source code and expands instances of multi-alias syntax like:
+
   ```elixir
   alias Foo.{Bar, Baz.Qux}
   ```
   to individual aliases:
+
   ```elixir
   alias Foo.Bar
   alias Foo.Baz.Qux
   ```
 
   It also preserves the comments:
+
   ```elixir
   # Multi alias example
   alias Foo.{ # Opening the multi alias

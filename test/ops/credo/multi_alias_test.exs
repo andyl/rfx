@@ -16,7 +16,6 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       |> String.trim()
 
     actual = MultiAlias.rfx_source(source)
-
     assert actual == expected
   end
 

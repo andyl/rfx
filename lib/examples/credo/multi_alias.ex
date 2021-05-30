@@ -1,4 +1,6 @@
 defmodule Examples.Credo.MultiAlias do
+  @moduledoc false
+
   @doc """
   Walks the source code and expands instances of multi alias syntax like
   ```elixir
