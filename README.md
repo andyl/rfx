@@ -1,9 +1,10 @@
 # Rfx : ReFactor Elixir
 
 ```markdown
-NOTE at the moment this code does not work!  Right now we're working out the
-programming interfaces and project organization.  Once this is done, we'll
-build out the refactoring operations step by step.
+NOTE at the moment this code does not work!  Right now
+we're working out the programming interfaces and
+project organization.  Once this is done, we'll build
+out the refactoring operations step by step.
 ```
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
@@ -138,10 +139,10 @@ RenameModule.rfx_code(input_code)
 RenameModule.rfx_file!(input_file_name, new_name: "MyNewName") 
 #> {:ok, output_file_name}
 
-RenameModule.rfx_project!(project_dir_name, old_module_name: "OldModule", new_module_name: "NewModule") 
+RenameModule.rfx_project!(project_dir, old_module: "OldModule", new_module: "NewModule") 
 #> {:ok, project_dir_name, [list_of_updated_files]}
 
-RenameModule.rfx_subapp!(subapp_dir_name, old_module_name: "OldModule", new_module_name: "NewModule") 
+RenameModule.rfx_subapp!(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
 #> {:ok, subapp_dir_name, [list_of_updated_files]}
 ```
 
