@@ -28,7 +28,8 @@ defmodule Rfx.MixProject do
 
   defp deps do
     [
-      {:sourceror, github: "doorgan/sourceror"}
+      {:sourceror, github: "doorgan/sourceror"},
+      {:optimus, "~> 0.2"}
     ]
   end
 end

@@ -69,7 +69,7 @@ end
 ## Notes on Code Organization
 
 We desire to have an extensible catalog of refactoring operations.  It seems
-like putting each refactoring operation into a standalone module would be good.
+like having a separate module for refactoring operation would work well.
 
 We expect that a given refactoring operation may be applied to different scopes:
 
@@ -78,8 +78,8 @@ We expect that a given refactoring operation may be applied to different scopes:
 - Scope3: an umbrella sub-application
 - Scope4: an entire project
 
-Furthermore, different scopes will require different actions.  Consider for
-example the operation `Rfx.Ops.Module.RenameModule`.
+Each scope will require different actions.  Consider for example the operation
+`Rfx.Ops.Module.RenameModule`.
 
 Within Scope1, the `RenameModule` operation would change the name of the
 module, and also change any `alias` references to the module name, and emit the

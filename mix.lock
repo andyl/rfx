@@ -1,3 +1,4 @@
 %{
+  "optimus": {:hex, :optimus, "0.2.0", "3e868b8bedc723d70189cde715df3ef804524c55b26fb33e89cd0f691f50fe80", [:mix], [], "hexpm", "95bcbf228d4ba67283747629087cc3650b10d24390e4ea533b0a64ca278c181c"},
   "sourceror": {:git, "https://github.com/doorgan/sourceror.git", "024bd0f6fd63360767e78c48affbb160bbdd2551", []},
 }
