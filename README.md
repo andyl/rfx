@@ -44,8 +44,9 @@ Credo Operations:
 
 - [ ] multi-alias
 
-Rfx depends on the excellent [Sourceror](http://github.com/doorgan/sourceror)
-written by [@doorgan](http://github.com/doorgan).
+Rfx Operations depend on the excellent
+[Sourceror](http://github.com/doorgan/sourceror) written by
+[@doorgan](http://github.com/doorgan).
 
 ## Clients 
 
