@@ -16,24 +16,20 @@ defmodule Rfx.Cli.Base do
   # rfx credo.multi_alias
   #
   # TODO:
-  # - [ ] call Refactoring Operations
-  # - [ ] pull subcommands into separate modules
-  # - [ ] spec arguments for each subcommand
-  # - [ ] detect and handle STDIN 
+  # - [x] design how to call Refactoring Operations
+  # - [x] design how to detect and handle STDIN 
+  # - [x] spec arguments for each subcommand
+  # - [-] pull subcommands into separate modules
 
-  defp get_stdin do
-    case IO.read(:stdio, :line) do
-      :eof -> ""
-      {:error, _} -> ""
-      data -> data
-    end
-  end
+  # defp get_stdin do
+  #   case IO.read(:stdio, :line) do
+  #     :eof -> ""
+  #     {:error, _} -> ""
+  #     data -> data
+  #   end
+  # end
 
   def main(argv) do
-    input = get_stdin()
-    IO.puts "INPUT START"
-    IO.puts input
-    IO.puts "INPUT FINISH"
     Optimus.new!(
       name: "rfx",
       description: "Refactoring operations for Elixir",
@@ -42,31 +38,36 @@ defmodule Rfx.Cli.Base do
       about: "A collection of refactoring operations for Elixir Code.",
       allow_unknown_args: false,
       parse_double_dash: true,
-      args: [
-        project_dir: [
-          value_name: "PROJECT_FILE",
-          help: "Root directory of your Elixir project",
-          required: false,
-          parser: :string
-        ],
-        source_file: [
-          value_name: "SOURCE_FILE",
-          help: "File containing source code",
-          required: false,
-          parser: :string
-        ]
-      ],
-      flags: [
-        verbosity: [
-          short: "-v",
-          help: "Verbosity level",
-          multiple: true,
-        ],
-      ],
       subcommands: [
+        project_alt: [
+          name: "project.alt",
+          about: "Refactoring Operations for Projects",
+          flags: [
+            subapp_dir: [
+              short: "-s",
+              help: "Subapp Directory",
+              multiple: false,
+            ]
+          ],
+          args: [
+            file: [
+              value_name: "FILE",
+              help: "File with raw data to validate",
+              required: true,
+              parser: :string
+            ]
+          ]
+        ], 
         project_test: [
           name: "project.test",
-          about: "Refactoring Operations for Projects",
+          about: "Refactoring Operations Hey Hey",
+          flags: [
+            subapp_dir: [
+              short: "-s",
+              help: "Subapp Directory",
+              multiple: false,
+            ]
+          ],
           args: [
             file: [
               value_name: "FILE",
