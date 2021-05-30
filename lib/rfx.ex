@@ -1,6 +1,6 @@
-defmodule Refactex do
+defmodule Rfx do
   @moduledoc """
-  Documentation for `Refactex`.
+  Documentation for `Rfx`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Refactex do
 
   ## Examples
 
-      iex> Refactex.hello()
+      iex> Rfx.hello()
       :world
 
   """

@@ -7,7 +7,9 @@ defmodule Rfx.MixProject do
       version: "0.0.1",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
+      source_url: "https://github.com/andyl/rfx",
       escript: escript(), 
+      docs: docs(),
       deps: deps()
     ]
   end
@@ -29,7 +31,15 @@ defmodule Rfx.MixProject do
   defp deps do
     [
       {:sourceror, github: "doorgan/sourceror"},
-      {:optimus, "~> 0.2"}
+      {:optimus, "~> 0.2"},
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: ["README.md", "guides/sample.md"]
     ]
   end
 end
