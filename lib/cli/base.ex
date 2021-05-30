@@ -1,7 +1,7 @@
 defmodule Rfx.Cli.Base do
 
   # rfx --help
-  # rfx help
+  # rfx help <subproject>
   # rfx project.deps_add --dependency <dep> --version <vsn> 
   # rfx project.version
   # rfx module.rename
@@ -13,7 +13,7 @@ defmodule Rfx.Cli.Base do
   # rfx function.rename_variable
   # rfx function.extract_variable
   # rfx function.inline_variable
-  # rfx credo.multi_alias
+  # rfx credo.multi_alias <ARGS>
   #
   # TODO:
   # - [x] design how to call Refactoring Operations
