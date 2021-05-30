@@ -1,9 +1,9 @@
 # Rfx : ReFactor Elixir
 
 ```
-NOTE at the moment this absolutely does not work!  Right now we're working out
-the overall organizataion of the code.  Once this is done, we'll build out the
-refactoring operations step by step.
+NOTE at the moment this code does not work!  Right now we're working out the
+programming interfaces and project organization.  Once this is done, we'll
+build out the refactoring operations step by step.
 ```
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
@@ -42,7 +42,7 @@ Credo Operations:
 
 - [ ] multi-alias
 
-Rfx Operations are intended to be embedded into editors, tools and end-user
+Rfx Operations are meant to be embedded into editors, tools and end-user
 applications:
 
 - Examples and Tests
@@ -50,7 +50,8 @@ applications:
 - Mix tasks
 - CLI (rfx)
 - Generators (eg phx.gen, phx.gen.auth)
-- Editor Plugins, ElixirLs
+- Editor Plugins
+- ElixirLs
 - Credo
 
 Rfx depends on the excellent [Sourceror](http://github.com/doorgan/sourceror)
@@ -71,7 +72,8 @@ end
 We desire to have an extensible catalog of refactoring operations.  It seems
 like having a separate module for refactoring operation would work well.
 
-We expect that a given refactoring operation may be applied to different scopes:
+We expect that a given refactoring operation may be applied to different
+scopes:
 
 - Scope1: a chunk of code
 - Scope2: a single file
