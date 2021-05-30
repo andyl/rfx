@@ -1,6 +1,6 @@
 # Rfx : ReFactor Elixir
 
-```
+```markdown
 NOTE at the moment this code does not work!  Right now we're working out the
 programming interfaces and project organization.  Once this is done, we'll
 build out the refactoring operations step by step.
@@ -8,6 +8,8 @@ build out the refactoring operations step by step.
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
+
+## Operations
 
 Project Operations:
 
@@ -42,6 +44,11 @@ Credo Operations:
 
 - [ ] multi-alias
 
+Rfx depends on the excellent [Sourceror](http://github.com/doorgan/sourceror)
+written by [@doorgan](http://github.com/doorgan).
+
+## Clients 
+
 Rfx Operations are meant to be embedded into editors, tools and end-user
 applications:
 
@@ -54,9 +61,6 @@ applications:
 - ElixirLs
 - Credo
 
-Rfx depends on the excellent [Sourceror](http://github.com/doorgan/sourceror)
-written by [@doorgan](http://github.com/doorgan).
-
 ## Installation
 
 ```elixir
@@ -67,7 +71,7 @@ def deps do
 end
 ```
 
-## Notes on Code Organization
+## Code Organization
 
 We desire to have an extensible catalog of refactoring operations.  It seems
 like having a separate module for refactoring operation would work well.
