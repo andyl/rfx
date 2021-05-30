@@ -20,5 +20,5 @@ source = """
 alias X.Y.{A, B, C}
 """
 
-Rfx.Ops.Credo.MultiAlias.rfx_source(source)
+Rfx.Ops.Credo.MultiAlias.rfx_code(source)
 ```

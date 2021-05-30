@@ -1,4 +1,6 @@
 defmodule Examples.Credo.MultiAlias do
+  @moduledoc false
+
   @doc """
   Walks the source code and expands instances of multi alias syntax like
   ```elixir
@@ -30,7 +32,7 @@ defmodule Examples.Credo.MultiAlias do
   ```
   """
   def fix(source) do
-    Rfx.Ops.Credo.MultiAlias.rfx_source(source)
+    Rfx.Ops.Credo.MultiAlias.rfx_code(source)
   end
 
 end

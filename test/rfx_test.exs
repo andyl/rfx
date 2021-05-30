@@ -1,8 +1,8 @@
-defmodule RefactexTest do
+defmodule RfxTest do
   use ExUnit.Case
-  doctest Refactex
+  doctest Rfx
 
   test "greets the world" do
-    assert Refactex.hello() == :world
+    assert Rfx.hello() == :world
   end
 end

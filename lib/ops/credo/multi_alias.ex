@@ -1,44 +1,55 @@
 defmodule Rfx.Ops.Credo.MultiAlias do
 
   @moduledoc """
-  Refactoring Operations to automatically fix the Credo 'multi-alias'
-  recommendations.
+  Refactoring Operations to automatically apply the Credo `multi-alias`
+  recommendation.
 
-  Walks the source code and expands instances of multi alias syntax like
-  ```elixir
-  alias Foo.{Bar, Baz.Qux}
-  ```
-  to individual aliases:
-  ```elixir
-  alias Foo.Bar
-  alias Foo.Baz.Qux
-  ```
+  Walks the source code and expands instances of multi-alias syntax.
 
-  It also preserves the comments:
-  ```elixir
-  # Multi alias example
-  alias Foo.{ # Opening the multi alias
-    Bar, # Here is Bar
-    # Here come the Baz
-    Baz.Qux # With a Qux!
-  }
-  ```
+  ## Examples
 
-  ```elixir
-  # Multi alias example
-  # Opening the multi alias
-  # Here is Bar
-  alias Foo.Bar
-  # Here come the Baz
-  # With a Qux!
-  alias Foo.Baz.Qux
-  ```
+  Basic transformation...
+
+       iex> source = "alias Foo.{Bar, Baz.Qux}"
+       ...>
+       ...> result = """
+       ...> alias Foo.Bar
+       ...> alias Foo.Baz.Qux
+       ...> """ |> String.trim()
+       ...>
+       ...> Rfx.Ops.Credo.MultiAlias.rfx_code(source)
+       result
+
+  Preserves comments...
+
+       iex> source = """
+       ...> # Multi alias example
+       ...> alias Foo.{ # Opening the multi alias
+       ...>   Bar, # Here is Bar
+       ...>   # Here come the Baz
+       ...>   Baz.Qux # With a Qux!
+       ...> }
+       ...> """ |> String.trim()
+       ...>
+       ...> result = """
+       ...> # Here is Bar
+       ...> # Multi alias example
+       ...> # Opening the multi alias
+       ...> alias Foo.Bar
+       ...> # Here come the Baz
+       ...> # With a Qux!
+       ...> alias Foo.Baz.Qux
+       ...> """ |> String.trim()
+       ...>
+       ...> Rfx.Ops.Credo.MultiAlias.rfx_code(source)
+       result
+
   """
 
   @doc """
   Applies the Multi-Alias transformation to a block of Elixir source code.
   """
-  def rfx_source(source_code) do
+  def rfx_code(source_code) do
     source_code
     |> Sourceror.parse_string()
     |> Sourceror.postwalk(fn
@@ -63,14 +74,14 @@ defmodule Rfx.Ops.Credo.MultiAlias do
 
   - reads the file
   - applies the `multi_alias` transformation to the source
-  - writes the file
+  - writes the fil~j
   """
   def rfx_file!(file_name) do
-    new_source = file_name
+    new_code = file_name
     |> File.read!()
-    |> rfx_source()
+    |> rfx_code()
 
-    File.write(file_name, new_source)
+    File.write(file_name, new_code)
   end
 
   @doc """

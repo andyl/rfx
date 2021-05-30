@@ -1,6 +1,6 @@
 defmodule Rfx.Ops.Credo.DepsAdd do
 
-  def rfx_source(source_code, name, version) do
+  def rfx_code(source_code, name, version) do
       source_code
       |> Sourceror.parse_string()
       |> Sourceror.postwalk(fn
@@ -42,7 +42,7 @@ defmodule Rfx.Ops.Credo.DepsAdd do
   def rfx_file!(file_name, name, version) do
     new_source = file_name
     |> File.read!()
-    |> rfx_source(name, version)
+    |> rfx_code(name, version)
 
     File.write(file_name, new_source)
   end
