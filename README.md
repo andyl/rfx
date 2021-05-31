@@ -1,10 +1,9 @@
 # Rfx : ReFactor Elixir
 
 ```markdown
-NOTE at the moment this code does not work!  Right now
-we're working out the programming interfaces and
-project organization.  Once this is done, we'll build
-out the refactoring operations step by step.
+NOTE at the moment this code does not work!  We're working out the programming
+interfaces and project organization.  Once this is done, we'll build out the
+refactoring operations step by step.
 ```
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
@@ -49,6 +48,20 @@ Rfx Operations depend on the excellent
 [Sourceror](http://github.com/doorgan/sourceror) written by
 [@doorgan](http://github.com/doorgan).
 
+## Alterspecs
+
+Each operation returns an `alterspec`, a data structure that represents the
+refactoring changes to be made for an operation.
+
+Rfx provies helper functions to manipulate alterspecs:
+
+```elixir
+Rfx.Alterspec.to_json(alterspec)   #> Returns a JSON data structure
+Rfx.Alterspec.to_patch(alterspec)  #> Returns a unix-standard patchfile
+Rfx.Alterspec.to_string(alterspec) #> Returns the modified source code
+Rfx.Alterspec.apply!(alterspec)    #> Applies the alterations to the filesystem
+```
+
 ## Clients 
 
 Rfx Operations are meant to be embedded into editors, tools and end-user
@@ -57,7 +70,7 @@ applications:
 - Examples and Tests
 - Elixir Scripts and LiveNotebooks
 - Mix tasks
-- CLI (rfx)
+- CLI (eg the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
 - Generators (eg phx.gen, phx.gen.auth)
 - Editor Plugins
 - ElixirLs
@@ -75,8 +88,8 @@ end
 
 ## Code Organization
 
-We desire to have an extensible catalog of refactoring operations.  It seems
-like having a separate module for refactoring operation would work well.
+We desire to have an extensible catalog of refactoring operations.  The code
+for each operation is organized into a separate module.
 
 We expect that a given refactoring operation may be applied to different
 scopes:
@@ -105,44 +118,53 @@ callbacks:
 
 ```elixir
 @doc """
-Transforms a block of source code, according to the Operation rules.
+Returns an alterspec for a block of source code, according to the Operation rules.
 """
-@callback rfx_code(input_source_code) :: {:ok, output_source_code} | {:error, String.t}
+@callback rfx_code(input_source_code) :: {:ok, alterspec} | {:error, String.t}
 
 @doc """
-Updates a single file with transformed source code, and renames the file
-according to the Operation rules.
+Returns an alterspec for a single file,  with directives for transformed source
+code, and with directives to rename the file according to the Operation rules.
 """
-@callback rfx_file!(input_file_name, args) :: {:ok, output_file_name} | {:error, String.t}
+@callback rfx_file(input_file_name, args) :: {:ok, alterspec} | {:error, String.t}
 
 @doc """
-Updates all relevant files within an entire project, according to the Operation
-rules.
+Returns an alterspec with directives to update all relevant files within an
+entire project, according to the Operation rules.
 """
-@callback rfx_project!(input_project_dir, args) :: {:ok, output_project_dir, [updated_file_list]} | {:error, String.t}
+@callback rfx_project(input_project_dir, args) :: {:ok, alterspec} | {:error, String.t}
 
 @doc """
-Only works within Umbrella applications.  Updates all relevant files within a
-subapp, according to the Operation rules.
+Only works within Umbrella applications.  Returns an alterspec with directives
+to update all relevant files within a subapp, according to the Operation rules.
 """
-@callback rfx_subapp!(input_subapp_dir, args) :: {:ok, output_subapp_dir, [updated_file_list]} | {:error, String.t}
+@callback rfx_subapp(input_subapp_dir, args) :: {:ok, alterspec} | {:error, String.t}
 ```
 
 Here's a pseudo-code example using this behavior:
 
 ```elixir
 alias Rfx.Ops.Module.RenameModule
+alias Rfx.Alterspec
 
+# return altered source code
 RenameModule.rfx_code(input_code) 
-#> {:ok, output_code}
+|> Alterspec.to_string()
+#> {:ok, altered_source_code_string}
 
-RenameModule.rfx_file!(input_file_name, new_name: "MyNewName") 
-#> {:ok, output_file_name}
+# write changes to file system
+RenameModule.rfx_file(input_file_name, new_name: "MyNewName") 
+|> Alterspec.apply!()
+#> :ok  
 
-RenameModule.rfx_project!(project_dir, old_module: "OldModule", new_module: "NewModule") 
-#> {:ok, project_dir_name, [list_of_updated_files]}
+# return a unix patchfile string
+RenameModule.rfx_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
+|> Alterspec.to_patch()
+#> {:ok, patchfile_string}
 
-RenameModule.rfx_subapp!(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
-#> {:ok, subapp_dir_name, [list_of_updated_files]}
+# return a json string
+RenameModule.rfx_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
+|> Alterspec.to_json()
+#> {:ok, json_string}
 ```
 
