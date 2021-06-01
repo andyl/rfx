@@ -1,9 +1,10 @@
 # Rfx : ReFactor Elixir
 
 ```markdown
-NOTE at the moment this code does not work!  We're working out the programming
-interfaces and project organization.  Once this is done, we'll build out the
-refactoring operations step by step.
+NOTE at the moment this code does not work!  We're
+working out the programming interfaces and project
+organization.  Once this is done, we'll build out
+the refactoring operations step by step.
 ```
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
@@ -48,18 +49,19 @@ Rfx Operations depend on the excellent
 [Sourceror](http://github.com/doorgan/sourceror) written by
 [@doorgan](http://github.com/doorgan).
 
-## Alterspecs
+## Changelists
 
-Each operation returns an `alterspec`, a data structure that represents the
+Each operation returns an `changelist`, a data structure that represents the
 refactoring changes to be made for an operation.
 
-Rfx provies helper functions to manipulate alterspecs:
+Rfx provies helper functions to manipulate changelists:
 
 ```elixir
-Rfx.Alterspec.to_json(alterspec)   #> Returns a JSON data structure
-Rfx.Alterspec.to_patch(alterspec)  #> Returns a unix-standard patchfile
-Rfx.Alterspec.to_string(alterspec) #> Returns the modified source code
-Rfx.Alterspec.apply!(alterspec)    #> Applies the alterations to the filesystem
+Rfx.Changelist.to_string(changelist) #> Returns the modified source code
+Rfx.Changelist.to_json(changelist)   #> Returns a JSON data structure
+Rfx.Changelist.to_patch(changelist)  #> Returns a unix-standard patchfile
+Rfx.Changelist.to_lsp(changelist)    #> Returns a data structure for LSP
+Rfx.Changelist.apply!(changelist)    #> Applies the alterations to the filesystem
 ```
 
 ## Clients 
@@ -67,10 +69,9 @@ Rfx.Alterspec.apply!(alterspec)    #> Applies the alterations to the filesystem
 Rfx Operations are meant to be embedded into editors, tools and end-user
 applications:
 
-- Examples and Tests
-- Elixir Scripts and LiveNotebooks
-- Mix tasks
-- CLI (eg the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
+- Tests, Elixir Scripts and LiveNotebooks
+- Mix tasks (see the experimental [rfx_tasks](https://github.andyl/rfx_tasks))
+- CLI (see the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
 - Generators (eg phx.gen, phx.gen.auth)
 - Editor Plugins
 - ElixirLs
@@ -118,53 +119,53 @@ callbacks:
 
 ```elixir
 @doc """
-Returns an alterspec for a block of source code, according to the Operation rules.
+Returns an changelist for a block of source code, according to the Operation rules.
 """
-@callback rfx_code(input_source_code) :: {:ok, alterspec} | {:error, String.t}
+@callback rfx_code(input_source_code) :: {:ok, changelist} | {:error, String.t}
 
 @doc """
-Returns an alterspec for a single file,  with directives for transformed source
+Returns an changelist for a single file,  with directives for transformed source
 code, and with directives to rename the file according to the Operation rules.
 """
-@callback rfx_file(input_file_name, args) :: {:ok, alterspec} | {:error, String.t}
+@callback rfx_file(input_file_name, args) :: {:ok, changelist} | {:error, String.t}
 
 @doc """
-Returns an alterspec with directives to update all relevant files within an
+Returns an changelist with directives to update all relevant files within an
 entire project, according to the Operation rules.
 """
-@callback rfx_project(input_project_dir, args) :: {:ok, alterspec} | {:error, String.t}
+@callback rfx_project(input_project_dir, args) :: {:ok, changelist} | {:error, String.t}
 
 @doc """
-Only works within Umbrella applications.  Returns an alterspec with directives
+Only works within Umbrella applications.  Returns an changelist with directives
 to update all relevant files within a subapp, according to the Operation rules.
 """
-@callback rfx_subapp(input_subapp_dir, args) :: {:ok, alterspec} | {:error, String.t}
+@callback rfx_subapp(input_subapp_dir, args) :: {:ok, changelist} | {:error, String.t}
 ```
 
 Here's a pseudo-code example using this behavior:
 
 ```elixir
 alias Rfx.Ops.Module.RenameModule
-alias Rfx.Alterspec
+alias Rfx.Changelist
 
 # return altered source code
 RenameModule.rfx_code(input_code) 
-|> Alterspec.to_string()
+|> Changelist.to_string()
 #> {:ok, altered_source_code_string}
 
 # write changes to file system
 RenameModule.rfx_file(input_file_name, new_name: "MyNewName") 
-|> Alterspec.apply!()
+|> Changelist.apply!()
 #> :ok  
 
 # return a unix patchfile string
 RenameModule.rfx_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
-|> Alterspec.to_patch()
+|> Changelist.to_patch()
 #> {:ok, patchfile_string}
 
 # return a json string
 RenameModule.rfx_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
-|> Alterspec.to_json()
+|> Changelist.to_json()
 #> {:ok, json_string}
 ```
 
