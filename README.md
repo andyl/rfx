@@ -51,10 +51,14 @@ Rfx Operations depend on the excellent
 
 ## Changelists
 
-Each operation returns an `changelist`, a data structure that represents the
-refactoring changes to be made for an operation.
+Each operation returns a *changelist* with a set of of *change requests*.  The
+*changelist* is a data structure that describes all the refactoring changes to
+be made for an operation.
 
-Rfx provies helper functions to manipulate changelists:
+A *change request* struct has elements for *content edits* and *filesystem
+actions* (create, rename, delete).
+
+Rfx provides helper functions to manipulate changelists:
 
 ```elixir
 Rfx.Changelist.to_string(changelist) #> Returns the modified source code
@@ -89,33 +93,28 @@ end
 
 ## Code Organization
 
-We desire to have an extensible catalog of refactoring operations.  The code
-for each operation is organized into a separate module.
+We desire to have an extensible catalog of refactoring operations.  Each
+operation is implemented in a separate module that implements a standard
+behavior.
 
-We expect that a given refactoring operation may be applied to different
-scopes:
+A given refactoring operation may be applied to different scopes:
 
 - Scope1: a chunk of code
 - Scope2: a single file
 - Scope3: an entire project
 - Scope4: an umbrella sub-application
 
-Each scope will require different actions.  Consider for example the operation
-`Rfx.Ops.Module.RenameModule`.
+Each scope will generate a different set of change requests.  Consider for
+example the operation `Rfx.Ops.Module.RenameModule`.
 
-Within Scope1, the `RenameModule` operation would change the name of the
-module, and also change any `alias` references to the module name, and emit the
-updated source code as a return value.
+|                         | # of Changereqs                    | Content Edits     | Filesys Actions          |
+|-------------------------|------------------------------------|-------------------|--------------------------|
+| Scope1 \\ `rfx_code`    | 1                                  | Edit src and docs | NA                       |
+| Scope2 \\ `rfx_file`    | 1                                  | Edit src and docs | Rename Src file          |
+| Scope3 \\ `rfx_project` | 1 for each related file in project | Edit src and docs | Rename Src and Test file |
+| Scope4 \\ `rfx_subapp`  | 1 for each related file in subapp  | Edit src and docs | Rename Src and Test file |
 
-Within Scope2, the `RenameModule` operation would first apply, Scope1, then
-write the Scope1 results to the target file, then rename the target file.
-
-Within Scope3 and 4, the `RenameModule` operation would first apply Scope2,
-then update update all module references across the entire project, then rename
-the relevant test files to match the new module name. 
-
-We speculate that each operation can implement a standard behavior with four
-callbacks:
+Each Rfx operation implements a standard behavior with four callbacks:
 
 ```elixir
 @doc """
@@ -142,7 +141,7 @@ to update all relevant files within a subapp, according to the Operation rules.
 @callback rfx_subapp(input_subapp_dir, args) :: {:ok, changelist} | {:error, String.t}
 ```
 
-Here's a pseudo-code example using this behavior:
+Here's a pseudo-code example using the Changelist behavior:
 
 ```elixir
 alias Rfx.Ops.Module.RenameModule
