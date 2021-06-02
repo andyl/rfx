@@ -32,7 +32,12 @@ defmodule Rfx.MixProject do
   defp docs do
     [
       main: "readme",
-      extras: ["README.md", "guides/sample.md"]
+      extras: [
+        "README.md", 
+        "guides/introduction.md",
+        "guides/refactoring_and_lsp.md",
+        "guides/related_tools.md"
+      ]
     ]
   end
 end

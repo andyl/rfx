@@ -14,12 +14,12 @@ code.
 
 Project Operations:
 
-- [ ] add dependency
+- [ ] add dependency (`Rfx.Ops.Project.DepsAdd`)
 - [ ] increment version
 
 Module Operations:
 
-- [ ] rename module
+- [ ] rename module (`Rfx.Ops.Module.RenameModule`)
 - [ ] rename module attribute
 - [ ] extract function
 - [ ] inline function
@@ -43,7 +43,7 @@ PhxGenAuth Operations:
 
 Credo Operations:
 
-- [ ] multi-alias
+- [ ] multi-alias (`Rfx.Ops.Credo.MultiAlias`)
 
 Rfx Operations depend on the excellent
 [Sourceror](http://github.com/doorgan/sourceror) written by
@@ -51,9 +51,9 @@ Rfx Operations depend on the excellent
 
 ## Changelists
 
-Each operation returns a *changelist* with a set of of *change requests*.  The
-*changelist* is a data structure that describes all the refactoring changes to
-be made for an operation.
+Each operation returns a *changelist* (`Rfx.Changelist`) with a set of of
+*change requests* (`Rfx.Changereq`).  The *changelist* is a data structure that
+describes all the refactoring changes to be made for an operation.
 
 A *change request* struct has elements for *content edits* and *filesystem
 actions* (create, rename, delete).
@@ -94,7 +94,7 @@ end
 ## Code Organization
 
 We desire to have an extensible catalog of refactoring operations.  Each
-operation is implemented in a separate module that implements a standard
+operation is coded in a separate module that implements the `Rfx.Ops`
 behavior.
 
 A given refactoring operation may be applied to different scopes:
@@ -107,14 +107,14 @@ A given refactoring operation may be applied to different scopes:
 Each scope will generate a different set of change requests.  Consider for
 example the operation `Rfx.Ops.Module.RenameModule`.
 
-|                         | # of Changereqs                    | Content Edits     | Filesys Actions          |
-|-------------------------|------------------------------------|-------------------|--------------------------|
-| Scope1 \\ `rfx_code`    | 1                                  | Edit src and docs | NA                       |
-| Scope2 \\ `rfx_file`    | 1                                  | Edit src and docs | Rename Src file          |
-| Scope3 \\ `rfx_project` | 1 for each related file in project | Edit src and docs | Rename Src and Test file |
-| Scope4 \\ `rfx_subapp`  | 1 for each related file in subapp  | Edit src and docs | Rename Src and Test file |
+| Rename_Module    | # of Changereqs                    | Content Edits     | Filesys Actions          |
+|------------------|------------------------------------|-------------------|--------------------------|
+| Scope1 `code`    | 1                                  | Edit src and docs | NA                       |
+| Scope2 `file`    | 1                                  | Edit src and docs | Rename Src file          |
+| Scope3 `project` | 1 for each related file in project | Edit src and docs | Rename Src and Test file |
+| Scope4 `subapp`  | 1 for each related file in subapp  | Edit src and docs | Rename Src and Test file |
 
-Each Rfx operation implements a standard behavior with four callbacks:
+Each Rfx operation implements the `Rfx.Ops` behavior with four callbacks:
 
 ```elixir
 @doc """
@@ -141,7 +141,7 @@ to update all relevant files within a subapp, according to the Operation rules.
 @callback rfx_subapp(input_subapp_dir, args) :: {:ok, changelist} | {:error, String.t}
 ```
 
-Here's a pseudo-code example using the Changelist behavior:
+Here's a pseudo-code example:
 
 ```elixir
 alias Rfx.Ops.Module.RenameModule
@@ -149,7 +149,7 @@ alias Rfx.Changelist
 
 # return altered source code
 RenameModule.rfx_code(input_code) 
-|> Changelist.to_string()
+| > Changelist.to_string()
 #> {:ok, altered_source_code_string}
 
 # write changes to file system
@@ -160,11 +160,11 @@ RenameModule.rfx_file(input_file_name, new_name: "MyNewName")
 # return a unix patchfile string
 RenameModule.rfx_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
 |> Changelist.to_patch()
-#> {:ok, patchfile_string}
+#> {:ok, list of patchfile_strings}
 
 # return a json string
 RenameModule.rfx_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
 |> Changelist.to_json()
-#> {:ok, json_string}
+#> {:ok, list of json_strings}
 ```
 
