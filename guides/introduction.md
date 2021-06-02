@@ -9,7 +9,7 @@ editors in the Elixir community (eg VsCode, Vim, Emacs).
 
 Beyond that, it will be interesting to see if a general purpose refactoring
 library can help to spark the developement of novel applications: analytic
-tools, bots, machine-learning aids, etc.
+tools, bots, machine-learning aids, generators, etc.
 
 ## About Refactoring
 
@@ -61,10 +61,10 @@ Books:
 
 Rfx builds on a foundation of prior work by the Elixir community:
 
-- [Elixir Macros and Metaprogramming][macros] - Any code you write can be
-  represented as a tree of expressions, called an Abstract Syntax Tree (AST).
-  Elixir is able to convert code to AST and vice-versa.  Elixir Macros and
-  Metaprogramming gives developers superpowers to extend the language.
+- [Elixir Macros and Metaprogramming][macros] - Any elixir code you write can
+  be represented as a tree of expressions, called an Abstract Syntax Tree
+  (AST).  Elixir is able to convert code to AST and vice-versa.  Elixir Macros
+  and Metaprogramming give superpowers to extend the language.
 - [AST Ninja][astn] - AST Ninja is a handy online tool to easily convert Elixir
   code to AST.
 - [Refactoring Problems][as_talk] - In his [2019 talk][as_talk]
@@ -74,8 +74,8 @@ Rfx builds on a foundation of prior work by the Elixir community:
 - [Sourceror][sourceror] - As of Elixir 1.13 (and backported to Elixir 1.10),
   [Dorgan][dorgangh] made critical contributions to enable Refactoring.  The
   first is new functions for the Elixir standard library:
-  [Code.string_to_quoted_with_comments/2][stqwc] and
-  [Code.quoted_to_algebra/2][qta].  These allow generation of an AST which
+  `Code.string_to_quoted_with_comments/2` [</>][stqwc] and
+  `Code.quoted_to_algebra/2` [</>][qta].  These allow generation of an AST which
   preserves comments.  The second is a new library [Sourceror][sourceror] which
   provides tooling to readily manipulate the AST-with-comments.  
 
@@ -89,8 +89,12 @@ Rfx builds on a foundation of prior work by the Elixir community:
 [stqwc]: https://hexdocs.pm/elixir/master/Code.html#quoted_to_algebra/2
 [qta]: https://hexdocs.pm/elixir/master/Code.html#string_to_quoted_with_comments/2
 
-## Refactoring Libraries in Other Languages
+## Other Languages
+
+Here are some comparable refactoring libraries written for other languages:
 
 - Python: [python-rope](https://github.com/python-rope/rope)
 - Javascript: [grasp](https://graspjs.com)
+- Rust: [Structural Search and Replace](https://rust-analyzer.github.io/manual.html#structural-search-and-replace)
+- Rust: [ReRast](https://github.com/google/rerast)
 
