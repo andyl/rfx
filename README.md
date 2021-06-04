@@ -74,8 +74,8 @@ Rfx Operations are meant to be embedded into editors, tools and end-user
 applications:
 
 - Tests, Elixir Scripts and LiveNotebooks
-- Mix tasks (see the experimental [cl_tasks](https://github.andyl/cl_tasks))
-- CLI (see the experimental [cl_cli](https://github.com/andyl/cl_cli))
+- Mix tasks (see the experimental [rfx_tasks](https://github.andyl/rfx_tasks))
+- CLI (see the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
 - Generators (eg phx.gen, phx.gen.auth)
 - Editor Plugins
 - ElixirLs
