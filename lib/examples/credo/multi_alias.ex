@@ -32,7 +32,7 @@ defmodule Examples.Credo.MultiAlias do
   ```
   """
   def fix(source) do
-    Rfx.Ops.Credo.MultiAlias.rfx_code(source)
+    Rfx.Ops.Credo.MultiAlias.edit(source)
   end
 
 end
