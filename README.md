@@ -114,7 +114,7 @@ example the operation `Rfx.Ops.Module.RenameModule`.
 | Scope3 `project` | 1 for each related file in project | Edit src and docs | Rename Src and Test file |
 | Scope4 `subapp`  | 1 for each related file in subapp  | Edit src and docs | Rename Src and Test file |
 
-Each Rfx operation implements the `Rfx.Ops` behavior with four callbacks:
+Each Rfx operation implements the `Rfx.Ops` behavior:
 
 ```elixir
 @doc """

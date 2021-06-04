@@ -1,5 +1,13 @@
 defmodule Rfx.Ops do
 
+  @moduledoc """
+  Behavior for Rfx operation.
+
+  Each operation has an edit function which returned edited source code.  Each
+  operation has `cl_*` functions  that return a Changelist for each Scope:
+  code, file, project, subapp.
+  """
+
   @doc "Edit a piece of code, using Sourceror rules."
   @callback edit(String.t) :: String.t
 

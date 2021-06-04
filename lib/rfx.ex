@@ -1,7 +1,5 @@
 defmodule Rfx do
-  @moduledoc """
-  Documentation for `Rfx`.
-  """
+  @moduledoc false
 
   @doc """
   Hello world.
