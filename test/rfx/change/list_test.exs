@@ -1,4 +1,4 @@
-defmodule Rfx.ChangelistTest do
+defmodule Rfx.Change.ListTest do
   use ExUnit.Case
 
   test "placeholder" do

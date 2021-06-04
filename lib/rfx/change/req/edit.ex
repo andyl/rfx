@@ -1,11 +1,11 @@
-defmodule Rfx.Changereq.Edit do
+defmodule Rfx.Change.Req.Edit do
 
   @moduledoc """
-  Changereq.Edit struct and support functions.
+  Change.Req.Edit struct and support functions.
 
   Edit elements - source file and diff.
 
-  Changereq.Edit must have:
+  Change.Req.Edit must have:
   - either *edit_path* or *edit_source*
   - *diff*
   """
@@ -14,7 +14,7 @@ defmodule Rfx.Changereq.Edit do
 
   defstruct [:edit_file, :edit_source, :diff]
 
-  alias Rfx.Changereq.Edit
+  alias Rfx.Change.Req.Edit
 
   # ----- Construction -----
   

@@ -1,11 +1,11 @@
-defmodule Rfx.Changereq.Filesys do
+defmodule Rfx.Change.Req.Filesys do
   
   @moduledoc """
-  Changereq.Filesys struct and support functions.
+  Change.Req.Filesys struct and support functions.
 
   Filesys elements.
 
-  Changereq.Filesys struc has three elements:
+  Change.Req.Filesys struc has three elements:
   - *cmd* - the filesys command
   - *src_path* - source path
   - *tgt_path* - target path (only for move commands...)
@@ -18,7 +18,7 @@ defmodule Rfx.Changereq.Filesys do
   - :dir_move
   - :dir_delete
 
-  Changereq.Filesys must have:
+  Change.Req.Filesys must have:
   - either *edit_path* or *edit_source*
   - *diff*
   """
@@ -27,7 +27,7 @@ defmodule Rfx.Changereq.Filesys do
 
   defstruct [:cmd, :src_path, :tgt_path ]
 
-  alias Rfx.Changereq.Filesys
+  alias Rfx.Change.Req.Filesys
 
   # ----- Construction -----
   

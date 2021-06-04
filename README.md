@@ -51,8 +51,8 @@ Rfx Operations depend on the excellent
 
 ## Changelists
 
-Each operation returns a *changelist* (`Rfx.Changelist`) with a set of of
-*change requests* (`Rfx.Changereq`).  The *changelist* is a data structure that
+Each operation returns a *changelist* (`Rfx.Change.List`) with a set of of
+*change requests* (`Rfx.Change.Req`).  The *changelist* is a data structure that
 describes all the refactoring changes to be made for an operation.
 
 A *change request* struct has elements for *content edits* and *filesystem
@@ -61,11 +61,11 @@ actions* (create, rename, delete).
 Rfx provides helper functions to manipulate changelists:
 
 ```elixir
-Rfx.Changelist.to_string(changelist) #> Returns the modified source code
-Rfx.Changelist.to_json(changelist)   #> Returns a JSON data structure
-Rfx.Changelist.to_patch(changelist)  #> Returns a unix-standard patchfile
-Rfx.Changelist.to_lsp(changelist)    #> Returns a data structure for LSP
-Rfx.Changelist.apply!(changelist)    #> Applies the changereqs to the filesystem
+Rfx.Change.List.to_string(changelist) #> Returns the modified source code
+Rfx.Change.List.to_json(changelist)   #> Returns a JSON data structure
+Rfx.Change.List.to_patch(changelist)  #> Returns a unix-standard patchfile
+Rfx.Change.List.to_lsp(changelist)    #> Returns a data structure for LSP
+Rfx.Change.List.apply!(changelist)    #> Applies the changereqs to the filesystem
 ```
 
 ## Clients 
@@ -145,26 +145,26 @@ Here's a pseudo-code example:
 
 ```elixir
 alias Rfx.Ops.Module.RenameModule
-alias Rfx.Changelist
+alias Rfx.Change.List
 
 # return edited source code
 RenameModule.cl_code(input_code) 
-| > Changelist.to_string()
+| > Change.List.to_string()
 #> {:ok, edited_source_code_string}
 
 # write changes to file system
 RenameModule.cl_file(input_file_name, new_name: "MyNewName") 
-|> Changelist.apply!()
+|> Change.List.apply!()
 #> :ok  
 
 # return a unix patchfile string
 RenameModule.cl_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
-|> Changelist.to_patch()
+|> Change.List.to_patch()
 #> {:ok, list of patchfile_strings}
 
 # return a json string
 RenameModule.cl_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
-|> Changelist.to_json()
+|> Change.List.to_json()
 #> {:ok, list of json_strings}
 ```
 
