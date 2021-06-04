@@ -13,6 +13,13 @@ defmodule Tst do
     fname
   end
 
+  def gen_dir do
+    base_dir() |> File.mkdir()
+    dname = rand_fn()
+    File.mkdir(dname)
+    dname
+  end
+
   def gen_proj(cmd) do
     base_dir() |> File.mkdir()
     base_dir() |> File.cd()
