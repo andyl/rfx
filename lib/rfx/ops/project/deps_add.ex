@@ -1,6 +1,6 @@
 defmodule Rfx.Ops.Project.DepsAdd do
 
-  def rfx_code(source_code, name, version) do
+  def cl_code(source_code, name, version) do
       source_code
       |> Sourceror.parse_string()
       |> Sourceror.postwalk(fn
@@ -39,17 +39,17 @@ defmodule Rfx.Ops.Project.DepsAdd do
       |> Sourceror.to_string()
   end
 
-  def rfx_file!(file_name, name, version) do
+  def cl_file!(file_name, name, version) do
     new_source = file_name
     |> File.read!()
-    |> rfx_code(name, version)
+    |> cl_code(name, version)
 
     File.write(file_name, new_source)
   end
 
-  def rfx_project!(project_root, name, version) do
+  def cl_project!(project_root, name, version) do
     file_name = project_root <> "mix.exs"
-    rfx_file!(file_name, name, version)
+    cl_file!(file_name, name, version)
   end
 
 end

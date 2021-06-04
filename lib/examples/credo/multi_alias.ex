@@ -31,8 +31,8 @@ defmodule Examples.Credo.MultiAlias do
   alias Foo.Baz.Qux
   ```
   """
-  def fix(_source) do
-    # Rfx.Ops.Credo.MultiAlias.rfx_code(source)
+  def fix(source) do
+    Rfx.Ops.Credo.MultiAlias.edit(source)
   end
 
 end

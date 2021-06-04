@@ -1,5 +1,7 @@
 defmodule Rfx.Ops.Credo.MultiAlias do
 
+  @behaviour Rfx.Ops
+
   @moduledoc """
   Refactoring Operations to automatically apply the Credo `multi-alias`
   recommendation.
@@ -12,13 +14,13 @@ defmodule Rfx.Ops.Credo.MultiAlias do
 
        iex> source = "alias Foo.{Bar, Baz.Qux}"
        ...>
-       ...> result = """
+       ...> expected = """
        ...> alias Foo.Bar
        ...> alias Foo.Baz.Qux
        ...> """ |> String.trim()
        ...>
-       ...> Rfx.Ops.Credo.MultiAlias.rfx_code(source)
-       result
+       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
+       expected
 
   Preserving comments...
 
@@ -31,7 +33,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
        ...> }
        ...> """ |> String.trim()
        ...>
-       ...> result = """
+       ...> expected = """
        ...> # Here is Bar
        ...> # Multi alias example
        ...> # Opening the multi alias
@@ -41,35 +43,37 @@ defmodule Rfx.Ops.Credo.MultiAlias do
        ...> alias Foo.Baz.Qux
        ...> """ |> String.trim()
        ...>
-       ...> Rfx.Ops.Credo.MultiAlias.rfx_code(source)
-       result
+       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
+       expected
 
   """
 
   alias Rfx.Source
 
-  def rfx_source(source_code: source) do
-    rfx_source(source)
+  # ----- Changelists -----
+
+  @impl true
+  def cl_code(source_code: source) do
+    cl_code(source)
   end
 
-  def rfx_source(file_path: file_path) do
-    diff = File.read!(file_path) |> edit() |> gen_diff()
-    case diff do
+  @impl true
+  def cl_code(file_path: file_path) do
+    old_source = File.read!(file_path)
+    new_source = edit(old_source)
+    case Source.diff(old_source, new_source) do
       nil -> nil
       diff -> [file_path: file_path, diff: diff]
     end
   end
 
-  def rfx_source(source) do
-    diff = source |> edit() |> Source.diff()
-    case diff do
+  @impl true
+  def cl_code(old_source) do
+    new_source = edit(old_source)
+    case Source.diff(old_source, new_source) do
       nil -> nil
-      diff -> [source_code: source, diff: diff]
+      diff -> [source_code: old_source, diff: diff]
     end
-  end
-
-  defp gen_diff(old_src: _old_src, new_src: _new_src) do
-    ""
   end
 
   @doc """
@@ -79,10 +83,12 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   - applies the `multi_alias` transformation to the source
   - writes the fil~j
   """
-  def rfx_file(file_name) do
+
+  @impl true
+  def cl_file(file_name) do
     new_code = file_name
     |> File.read!()
-    # |> rfx_code()
+    |> edit()
 
     File.write(file_name, new_code)
   end
@@ -95,13 +101,21 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     - apply the `multi_alias` transformation to the source
     - write the file
   """
-  def rfx_project(_project_root) do
+
+  @impl true
+  def cl_project(_project_root) do
+    :ok
+  end
+
+  @impl true
+  def cl_subapp(_) do
     :ok
   end
 
   # ----- Edit -----
 
-  defp edit(source_code) do
+  @impl true
+  def edit(source_code) do
     efun = fn
       {:alias, _, [{{:., _, [_, :{}]}, _, _}]} = quoted, state ->
         {aliases, line_correction} = expand_alias(quoted, state.line_correction)
@@ -116,8 +130,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
       quoted, state ->
         {quoted, state}
     end
-    new_source = Source.edit(source_code, efun)
-    {source_code, new_source}
+    Source.edit(source_code, efun)
   end
 
   defp expand_alias({:alias, alias_meta, [{{:., _, [left, :{}]}, _, right}]}, line_correction) do

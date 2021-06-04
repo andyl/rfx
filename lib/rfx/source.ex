@@ -10,6 +10,8 @@ defmodule Rfx.Source do
     |> Sourceror.to_string()
   end
 
+  def diff(old_source, new_source), do: diff({old_source, new_source})
+
   def diff({src1, src2}) do
     path1 = "/tmp/src1"
     path2 = "/tmp/src2"

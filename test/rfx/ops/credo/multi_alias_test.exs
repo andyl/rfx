@@ -5,7 +5,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
 
   doctest MultiAlias
 
-  describe "#rfx_code" do
+  describe "#edit" do
     test "expands multi alias" do
       source = """
       alias Foo.{Bar, Baz.Qux}
@@ -18,7 +18,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       """
       |> String.trim()
 
-      actual = MultiAlias.rfx_code(source)
+      actual = MultiAlias.edit(source)
       assert actual == expected
     end
 
@@ -48,7 +48,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
         """
         |> String.trim()
 
-      actual = MultiAlias.rfx_code(source)
+      actual = MultiAlias.edit(source)
 
       assert actual == expected
     end

@@ -74,8 +74,8 @@ Rfx Operations are meant to be embedded into editors, tools and end-user
 applications:
 
 - Tests, Elixir Scripts and LiveNotebooks
-- Mix tasks (see the experimental [rfx_tasks](https://github.andyl/rfx_tasks))
-- CLI (see the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
+- Mix tasks (see the experimental [cl_tasks](https://github.andyl/cl_tasks))
+- CLI (see the experimental [cl_cli](https://github.com/andyl/cl_cli))
 - Generators (eg phx.gen, phx.gen.auth)
 - Editor Plugins
 - ElixirLs
@@ -118,27 +118,27 @@ Each Rfx operation implements the `Rfx.Ops` behavior with four callbacks:
 
 ```elixir
 @doc """
-Returns an changelist for a block of source code, according to the Operation rules.
+Returns a changelist for a block of source code, according to the Operation rules.
 """
-@callback rfx_code(input_source_code) :: {:ok, changelist} | {:error, String.t}
+@callback cl_code(input_source_code) :: {:ok, changelist} | {:error, String.t}
 
 @doc """
-Returns an changelist for a single file,  with directives for edited source
+Returns a changelist for a single file,  with directives for edited source
 code, and with directives to rename the file according to the Operation rules.
 """
-@callback rfx_file(input_file_name, args) :: {:ok, changelist} | {:error, String.t}
+@callback cl_file(input_file_name, args) :: {:ok, changelist} | {:error, String.t}
 
 @doc """
-Returns an changelist with directives to update all relevant files within an
+Returns a changelist with directives to update all relevant files within an
 entire project, according to the Operation rules.
 """
-@callback rfx_project(input_project_dir, args) :: {:ok, changelist} | {:error, String.t}
+@callback cl_project(input_project_dir, args) :: {:ok, changelist} | {:error, String.t}
 
 @doc """
-Only works within Umbrella applications.  Returns an changelist with directives
+Only works within Umbrella applications.  Returns a changelist with directives
 to update all relevant files within a subapp, according to the Operation rules.
 """
-@callback rfx_subapp(input_subapp_dir, args) :: {:ok, changelist} | {:error, String.t}
+@callback cl_subapp(input_subapp_dir, args) :: {:ok, changelist} | {:error, String.t}
 ```
 
 Here's a pseudo-code example:
@@ -148,22 +148,22 @@ alias Rfx.Ops.Module.RenameModule
 alias Rfx.Changelist
 
 # return edited source code
-RenameModule.rfx_code(input_code) 
+RenameModule.cl_code(input_code) 
 | > Changelist.to_string()
 #> {:ok, edited_source_code_string}
 
 # write changes to file system
-RenameModule.rfx_file(input_file_name, new_name: "MyNewName") 
+RenameModule.cl_file(input_file_name, new_name: "MyNewName") 
 |> Changelist.apply!()
 #> :ok  
 
 # return a unix patchfile string
-RenameModule.rfx_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
+RenameModule.cl_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
 |> Changelist.to_patch()
 #> {:ok, list of patchfile_strings}
 
 # return a json string
-RenameModule.rfx_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
+RenameModule.cl_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
 |> Changelist.to_json()
 #> {:ok, list of json_strings}
 ```
