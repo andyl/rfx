@@ -65,7 +65,7 @@ Rfx.Changelist.to_string(changelist) #> Returns the modified source code
 Rfx.Changelist.to_json(changelist)   #> Returns a JSON data structure
 Rfx.Changelist.to_patch(changelist)  #> Returns a unix-standard patchfile
 Rfx.Changelist.to_lsp(changelist)    #> Returns a data structure for LSP
-Rfx.Changelist.apply!(changelist)    #> Applies the alterations to the filesystem
+Rfx.Changelist.apply!(changelist)    #> Applies the changereqs to the filesystem
 ```
 
 ## Clients 
@@ -123,7 +123,7 @@ Returns an changelist for a block of source code, according to the Operation rul
 @callback rfx_code(input_source_code) :: {:ok, changelist} | {:error, String.t}
 
 @doc """
-Returns an changelist for a single file,  with directives for transformed source
+Returns an changelist for a single file,  with directives for edited source
 code, and with directives to rename the file according to the Operation rules.
 """
 @callback rfx_file(input_file_name, args) :: {:ok, changelist} | {:error, String.t}
@@ -147,10 +147,10 @@ Here's a pseudo-code example:
 alias Rfx.Ops.Module.RenameModule
 alias Rfx.Changelist
 
-# return altered source code
+# return edited source code
 RenameModule.rfx_code(input_code) 
 | > Changelist.to_string()
-#> {:ok, altered_source_code_string}
+#> {:ok, edited_source_code_string}
 
 # write changes to file system
 RenameModule.rfx_file(input_file_name, new_name: "MyNewName") 
