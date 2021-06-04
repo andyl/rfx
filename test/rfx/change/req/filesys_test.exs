@@ -1,7 +1,7 @@
-defmodule Rfx.Changereq.FilesysTest do
+defmodule Rfx.Change.Req.FilesysTest do
   use ExUnit.Case
 
-  alias Rfx.Changereq.Filesys
+  alias Rfx.Change.Req.Filesys
 
   # ----- Construction -----
 
