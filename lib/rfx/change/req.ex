@@ -11,6 +11,9 @@ defmodule Rfx.Change.Req do
   - *filesys* (`Rfx.Req.Filesys`) - the filesys request (create, move, delete)
 
   A Change.Req struct may contain an *edit* element, or a *filesys* element, or both.
+
+  Note that when a Req is applied to the filesystem, the *edit* element is
+  applied first, then the *filesys* element.
   """
 
   defstruct [:edit, :filesys]

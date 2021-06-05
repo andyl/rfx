@@ -49,6 +49,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   """
 
   alias Rfx.Source
+  alias Rfx.Change.Req
 
   # ----- Changelists -----
 
@@ -62,8 +63,9 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     old_source = File.read!(file_path)
     new_source = edit(old_source)
     case Source.diff(old_source, new_source) do
+      "" -> nil
       nil -> nil
-      diff -> [file_path: file_path, diff: diff]
+      diff -> [Req.new(edit: [file_path: file_path, diff: diff])]
     end
   end
 
@@ -71,8 +73,9 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   def cl_code(old_source) do
     new_source = edit(old_source)
     case Source.diff(old_source, new_source) do
+      "" -> nil
       nil -> nil
-      diff -> [source_code: old_source, diff: diff]
+      diff -> [Req.new(edit: [source_code: old_source, diff: diff])]
     end
   end
 
@@ -81,35 +84,37 @@ defmodule Rfx.Ops.Credo.MultiAlias do
 
   - reads the file
   - applies the `multi_alias` transformation to the source
-  - writes the fil~j
+  - return a changelist
   """
 
   @impl true
-  def cl_file(file_name) do
-    new_code = file_name
-    |> File.read!()
-    |> edit()
-
-    File.write(file_name, new_code)
+  def cl_file(file_path) do
+    cl_code(file_path: file_path)
   end
 
   @doc """
   Applies the `multi_alias` transformation to every source file in an Elixir project.
 
   - walk the project directory, and for each source code file:
-    - read the file
-    - apply the `multi_alias` transformation to the source
-    - write the file
+  - read the file
   """
 
   @impl true
-  def cl_project(_project_root) do
-    :ok
+  def cl_project(project_root) do
+    project_root
+    |> Rfx.Filesys.project_files()
+    |> Enum.map(&cl_file/1)
+    |> Enum.reject(&is_nil/1)
+    |> List.flatten()
   end
 
   @impl true
-  def cl_subapp(_) do
-    :ok
+  def cl_subapp(subapp_root) do
+    subapp_root
+    |> Rfx.Filesys.subapp_files()
+    |> Enum.map(&cl_file/1)
+    |> Enum.reject(&is_nil/1)
+    |> List.flatten()
   end
 
   # ----- Edit -----
