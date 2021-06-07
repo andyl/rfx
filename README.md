@@ -65,6 +65,7 @@ Rfx.Change.List.to_string(changelist) #> Returns the modified source code
 Rfx.Change.List.to_json(changelist)   #> Returns a JSON data structure
 Rfx.Change.List.to_patch(changelist)  #> Returns a unix-standard patchfile
 Rfx.Change.List.to_lsp(changelist)    #> Returns a data structure for LSP
+Rfx.Change.List.to_pr(changelist)     #> Returns a pull-request data structure
 Rfx.Change.List.apply!(changelist)    #> Applies the changereqs to the filesystem
 ```
 

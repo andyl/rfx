@@ -8,18 +8,15 @@ defmodule Rfx.Change.Req.Edit do
   Change.Req.Edit must have:
   - either *edit_path* or *edit_source*
   - *diff*
+
+  Not using a struct here for now, in order to use the shorthand access syntax
+  `edit[:diff]`.
   """
-  
-  @enforce_keys [:diff]
-
-  defstruct [:edit_file, :edit_source, :diff]
-
-  alias Rfx.Change.Req.Edit
 
   # ----- Construction -----
   
-  def new(edit_file: path, diff: diff) do
-    valid_struct = %Edit{edit_file: path, diff: diff}
+  def new(file_path: path, diff: diff) do
+    valid_struct = %{file_path: path, diff: diff}
     case File.exists?(path) do
       true ->  {:ok, valid_struct}
       _ -> {:error, "No file #{path}"}
@@ -27,7 +24,7 @@ defmodule Rfx.Change.Req.Edit do
   end
 
   def new(edit_source: source, diff: diff) do
-    valid_struct = %Edit{edit_source: source, diff: diff}
+    valid_struct = %{edit_source: source, diff: diff}
     {:ok, valid_struct}
   end
 

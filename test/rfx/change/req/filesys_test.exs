@@ -9,7 +9,7 @@ defmodule Rfx.Change.Req.FilesysTest do
     test "returns :ok" do
       path = Tst.gen_file("content ok")
       assert {:ok, result} = Filesys.new(cmd: :file_create, src_path: path)
-      assert result == %Filesys{cmd: :file_create, src_path: path}
+      assert result == %{cmd: :file_create, src_path: path}
     end
   end
 
@@ -18,7 +18,7 @@ defmodule Rfx.Change.Req.FilesysTest do
       path1 = Tst.gen_file("content 1")
       path2 = Tst.gen_file("content 2")
       assert {:ok, result} = Filesys.new(cmd: :file_move, src_path: path1, tgt_path: path2)
-      assert result == %Filesys{cmd: :file_move, src_path: path1, tgt_path: path2}
+      assert result == %{cmd: :file_move, src_path: path1, tgt_path: path2}
     end
   end
 
@@ -26,7 +26,7 @@ defmodule Rfx.Change.Req.FilesysTest do
     test "returns :ok" do
       path = Tst.gen_file("content ok")
       assert {:ok, result} = Filesys.new(cmd: :file_delete, src_path: path)
-      assert result == %Filesys{cmd: :file_delete, src_path: path}
+      assert result == %{cmd: :file_delete, src_path: path}
     end
   end
 
@@ -35,7 +35,7 @@ defmodule Rfx.Change.Req.FilesysTest do
       path1 = Tst.gen_dir()
       path2 = Tst.gen_dir()
       assert {:ok, result} = Filesys.new(cmd: :dir_move, src_path: path1, tgt_path: path2)
-      assert result == %Filesys{cmd: :dir_move, src_path: path1, tgt_path: path2}
+      assert result == %{cmd: :dir_move, src_path: path1, tgt_path: path2}
     end
   end
 
@@ -43,7 +43,7 @@ defmodule Rfx.Change.Req.FilesysTest do
     test "returns :ok" do
       path = Tst.gen_dir()
       assert {:ok, result} = Filesys.new(cmd: :dir_create, src_path: path)
-      assert result == %Filesys{cmd: :dir_create, src_path: path}
+      assert result == %{cmd: :dir_create, src_path: path}
     end
   end
 
@@ -51,7 +51,7 @@ defmodule Rfx.Change.Req.FilesysTest do
     test "returns :ok" do
       path = Tst.gen_dir()
       assert {:ok, result} = Filesys.new(cmd: :dir_delete, src_path: path)
-      assert result == %Filesys{cmd: :dir_delete, src_path: path}
+      assert result == %{cmd: :dir_delete, src_path: path}
     end
   end
 
