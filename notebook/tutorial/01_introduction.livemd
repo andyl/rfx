@@ -1,0 +1,25 @@
+# Rfx Developer Tutorials
+
+## Background
+
+These tutorials are for developers who want to write their own Rfx Operations.
+
+Key subjects:
+
+* The Elixir AST
+* Problem solved by Sourceror
+* The Refactoring Lifecycle
+* Sourceror Details
+* How to Write a Rfx Edit Function
+
+## Navigating the Tutorials
+
+As of this writing, Livebook (Version 0.1.2) does not support hyperlinks 
+between `.livemd` files.
+
+To navigate, click on the "Numbat" icon on the upper-left, then open the 
+livebooks one-by-one.
+
+```elixir
+
+```

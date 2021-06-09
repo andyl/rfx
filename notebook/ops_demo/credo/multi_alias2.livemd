@@ -1,0 +1,357 @@
+# Expand multi-alias syntax
+
+## Introduction
+
+**Note:** this document is a work in progress and uses the latest Sourceror
+version in the main branch.
+
+The multi-alias syntax `alias Foo.{Bar, Baz}`, while handy to alias multiple
+modules at once, makes module uses harder to search for in large code bases, as
+mentioned by [credo](https://github.com/rrrene/credo) warnings. We can use
+Sourceror to fix this issue by expanding this syntax into multiple calls to
+`alias`, each in its own line.
+
+Let's first start by installing Sourceror:
+
+```elixir
+Mix.install([
+  {:sourceror, "~> 0.5"}
+  # {:sourceror, github: "doorgan/sourceror"}
+])
+```
+
+And now lets parse an example to get an idea of the kind of structure we're
+going to work with:
+
+```elixir
+source = ~S"""
+defmodule Foo do
+  alias Foo.{Bar, Baz}
+end
+"""
+
+quoted = Sourceror.parse_string!(source)
+```
+
+We need to traverse the ast to find any ocurrence of a qualified tuple call(ie.
+calls with the form `{:., meta, [left, :{}]}` as their first element) that is
+an argument to an `:alias` call. Then for each module inside of the curly
+brackets, we need to join the module segments from the left hand side with the
+ones in the right hand side, and finally put them in a call to `:alias`.
+
+For the traversal part, we can use `Sourceror.postwalk/2`. Postwalk functions
+will go down the tree to the deepest node, then to the sibling nodes, then to
+the parent node, and so on until the whole tree is traversed. A way to think
+about it is that it traverses bottom to top, or that child nodes are always
+visited first.
+
+To convert a single alias into multiple ones, we need to extract the left side
+of the tuple and join it with the elements inside of the tuple. For the left
+part, we can extract it from the dot call we mentioned earlier. The first
+argument will always be the left hand side, and the second one the atom `:{}`.
+The elements inside the tuple are just the arguments of the qualified tuple
+call, ie the outer 3-tuple.
+
+Each of these elements will be an `:__aliases__` call. In such calls, the
+arguments are the segments of the module as regular atoms, so for example the
+segments for `Foo.Bar` will be `[:Foo, :Bar]`. To create a module alias of the
+expanded `Foo.{Bar}`, we just need to join the segments and put them in an
+`:__aliases__` call. Finally, that call needs to be wrapped in a call to
+`:alias` to effectively create an `alias` expression.
+
+Now we have a list of `:alias` calls, but the traversal function needs to
+return an AST node, not just a list(that would be considered a list literal).
+We can work around this for now by wrapping the aliases in a `:__block__` and
+returning that. In other contexts like macros this would change the semantics
+of the code and it would not behave as we expect, but since we are doing these
+manipulations to output code as text, we can afford to do it:
+
+```elixir
+defmodule AliasExpansion do
+  def expand_aliases(quoted) do
+    Sourceror.postwalk(quoted, fn
+      {:alias, _, [{{:., _, [left, :{}]}, _, right}]}, state ->
+        {_, _, base} = left
+
+        aliases =
+          Enum.map(right, fn {_, _, segments} ->
+            aliased = {:__aliases__, [], base ++ segments}
+            {:alias, [], [aliased]}
+          end)
+
+        {{:__block__, [], aliases}, state}
+
+      quoted, state ->
+        {quoted, state}
+    end)
+  end
+end
+
+AliasExpansion.expand_aliases(quoted)
+|> Sourceror.to_string()
+|> IO.puts()
+```
+
+This works for now because it was just a single expression in the whole module, but it will break
+as soon as we add more expressions:
+
+```elixir
+source = ~S"""
+defmodule Foo do
+  alias Foo.{Bar, Baz}
+  42
+end
+"""
+
+Sourceror.parse_string!(source)
+|> AliasExpansion.expand_aliases()
+|> Sourceror.to_string()
+|> IO.puts()
+```
+
+Because we wrapped the aliases in a block, if we add more expressions the
+expanded aliases will be wrapped in parenthesis. This happens because `do`
+blocks contents are wrapped in a `:__block__` whenever they have more than one
+expression, and what we are doing in our expansion is putting a block inside
+another block, so the formatter will interpret that as a block expression and
+will wrap it accordingly:
+
+```elixir
+Sourceror.parse_string!(~S"""
+def foo do
+  :ok
+end
+""")
+|> IO.inspect(label: "Single expression")
+
+Sourceror.parse_string!(~S"""
+def foo do
+  42
+  :ok
+end
+""")
+|> IO.inspect(label: "Multiple expressions")
+```
+
+One way to solve this issue is to mark our aliases block as a block that needs
+to be unwrapped if it's inside another block. When traversing, if we encounter
+a block, we reduce its arguments to unwrap any marked block, essentially
+"adding multiple nodes" to the block:
+
+```elixir
+defmodule AliasExpansion do
+  def expand_aliases(quoted) do
+    Sourceror.postwalk(quoted, fn
+      {:alias, _, [{{:., _, [_, :{}]}, _, _}]} = quoted, state ->
+        aliases = expand_alias(quoted)
+
+        {{:__block__, [unwrap_me?: true], aliases}, state}
+
+      {:__block__, meta, args}, state ->
+        args = Enum.reduce(args, [], &unwrap_aliases/2)
+
+        {{:__block__, meta, args}, state}
+
+      quoted, state ->
+        {quoted, state}
+    end)
+  end
+
+  defp expand_alias({:alias, _, [{{:., _, [left, :{}]}, _, right}]}) do
+    {_, _, base} = left
+
+    aliases =
+      Enum.map(right, fn {_, _, segments} ->
+        aliased = {:__aliases__, [], base ++ segments}
+        {:alias, [], [aliased]}
+      end)
+
+    aliases
+  end
+
+  defp unwrap_aliases({:__block__, [unwrap_me?: true], aliases}, args) do
+    args ++ aliases
+  end
+
+  defp unwrap_aliases(quoted, args) do
+    args ++ [quoted]
+  end
+end
+
+Sourceror.parse_string!(source)
+|> AliasExpansion.expand_aliases()
+|> Sourceror.to_string()
+|> IO.puts()
+```
+
+## Handling comments
+
+Great! Now that we have addressed this issue, there is one last problem we need
+to take care of.  In our current code we are completely ignoring the nodes
+metadata. This would be fine in most cases if we were working with macros, but
+it becomes a big issue if we want to turn this AST into formatted text. To
+avoid adding new types of AST nodes, Sourceror places comments in the nodes
+metadata, so if we discard nodes metadata, we would also be discarding it's
+associated comments. An important aspect of refactoring tools is that they
+should be able to preserve as much data as possible while doing the
+transformation, so we must take comments into account.
+
+This is easier to see with an example:
+
+```elixir
+~S"""
+# Some comment
+alias Foo.{Bar, Baz}
+"""
+|> Sourceror.parse_string!()
+|> AliasExpansion.expand_aliases()
+|> Sourceror.to_string()
+|> IO.puts()
+```
+
+This issue is easy to avoid if we always remember to pass the metadata around.
+In this particular example, due to the way Sourceror merges comments, we only
+need to preserve the alias and the individual `:__aliases__` metadata.
+
+The other thing to keep is that we're getting rid of the first alias and
+starting anew with the right side segments. But this first alias is the one
+that holds the leading comments for the first expression, which means that if
+we discard it, we lose the comments right before the multi alias.
+
+We can solve this by attaching the leading comments to the first one, and the
+trailing comments to the last one:
+
+```elixir
+defmodule AliasExpansion do
+  def expand_aliases(quoted) do
+    Sourceror.postwalk(quoted, fn
+      {:alias, _, [{{:., _, [_, :{}]}, _, _}]} = quoted, state ->
+        {aliases, state} = expand_alias(quoted, state)
+
+        {{:__block__, [unwrap_me?: true], aliases}, state}
+
+      {:__block__, meta, args}, state ->
+        args = Enum.reduce(args, [], &unwrap_aliases/2)
+
+        {{:__block__, meta, args}, state}
+
+      quoted, state ->
+        {quoted, state}
+    end)
+  end
+
+  defp unwrap_aliases({:__block__, [unwrap_me?: true], aliases}, args) do
+    args ++ aliases
+  end
+
+  defp unwrap_aliases(quoted, args) do
+    args ++ [quoted]
+  end
+
+  defp expand_alias({:alias, alias_meta, [{{:., _, [left, :{}]}, call_meta, right}]}, state) do
+    {_, _, base_segments} = left
+
+    leading_comments = alias_meta[:leading_comments] || []
+    trailing_comments = call_meta[:trailing_comments] || []
+
+    aliases =
+      right
+      |> Enum.map(&segments_to_alias(base_segments, &1))
+      |> put_leading_comments(leading_comments)
+      |> put_trailing_comments(trailing_comments)
+
+    {aliases, state}
+  end
+
+  defp segments_to_alias(base_segments, {_, meta, segments}) do
+    {:alias, meta, [{:__aliases__, [], base_segments ++ segments}]}
+  end
+
+  defp put_leading_comments([first | rest], comments) do
+    [Sourceror.prepend_comments(first, comments) | rest]
+  end
+
+  defp put_trailing_comments(list, comments) do
+    case List.pop_at(list, -1) do
+      {nil, list} ->
+        list
+
+      {last, list} ->
+        last =
+          {:__block__,
+           [
+             trailing_comments: comments,
+             # End of expression newlines higher than 1 will cause the formatter to add an
+             # additional line break after the node. This is entirely optional and only showcased
+             # here to improve the readability of the output
+             end_of_expression: [newlines: 2]
+           ], [last]}
+
+        list ++ [last]
+    end
+  end
+end
+
+~S"""
+# Some comment
+alias Foo.{Bar, Baz}
+"""
+|> Sourceror.parse_string!()
+|> AliasExpansion.expand_aliases()
+|> Sourceror.to_string()
+|> IO.puts()
+```
+
+Older versions of sourceror required you to keep track of line numbers, and in
+an example like the one above you'd be required to keep track of how line
+numbers changed to Sourceror would apply corrections and ensure comments ended
+up in the correct places. Fortunately, newer Sourceror versions eliminate this
+issue so you can focus just on moving nodes around and stop worrying about
+hacky line numbers calculations.
+
+You can try with more convoluted examples and see that the code above produces
+the output you would expect:
+
+```elixir
+source = ~S"""
+defmodule Sample do
+  # Some aliases
+  alias Foo.{A, B, C, D, E, F}
+
+  # Hello!
+  alias Bar.{G, H, I,
+
+    # Inner comment!
+    # Inner comment 2!
+    # Inner comment 3!
+    J,
+
+    # Comment for K!
+    K # Comment for K 2!
+
+    # Inner last comment!
+    # Inner last comment 2!
+  } # Not an inner comment
+
+  def foo() do
+    # Some scoped alias
+    alias Baz.{A, B, C}
+
+    # Just return :ok
+    :ok
+
+    # At the end
+  end
+
+  # Comment for :hello
+  :hello
+end
+# End of file!
+"""
+
+source
+|> Sourceror.parse_string!()
+|> AliasExpansion.expand_aliases()
+|> Sourceror.to_string()
+|> IO.puts()
+```
