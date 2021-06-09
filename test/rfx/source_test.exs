@@ -1,4 +1,3 @@
-# test/rfx/source_test.exs
 defmodule Rfx.SourceTest do
 
   use ExUnit.Case

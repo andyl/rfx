@@ -1,9 +1,0 @@
-# Test1
-
-## First Section
-
-some markdown text here
-
-```elixir
-x = 1
-```

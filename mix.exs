@@ -36,7 +36,8 @@ defmodule Rfx.MixProject do
         "README.md", 
         "guides/introduction.md",
         "guides/refactoring_and_lsp.md",
-        "guides/related_tools.md"
+        "guides/related_tools.md", 
+        "guides/edit_functions.md"
       ]
     ]
   end
