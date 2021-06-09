@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Runs the watched script file after every change.
+
+abort () {
+  msg="Usage: RUN_WHEN_CHANGED <script_file>"
+  echo $msg
+  exit 1
+}
+
+[ $# == 0 ] && abort 
+
+echo Watching $1
+
+while inotifywait -e close_write $1; do clear && ./$1; done
