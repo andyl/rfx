@@ -2,6 +2,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   use ExUnit.Case
 
   alias Rfx.Ops.Credo.MultiAlias
+  alias Rfx.Util.Source
 
   @base_source """
   alias Foo.{Bar, Baz.Qux}
@@ -46,7 +47,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       [changereq | _] = MultiAlias.cl_code(@base_source)
       code = Map.get(changereq, :edit) |> Map.get(:edit_source)
       diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
-      new_code = Rfx.Source.patch(code, diff)
+      new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
 
@@ -83,7 +84,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       [changereq | _] = MultiAlias.cl_code(file_path: file)
       code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
       diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
-      new_code = Rfx.Source.patch(code, diff)
+      new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
 
@@ -147,7 +148,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       [changereq | _] = MultiAlias.cl_file(file)
       code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
       diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
-      new_code = Rfx.Source.patch(code, diff)
+      new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
   end
@@ -193,7 +194,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       [changereq | _] = MultiAlias.cl_file(file)
       code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
       diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
-      new_code = Rfx.Source.patch(code, diff)
+      new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
   end

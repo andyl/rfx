@@ -6,6 +6,7 @@ defmodule Rfx.Change.Req.EditTest do
   # ----- Construction -----
   
   describe "file constructor" do
+    @tag :pending
     test "returns :ok with valid file" do
       path = Tst.gen_file("content ok")
       diff = "diff ok"
@@ -13,6 +14,7 @@ defmodule Rfx.Change.Req.EditTest do
       assert result == %{file_path: path, diff: diff}
     end
 
+    @tag :pending
     test "returns :error with missing file" do
       path = "/tmp/missing.ex"
       diff = "diff ok"
@@ -21,6 +23,7 @@ defmodule Rfx.Change.Req.EditTest do
   end
 
   describe "source constructor" do
+    @tag :pending
     test "returns :ok" do
       content = "content ok"
       diff = "diff ok"

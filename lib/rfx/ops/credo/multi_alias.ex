@@ -110,7 +110,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   @impl true
   def cl_project(project_root: project_root) do
     project_root
-    |> Rfx.Filesys.project_files()
+    |> Rfx.Util.Filesys.project_files()
     |> Enum.map(&cl_file/1)
     |> List.flatten()
     |> Enum.reject(&is_nil/1)
@@ -124,7 +124,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   @impl true
   def cl_subapp(subapp_root: subapp_root) do
     subapp_root
-    |> Rfx.Filesys.subapp_files()
+    |> Rfx.Util.Filesys.subapp_files()
     |> Enum.map(&cl_file/1)
     |> List.flatten()
     |> Enum.reject(&is_nil/1)
@@ -138,6 +138,6 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   # ----- Edit -----
   
   @impl true
-  defdelegate edit(source_code), to: Rfx.Ops.Credo.MultiAlias.AliasExpansion
+  defdelegate edit(source_code), to: Rfx.Edit.Credo.MultiAlias1
 
 end

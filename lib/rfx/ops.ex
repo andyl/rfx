@@ -1,11 +1,19 @@
 defmodule Rfx.Ops do
 
   @moduledoc """
-  Behavior for Rfx operation.
+  Behavior for Rfx operations.
 
-  Each operation has an edit function which returned edited source code.  Each
-  operation has `cl_*` functions  that return a Changelist for each Scope:
-  code, file, project, subapp.
+  Each operation has an edit function which returned edited source code.  
+
+  Each operation has functions that return a `Rfx.Change.List` for each Scope: cl_code,
+  cl_file, cl_project, cl_subapp.
+
+  Within an Ops module, the edit function can be delegated to an `Rfx.Edit.*`
+  module.  
+
+      defdelegate :edit, Rfx.Edit.Credo.MultiAlias
+
+  See `Rfx.Edit` for more information.
   """
 
   @doc "Edit a piece of code, using Sourceror rules."

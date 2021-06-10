@@ -94,7 +94,7 @@ end
 
 ## Code Organization
 
-We desire to have an extensible catalog of refactoring operations.  Each
+Rfx provides an extensible catalog of refactoring operations.  Each
 operation is coded in a separate module that implements the `Rfx.Ops`
 behavior.
 

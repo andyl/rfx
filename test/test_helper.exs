@@ -2,7 +2,7 @@ defmodule Tst do
 
   @base_dir "/tmp/rfx_test_files"
 
-  alias Rfx.Util
+  alias Rfx.Util.Str
 
   def base_dir do
     @base_dir
@@ -26,17 +26,17 @@ defmodule Tst do
     base_dir() |> File.mkdir()
     base_dir() |> File.cd()
     [cmd | args] = String.split(cmd, " ")
-    dname = Rfx.Util.rand_str()
+    dname = Str.rand_str()
     System.cmd(cmd, args ++ [dname])
     base_dir() <> "/" <> dname
   end
 
   defp rand_fn do
-    base_dir() <> "/" <> Util.rand_str() <> ".ex"
+    base_dir() <> "/" <> Str.rand_str() <> ".ex"
   end
 
   defp rand_dn do
-    base_dir() <> "/" <> Util.rand_str()
+    base_dir() <> "/" <> Str.rand_str()
   end
 
 end
