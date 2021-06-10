@@ -39,19 +39,30 @@ defmodule Rfx.Util.Source do
   Returns modified source, given old source text, and a diff text.
   """
   def patch(source, diff) do
-    spath = @base_diff <> "/patch_src_"  <> Str.rand_str()
-    dpath = @base_diff <> "/patch_diff_" <> Str.rand_str()
+    ext = Str.rand_str()
+    spath = @base_diff <> "/patch_src_" <> ext
+    dpath = @base_diff <> "/patch_dif_" <> ext
 
     File.mkdir(@base_diff)
     File.write(spath, source)
-    File.write(dpath, diff)
-    opts = [spath, dpath, "-o", "-"] #, "2>", "/dev/null"]
-    {new_src, _} = System.cmd("patch", opts, stderr_to_stdout: true)
+    File.write(dpath, diff |> terminate_nl())
+    opts = [spath, dpath, "-s", "-o", "-"]
+    {new_src, _} = System.cmd("patch", opts)
     File.rm(spath)
     File.rm(dpath)
+    # IO.inspect spath
+    # IO.inspect dpath
+    # IO.inspect source, label: "SOURCE"
+    # IO.inspect diff, label: "DIFF"
+    # IO.inspect new_src, label: "ZZZ"
     new_src
-    |> String.split("\n")
-    |> List.delete_at(0)
-    |> Enum.join("\n")
   end
+
+  defp terminate_nl(string) do
+    case Regex.match?(~r/\n$/, string) do
+      true -> string
+      false -> string <> "\n"
+    end
+  end
+
 end
