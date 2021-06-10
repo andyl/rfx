@@ -1,6 +1,6 @@
 defmodule Rfx.Edit.Proto.CommentDel do
   @moduledoc """
-  Prototype `Rfx.Edit` module - removes comment - use for testing.
+  Prototype `Rfx.Edit` module - removes comment lines.
 
   This module is intended for use in functional and integration tests.
   """
@@ -20,15 +20,8 @@ defmodule Rfx.Edit.Proto.CommentDel do
       ...> Rfx.Edit.Proto.CommentDel.edit(original)
       expected
 
-      iex> original = """
-      ...> # TestComment (MyLabel)
-      ...> Original Code
-      ...> """ |> String.trim()
-      ...> expected = "Original Code"
-      ...> Rfx.Edit.Proto.CommentDel.edit(original, label: "MyLabel")
-      expected
-
-  Intended for use in functional and integration tests.
+  Note this function will remove any lines that begin with `# TestComment`,
+  regardless of whether they contain a label or not.
   """
 
   @impl true
@@ -40,6 +33,20 @@ defmodule Rfx.Edit.Proto.CommentDel do
     |> Enum.join("\n")
   end
 
+  @doc """
+  Removes comment line with label from the source code.
+
+  Example:
+
+      iex> original = """
+      ...> # TestComment (MyLabel)
+      ...> Original Code
+      ...> """ |> String.trim()
+      ...> expected = "Original Code"
+      ...> Rfx.Edit.Proto.CommentDel.edit(original, label: "MyLabel")
+      expected
+  
+  """
   def edit(input_source, label: input_label) do
     input_source 
     |> String.split("\n")
