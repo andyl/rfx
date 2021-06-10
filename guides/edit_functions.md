@@ -14,4 +14,13 @@ Enabling Tooling:
 - [Code.quoted_to_algebra/](https://hexdocs.pm/elixir/master/Code.html#quoted_to_algebra/2)
 - [Inspect.Algebra](https://hexdocs.pm/elixir/1.12/Inspect.Algebra.html)
 
+## Edit Modules
+
+Edit functions can be large and difficult to test.  Often it is helpful to
+break out an edit function into a standalone module.
+
+Edit modules implement the `Rfx.Edit` behavior.
+
+
+
 

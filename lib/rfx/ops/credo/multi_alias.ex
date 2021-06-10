@@ -48,7 +48,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
 
   """
 
-  alias Rfx.Source
+  alias Rfx.Util.Source
   alias Rfx.Change.Req
 
   # ----- Changelists -----

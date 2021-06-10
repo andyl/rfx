@@ -1,6 +1,6 @@
 # Introduction to Refactoring
 
-Code Refactoring is a well-established topic within computer science.
+Code Refactoring is a well established topic within computer science.
 Refactoring tools have shown their value in IDEs like Eclipse and Intellij
 Idea.
 

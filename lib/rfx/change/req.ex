@@ -1,7 +1,7 @@
 defmodule Rfx.Change.Req do
 
   @moduledoc """
-  Req struct and support functions.
+  ChangeReq struct and support functions.
 
   A datastructure that represents the atomic refactoring changes to be made as
   part of a refactoring operation.
