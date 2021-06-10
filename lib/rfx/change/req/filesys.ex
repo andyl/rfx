@@ -23,41 +23,41 @@ defmodule Rfx.Change.Req.Filesys do
   - *diff*
   """
   
-  @enforce_keys [:cmd, :src_path]
-
-  defstruct [:cmd, :src_path, :tgt_path ]
-
-  alias Rfx.Change.Req.Filesys
+  # @enforce_keys [:cmd, :src_path]
+  #
+  # defstruct [:cmd, :src_path, :tgt_path ]
+  #
+  # alias Rfx.Change.Req.Filesys
 
   # ----- Construction -----
   
   def new(cmd: :file_create, src_path: source) do
-    valid_struct = %Filesys{cmd: :file_create, src_path: source}
+    valid_struct = %{cmd: :file_create, src_path: source}
     {:ok, valid_struct}
   end
 
   def new(cmd: :file_move, src_path: source, tgt_path: target) do
-    valid_struct = %Filesys{cmd: :file_move, src_path: source, tgt_path: target}
+    valid_struct = %{cmd: :file_move, src_path: source, tgt_path: target}
     {:ok, valid_struct}
   end
 
   def new(cmd: :file_delete, src_path: source) do
-    valid_struct = %Filesys{cmd: :file_delete, src_path: source}
+    valid_struct = %{cmd: :file_delete, src_path: source}
     {:ok, valid_struct}
   end
 
   def new(cmd: :dir_create, src_path: source) do
-    valid_struct = %Filesys{cmd: :dir_create, src_path: source}
+    valid_struct = %{cmd: :dir_create, src_path: source}
     {:ok, valid_struct}
   end
 
   def new(cmd: :dir_move, src_path: source, tgt_path: target) do
-    valid_struct = %Filesys{cmd: :dir_move, src_path: source, tgt_path: target}
+    valid_struct = %{cmd: :dir_move, src_path: source, tgt_path: target}
     {:ok, valid_struct}
   end
 
   def new(cmd: :dir_delete, src_path: source) do
-    valid_struct = %Filesys{cmd: :dir_delete, src_path: source}
+    valid_struct = %{cmd: :dir_delete, src_path: source}
     {:ok, valid_struct}
   end
 

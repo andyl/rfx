@@ -23,6 +23,7 @@ defmodule Rfx.MixProject do
 
   defp deps do
     [
+      # {:sourceror, "~> 0.6"},
       {:sourceror, github: "doorgan/sourceror"},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
       {:mix_test_interactive, "~> 1.0", only: :dev, runtime: false},
@@ -36,7 +37,8 @@ defmodule Rfx.MixProject do
         "README.md", 
         "guides/introduction.md",
         "guides/refactoring_and_lsp.md",
-        "guides/related_tools.md"
+        "guides/related_tools.md", 
+        "guides/edit_functions.md"
       ]
     ]
   end

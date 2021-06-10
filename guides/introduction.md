@@ -1,6 +1,6 @@
 # Introduction to Refactoring
 
-Code Refactoring is a well-established topic within computer science.
+Code Refactoring is a well established topic within computer science.
 Refactoring tools have shown their value in IDEs like Eclipse and Intellij
 Idea.
 
@@ -91,10 +91,15 @@ Rfx builds on a foundation of prior work by the Elixir community:
 
 ## Other Languages
 
-Here are some comparable refactoring libraries written for other languages:
+Refactoring libraries written for other languages:
 
 - Python: [python-rope](https://github.com/python-rope/rope)
 - Javascript: [grasp](https://graspjs.com)
 - Rust: [Structural Search and Replace](https://rust-analyzer.github.io/manual.html#structural-search-and-replace)
 - Rust: [ReRast](https://github.com/google/rerast)
+
+Posts, discussions and tools:
+
+- Python: [AST Patching (Hacker News)](https://news.ycombinator.com/item?id=27419237)
+- Javascript: [AST Explorer](https://astexplorer.net/)
 

@@ -1,7 +1,7 @@
 defmodule Rfx.Change.Req do
 
   @moduledoc """
-  Req struct and support functions.
+  ChangeReq struct and support functions.
 
   A datastructure that represents the atomic refactoring changes to be made as
   part of a refactoring operation.
@@ -29,14 +29,14 @@ defmodule Rfx.Change.Req do
     case Req.Edit.new(editargs) do
       {:ok, result} -> {:ok, %Req{edit: result}}
       {:error, msg} -> {:error, msg}
-    end
+    end 
   end
 
   def new(filesys: fileargs) do
     case Req.Filesys.new(fileargs) do
       {:ok, result} -> {:ok, %Req{filesys: result}}
       {:error, msg} -> {:error, msg}
-    end
+    end 
   end
 
   def new(edit: editargs, filesys: fsargs) do
@@ -55,7 +55,7 @@ defmodule Rfx.Change.Req do
       {{true, _}, {false, msg}} -> {:error, msg}
       {{false, msg}, {true, _}} -> {:error, msg}
       {{false, msg1}, {false, msg2}} -> {:error, Enum.join([msg1, msg2], ", ")}
-    end
+    end 
   end
 
   # ----- Conversion -----

@@ -2,6 +2,8 @@ defmodule Tst do
 
   @base_dir "/tmp/rfx_test_files"
 
+  alias Rfx.Util.Str
+
   def base_dir do
     @base_dir
   end
@@ -15,7 +17,7 @@ defmodule Tst do
 
   def gen_dir do
     base_dir() |> File.mkdir()
-    dname = rand_fn()
+    dname = rand_dn()
     File.mkdir(dname)
     dname
   end
@@ -24,29 +26,17 @@ defmodule Tst do
     base_dir() |> File.mkdir()
     base_dir() |> File.cd()
     [cmd | args] = String.split(cmd, " ")
-    dname = rand_dn() 
-    System.cmd(cmd, args + [dname])
-    dname
-  end
-
-  def rand_str(length \\ 4) do
-    Stream.repeatedly(&rchar/0) |> Enum.take(length) |> Enum.join()
+    dname = Str.rand_str()
+    System.cmd(cmd, args ++ [dname])
+    base_dir() <> "/" <> dname
   end
 
   defp rand_fn do
-    base_dir() <> "/" <> rand_str() <> ".ex"
+    base_dir() <> "/" <> Str.rand_str() <> ".ex"
   end
 
   defp rand_dn do
-    base_dir() <> "/" <> rand_str()
-  end
-
-  defp rchar do
-    ?a..?z |>
-    Enum.to_list() |>
-    to_string() |>
-    String.split("", trim: true) |>
-    Enum.random()
+    base_dir() <> "/" <> Str.rand_str()
   end
 
 end

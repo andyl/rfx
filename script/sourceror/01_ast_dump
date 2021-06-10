@@ -1,0 +1,27 @@
+#!/usr/bin/env elixir
+
+# ---
+# title: 01_ast_dump
+# desc: Dumps AST data from `Sourceror.postwalk`.
+# ---
+
+Mix.install([{:sourceror, "~> 0.5"}])
+
+defmodule Util do
+  def efun(quoted, state) do
+    IO.inspect quoted, label: "QUOTED"
+    IO.inspect state,  label: " STATE"
+    {quoted, state}
+  end
+end
+
+input = "x = 2 + 4"
+
+ast = input |> Sourceror.parse_string!()
+
+ast |> Sourceror.postwalk(&Util.efun/2) |> IO.inspect()
+
+output = ast |> Sourceror.to_string()
+
+IO.puts output
+

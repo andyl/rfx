@@ -1,6 +1,8 @@
 # Refactoring and LSP
 
 ElixirLS doesn't currently have internal data structures for refactoring.
+ElixirLS is not yet integrated with Rfx - integration design work has barely
+started.  Here are some notes to get us going...
 
 The Language Server Protocol specification does include data structures for
 refactoring - here are some of the most relevant.

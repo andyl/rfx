@@ -1,0 +1,27 @@
+# 03: Sourceror Basics
+
+## The Refactoring Cycle
+
+The refactoring cycle has three steps:
+
+1. Convert code to AST
+2. Modify the AST
+3. Convert AST to code
+
+Elixir has many tools to modify deeply nested data structures, and any tool will work.\
+Example tools include `Kernel.update_in` and `PhStTransform`.
+
+Sourceror provides a set of utility functions to transform the AST.  We'll start by looking
+at `Sourceror.postwalk`.
+
+## Sourceror Postwalk
+
+Let's start with a live example:
+
+```elixir
+Mix.install([{:sourceror, "~> 0.5"}])
+ast = "x = 2 + 4" |> Sourceror.parse_string!()
+Sourceror.postwalk()
+```
+
+## Other Sourceror Functions

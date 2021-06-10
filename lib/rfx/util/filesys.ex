@@ -1,4 +1,9 @@
-defmodule Rfx.Filesys do
+defmodule Rfx.Util.Filesys do
+  @moduledoc """
+  A utility module for file system operations.
+  """
+
+  
   def project_files(root \\ ".") do
     ls_r(root)
     |> Enum.map(&filter/1)
