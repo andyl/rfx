@@ -8,6 +8,6 @@
   "mix_test_interactive": {:hex, :mix_test_interactive, "1.0.1", "8202ea171e69f8c12bd050981a052d70bec58f6ad8443b4bd8cd23cb11ed6747", [:mix], [{:file_system, "~> 0.2", [hex: :file_system, repo: "hexpm", optional: false]}, {:typed_struct, "~> 0.2.1", [hex: :typed_struct, repo: "hexpm", optional: false]}], "hexpm", "aaee7d3b62615457f422f7f9ed6a31f7f081a70c92c32df46eda4df4cf42bade"},
   "nimble_parsec": {:hex, :nimble_parsec, "1.1.0", "3a6fca1550363552e54c216debb6a9e95bd8d32348938e13de5eda962c0d7f89", [:mix], [], "hexpm", "08eb32d66b706e913ff748f11694b17981c0b04a33ef470e33e11b3d3ac8f54b"},
   "optimus": {:hex, :optimus, "0.2.0", "3e868b8bedc723d70189cde715df3ef804524c55b26fb33e89cd0f691f50fe80", [:mix], [], "hexpm", "95bcbf228d4ba67283747629087cc3650b10d24390e4ea533b0a64ca278c181c"},
-  "sourceror": {:git, "https://github.com/doorgan/sourceror.git", "37ef057655d8cd97994b79664674d07accab91f6", []},
+  "sourceror": {:git, "https://github.com/doorgan/sourceror.git", "e289a878e8e226832b4b65be01a1d7c84ad136b9", []},
   "typed_struct": {:hex, :typed_struct, "0.2.1", "e1993414c371f09ff25231393b6430bd89d780e2a499ae3b2d2b00852f593d97", [:mix], [], "hexpm", "8f5218c35ec38262f627b2c522542f1eae41f625f92649c0af701a6fab2e11b3"},
 }
