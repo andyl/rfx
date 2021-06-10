@@ -100,9 +100,8 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       proj = root |> String.split("/") |> Enum.reverse() |> Enum.at(0)
       file = root <> "/lib/#{proj}.ex"
       {:ok, code} = File.read(file)
-      IO.inspect code
       [changelist | _] = MultiAlias.cl_code(code)
-      IO.inspect changelist |> Map.get(:edit) |> Map.get(:edit_source)
+      changelist |> Map.get(:edit) |> Map.get(:edit_source)
       assert [] == MultiAlias.cl_code(code)
     end
 

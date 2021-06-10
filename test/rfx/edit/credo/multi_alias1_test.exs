@@ -98,11 +98,6 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
       File.write("/tmp/one.ex", code)
       File.write("/tmp/two.ex", new_code)
 
-      IO.puts "---\n" <> code
-      IO.puts "---\n" <> new_code
-      IO.inspect "---\n" <> code
-      IO.inspect "---\n" <> new_code
-
       assert code == new_code
     end
   end
