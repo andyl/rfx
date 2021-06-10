@@ -1,11 +1,13 @@
 # Rfx : ReFactor Elixir
 
-```markdown
-NOTE at the moment this code does not work!  We're
-working out the programming interfaces and project
-organization.  Once this is done, we'll build out
-the refactoring operations step by step.
-```
+NOTE at the moment this code does not work!  We're working out the programming
+interfaces and project organization.  Once this is done, we'll build out the
+refactoring operations step by step.
+
+To get started with this pre-release code, clone the repo, then run `> mix test
+--exclude pending`.
+
+---
 
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
