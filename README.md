@@ -47,6 +47,12 @@ Credo Operations:
 
 - [ ] multi-alias (`Rfx.Ops.Credo.MultiAlias`)
 
+Prototype Operations:
+
+- [x] comment add (`Rfx.Ops.Proto.ContentAdd`)
+- [x] comment del (`Rfx.Ops.Proto.ContentDel`)
+- [x] no-op (`Rfx.Ops.Proto.NoOp`)
+
 Rfx Operations depend on the excellent
 [Sourceror](http://github.com/doorgan/sourceror) written by
 [@doorgan](http://github.com/doorgan).

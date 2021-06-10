@@ -40,6 +40,8 @@ defmodule Rfx.Edit.Proto.CommentAdd do
       ...> Rfx.Edit.Proto.CommentAdd.edit(original, label: "MyLabel")
       expected
 
+  Valid options:
+  - `label: "yourlabel"`
   """
   def edit(input_source, label: input_label) do
     "# TestComment (#{input_label})\n" <> input_source
