@@ -7,16 +7,17 @@ defmodule Rfx.Change.Req do
   part of a refactoring operation.
 
   The `Change.Req` struct has two elements:
-  - *edit* (`Rfx.Req.Edit`) - the edit request 
-  - *filesys* (`Rfx.Req.Filesys`) - the filesys request (create, move, delete)
+  - *text_req* (`Rfx.Req.TextReq`) - the text edit request 
+  - *file_req* (`Rfx.Req.FileReq`) - the file system request (create, move, delete)
 
-  A Change.Req struct may contain an *edit* element, or a *filesys* element, or both.
+  A Change.Req struct may contain an *text_req* element, or a *file_req*
+  element, or both.
 
-  Note that when a Req is applied to the filesystem, the *edit* element is
-  applied first, then the *filesys* element.
+  Note that when a Req is applied to the filesystem, the *text_req* element is
+  applied first, then the *file_req* element.
   """
 
-  defstruct [:edit, :filesys]
+  defstruct [:text_req, :file_req]
 
   alias Rfx.Change.Req
 
@@ -25,33 +26,33 @@ defmodule Rfx.Change.Req do
   @doc """
   Create a new `Req`
   """
-  def new(edit: editargs) do
-    case Req.Edit.new(editargs) do
-      {:ok, result} -> {:ok, %Req{edit: result}}
+  def new(text_req: editargs) do
+    case Req.TextReq.new(editargs) do
+      {:ok, result} -> {:ok, %Req{text_req: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
 
-  def new(filesys: fileargs) do
-    case Req.Filesys.new(fileargs) do
-      {:ok, result} -> {:ok, %Req{filesys: result}}
+  def new(file_req: fileargs) do
+    case Req.FileReq.new(fileargs) do
+      {:ok, result} -> {:ok, %Req{file_req: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
 
-  def new(edit: editargs, filesys: fsargs) do
-   edit_result = case Req.Edit.new(editargs) do
+  def new(text_req: editargs, file_req: fsargs) do
+   edit_result = case Req.TextReq.new(editargs) do
       {:ok, result} -> {true, result}
       {:error, msg} -> {false, msg}
     end
 
-    file_result = case Req.Filesys.new(fsargs) do
+    file_result = case Req.FileReq.new(fsargs) do
       {:ok, result} -> {true, result}
       {:error, msg} -> {false, msg}
     end
 
     case {edit_result, file_result} do
-      {{true, edit_result}, {true, file_result}} -> {:ok, %Req{edit: edit_result, filesys: file_result}}
+      {{true, edit_result}, {true, file_result}} -> {:ok, %Req{text_req: edit_result, file_req: file_result}}
       {{true, _}, {false, msg}} -> {:error, msg}
       {{false, msg}, {true, _}} -> {:error, msg}
       {{false, msg1}, {false, msg2}} -> {:error, Enum.join([msg1, msg2], ", ")}

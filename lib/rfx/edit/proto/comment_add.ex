@@ -8,7 +8,6 @@ defmodule Rfx.Edit.Proto.CommentAdd do
   @behaviour Rfx.Edit
 
   @impl true
-
   @doc """
   Prepends a comment line.
 
@@ -27,6 +26,7 @@ defmodule Rfx.Edit.Proto.CommentAdd do
     "# TestComment\n" <> input_source
   end
 
+  @impl true
   @doc """
   Prepends a comment line with a label.  
 

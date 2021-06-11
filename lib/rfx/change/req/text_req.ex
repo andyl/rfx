@@ -1,11 +1,11 @@
-defmodule Rfx.Change.Req.Edit do
+defmodule Rfx.Change.Req.TextReq do
 
   @moduledoc """
-  Change.Req.Edit struct and support functions.
+  Change.Req.Text struct and support functions.
 
   Edit elements - source file and diff.
 
-  Change.Req.Edit must have:
+  Change.Req.Text must have:
   - either *edit_path* or *edit_source*
   - *diff*
 

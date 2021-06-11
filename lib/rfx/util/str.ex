@@ -11,5 +11,12 @@ defmodule Rfx.Util.Str do
     String.split("", trim: true) |>
     Enum.random()
   end
-  
+
+  def terminate_nl(string) do
+    case Regex.match?(~r/\n$/, string) do
+      true -> string
+      false -> string <> "\n"
+    end
+  end
+
 end

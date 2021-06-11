@@ -28,22 +28,22 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
 
     test "expected fields" do
       [changereq | _] = CommentAdd.cl_code(@base_source)
-      refute changereq |> Map.get(:filesys)
-      assert changereq |> Map.get(:edit)
-      assert changereq |> Map.get(:edit) |> Map.get(:diff)
-      assert changereq |> Map.get(:edit) |> Map.get(:edit_source)
+      refute changereq |> Map.get(:file_req)
+      assert changereq |> Map.get(:text_req)
+      assert changereq |> Map.get(:text_req) |> Map.get(:diff)
+      assert changereq |> Map.get(:text_req) |> Map.get(:edit_source)
     end
 
     test "diff generation" do
       [changereq | _] = CommentAdd.cl_code(@base_source)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
+      diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
     test "patching" do
       [changereq | _] = CommentAdd.cl_code(@base_source)
-      code = Map.get(changereq, :edit) |> Map.get(:edit_source)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
+      code = Map.get(changereq, :text_req) |> Map.get(:edit_source)
+      diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
@@ -59,24 +59,24 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
     test "expected fields for source file" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = CommentAdd.cl_code(file_path: file)
-      refute changereq |> Map.get(:filesys)
-      assert changereq |> Map.get(:edit)
-      assert changereq |> Map.get(:edit) |> Map.get(:diff)
-      assert changereq |> Map.get(:edit) |> Map.get(:file_path)
+      refute changereq |> Map.get(:file_req)
+      assert changereq |> Map.get(:text_req)
+      assert changereq |> Map.get(:text_req) |> Map.get(:diff)
+      assert changereq |> Map.get(:text_req) |> Map.get(:file_path)
     end
 
     test "diff generation" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = CommentAdd.cl_code(file_path: file)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
+      diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
     test "patching" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = CommentAdd.cl_code(file_path: file)
-      code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
+      code = Map.get(changereq, :text_req) |> Map.get(:file_path) |> File.read() |> elem(1)
+      diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
@@ -92,24 +92,24 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
     test "changereq fields" do
       file = Tst.gen_file(@base_source)
       [changereq| _ ] = CommentAdd.cl_file(file)
-      refute changereq |> Map.get(:filesys)
-      assert changereq |> Map.get(:edit)
-      assert changereq |> Map.get(:edit) |> Map.get(:diff)
-      assert changereq |> Map.get(:edit) |> Map.get(:file_path)
+      refute changereq |> Map.get(:file_req)
+      assert changereq |> Map.get(:text_req)
+      assert changereq |> Map.get(:text_req) |> Map.get(:diff)
+      assert changereq |> Map.get(:text_req) |> Map.get(:file_path)
     end
 
     test "diff generation" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = CommentAdd.cl_file(file)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
+      diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
     test "patching" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = CommentAdd.cl_file(file)
-      code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
+      code = Map.get(changereq, :text_req) |> Map.get(:file_path) |> File.read() |> elem(1)
+      diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
