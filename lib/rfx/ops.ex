@@ -43,5 +43,8 @@ defmodule Rfx.Ops do
   See `Rfx.Edit` for more information.
   """
   @callback edit(String.t) :: String.t
+  @callback edit(String.t, any()) :: String.t
 
+  @optional_callbacks edit: 1, edit: 2
+  
 end
