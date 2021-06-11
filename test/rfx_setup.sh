@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# rfx_clone.sh
+# rfx_setup.sh
 # - A utility to quickly clone a specific commit of the RFX repo.
 # - Hopefully makes it easier to reproduce bugs and failing tests.
 # 
 # Workflow:
-# > wget https://raw.githubusercontent.com/andyl/rfx/master/test/rfx_clone.sh
-# > chmod a+rx ./rfx_clone.sh
-# > ./rfx_clone.sh <your_sha>
+# > wget https://raw.githubusercontent.com/andyl/rfx/master/test/rfx_setup.sh
+# > chmod a+rx ./rfx_setup.sh
+# > ./rfx_setup.sh <your_sha>
 # > cd rfx
 # > mix test <your_test_path>
 # 
@@ -19,8 +19,8 @@
 #
 
 abort_argv() {
-  echo "Usage: rfx_clone.sh <SHA>"
-  echo "rfx_clone.sh - clone and setup the RFX repo"
+  echo "Usage: rfx_setup.sh <SHA>"
+  echo "rfx_setup.sh - clone and setup the RFX repo"
   echo "visit https://github.com/andyl/rfx for more info"
   exit 1
 }
