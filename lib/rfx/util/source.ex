@@ -28,8 +28,8 @@ defmodule Rfx.Util.Source do
     path2 = @base_diff <> "/src2_" <> rand
 
     File.mkdir(@base_diff)
-    File.write(path1, src1 |> terminate_nl())
-    File.write(path2, src2 |> terminate_nl())
+    File.write(path1, src1 |> Str.terminate_nl())
+    File.write(path2, src2 |> Str.terminate_nl())
     {diff, _} = System.cmd("diff", [path1, path2])
     File.rm(path1)
     File.rm(path2)
@@ -46,19 +46,12 @@ defmodule Rfx.Util.Source do
 
     File.mkdir(@base_diff)
     File.write(spath, source)
-    File.write(dpath, diff |> terminate_nl())
+    File.write(dpath, diff |> Str.terminate_nl())
     opts = [spath, dpath, "-s", "-o", "-"]
     {new_src, _} = System.cmd("patch", opts)
     File.rm(spath)
     File.rm(dpath)
     new_src
-  end
-
-  defp terminate_nl(string) do
-    case Regex.match?(~r/\n$/, string) do
-      true -> string
-      false -> string <> "\n"
-    end
   end
 
 end

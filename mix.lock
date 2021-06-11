@@ -7,6 +7,6 @@
   "makeup_erlang": {:hex, :makeup_erlang, "0.1.1", "3fcb7f09eb9d98dc4d208f49cc955a34218fc41ff6b84df7c75b3e6e533cc65f", [:mix], [{:makeup, "~> 1.0", [hex: :makeup, repo: "hexpm", optional: false]}], "hexpm", "174d0809e98a4ef0b3309256cbf97101c6ec01c4ab0b23e926a9e17df2077cbb"},
   "mix_test_interactive": {:hex, :mix_test_interactive, "1.0.1", "8202ea171e69f8c12bd050981a052d70bec58f6ad8443b4bd8cd23cb11ed6747", [:mix], [{:file_system, "~> 0.2", [hex: :file_system, repo: "hexpm", optional: false]}, {:typed_struct, "~> 0.2.1", [hex: :typed_struct, repo: "hexpm", optional: false]}], "hexpm", "aaee7d3b62615457f422f7f9ed6a31f7f081a70c92c32df46eda4df4cf42bade"},
   "nimble_parsec": {:hex, :nimble_parsec, "1.1.0", "3a6fca1550363552e54c216debb6a9e95bd8d32348938e13de5eda962c0d7f89", [:mix], [], "hexpm", "08eb32d66b706e913ff748f11694b17981c0b04a33ef470e33e11b3d3ac8f54b"},
-  "sourceror": {:git, "https://github.com/doorgan/sourceror.git", "552bccd4f1209cb8c2c82dbe8eee64ffbe344a26", []},
+  "sourceror": {:git, "https://github.com/doorgan/sourceror.git", "aa4d157ced78fd9189431fb0d4ad837efdee4510", []},
   "typed_struct": {:hex, :typed_struct, "0.2.1", "e1993414c371f09ff25231393b6430bd89d780e2a499ae3b2d2b00852f593d97", [:mix], [], "hexpm", "8f5218c35ec38262f627b2c522542f1eae41f625f92649c0af701a6fab2e11b3"},
 }
