@@ -5,11 +5,11 @@
 # - Hopefully makes it easier to reproduce bugs and failing tests.
 # 
 # Workflow:
-#     > wget https://raw.githubusercontent.com/andyl/rfx/master/test/rfx_clone.sh
-#     > chmod a+rx ./rfx_clone.sh
-#     > ./rfx_clone.sh <your_sha>
-#     > cd rfx
-#     > mix test <your_test_path>
+# > wget https://raw.githubusercontent.com/andyl/rfx/master/test/rfx_clone.sh
+# > chmod a+rx ./rfx_clone.sh
+# > ./rfx_clone.sh <your_sha>
+# > cd rfx
+# > mix test <your_test_path>
 # 
 # Notes:
 # - this is only tested on Ubuntu 20.04
