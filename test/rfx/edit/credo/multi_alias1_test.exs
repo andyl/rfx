@@ -125,7 +125,7 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
 
       output_code = MultiAlias.edit(input_code)
 
-      IO.puts output_code
+      IO.puts "OUTPUT CODE\nBUG: exceped newlines\n" <> output_code
 
       assert output_code == input_code
     end
