@@ -82,9 +82,8 @@ Rfx.Change.List.apply!(changelist)    #> Applies the changereqs to the filesyste
 
 ## Code Organization
 
-Rfx provides an extensible catalog of refactoring operations.  Each operation
-is coded in a separate module.  A given refactoring operation may be applied to
-different scopes:
+Each operation is coded in a standalone module that implements the `Rfx.Ops`
+behavior.  A refactoring operation may be applied to different scopes:
 
 - Scope1: a chunk of code
 - Scope2: a single file
@@ -94,12 +93,12 @@ different scopes:
 Each scope will generate a different set of change requests.  Consider for
 example the operation `Rfx.Ops.Module.RenameModule`.
 
-| Rename_Module    | # of Change-Reqs                | Text Edits        | File Actions           |
-|------------------|---------------------------------|-------------------|------------------------|
-| Scope1 `code`    | 1                               | Edit src and docs | NA                     |
-| Scope2 `file`    | 1                               | Edit src and docs | Rename Src file        |
-| Scope3 `project` | 1 for each related project file | Edit src and docs | Rename Src & Test file |
-| Scope4 `subapp`  | 1 for each related subapp file  | Edit src and docs | Rename Src & Test file |
+| Rename_Module    | # of Change-Reqs                | Text Edits      | File Actions           |
+|------------------|---------------------------------|-----------------|------------------------|
+| Scope1 `code`    | 1                               | Edit src & docs | NA                     |
+| Scope2 `file`    | 1                               | Edit src & docs | Rename Src file        |
+| Scope3 `project` | 1 for each related project file | Edit src & docs | Rename Src & Test file |
+| Scope4 `subapp`  | 1 for each related subapp file  | Edit src & docs | Rename Src & Test file |
 
 Here's a pseudo-code example:
 
