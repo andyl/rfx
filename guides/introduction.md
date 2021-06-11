@@ -74,10 +74,10 @@ Rfx builds on a foundation of prior work by the Elixir community:
 - [Sourceror][sourceror] - As of Elixir 1.13 (and backported to Elixir 1.10),
   [Dorgan][dorgangh] made critical contributions to enable Refactoring.  The
   first is new functions for the Elixir standard library:
-  `Code.string_to_quoted_with_comments/2` [</>][stqwc] and
-  `Code.quoted_to_algebra/2` [</>][qta].  These allow generation of an AST which
+  [Code.string_to_quoted_with_comments/2][stqwc] and
+  [Code.quoted_to_algebra/2][qta].  These allow generation of an AST which
   preserves comments.  The second is a new library [Sourceror][sourceror] which
-  provides tooling to readily manipulate the AST-with-comments.  
+  provides tooling to manipulate the AST-with-comments.  
 
 [macros]: https://www.google.com/search?q=elixir+macros+metaprogramming&oq=elixir+macros+metaprogramming&aqs=chrome.0.69i59j69i64j69i60.6516j0j1&sourceid=chrome&ie=UTF-8
 [astn]: http://ast.ninja
