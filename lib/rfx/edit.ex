@@ -15,7 +15,9 @@ defmodule Rfx.Edit do
   """
 
   @doc "Edit a piece of code, using Sourceror rules."
+
   @callback edit(String.t) :: String.t
+
   @callback edit(String.t, any()) :: String.t
 
   @optional_callbacks edit: 1, edit: 2

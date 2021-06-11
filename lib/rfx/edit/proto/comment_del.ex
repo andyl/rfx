@@ -23,9 +23,7 @@ defmodule Rfx.Edit.Proto.CommentDel do
   Note this function will remove any lines that begin with `# TestComment`,
   regardless of whether they contain a label or not.
   """
-
   @impl true
-
   def edit(input_source) do
     input_source 
     |> String.split("\n")
@@ -47,6 +45,7 @@ defmodule Rfx.Edit.Proto.CommentDel do
       expected
   
   """
+  @impl true
   def edit(input_source, label: input_label) do
     input_source 
     |> String.split("\n")

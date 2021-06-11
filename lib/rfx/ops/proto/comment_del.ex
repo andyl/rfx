@@ -88,8 +88,8 @@ defmodule Rfx.Ops.Proto.CommentDel do
   # ----- Edit -----
   
   @impl true
-
   defdelegate edit(source_code), to: Rfx.Edit.Proto.CommentDel
+  @impl true
   defdelegate edit(source_code, opts), to: Rfx.Edit.Proto.CommentDel
 
 end
