@@ -1,7 +1,7 @@
-defmodule Rfx.Change.Req.FileTest do
+defmodule Rfx.Change.Req.FileReqTest do
   use ExUnit.Case
 
-  alias Rfx.Change.Req.File
+  alias Rfx.Change.Req.FileReq
 
   # ----- Construction -----
 
@@ -9,7 +9,7 @@ defmodule Rfx.Change.Req.FileTest do
     @tag :pending
     test "returns :ok" do
       path = Tst.gen_file("content ok")
-      assert {:ok, result} = File.new(cmd: :file_create, src_path: path)
+      assert {:ok, result} = FileReq.new(cmd: :file_create, src_path: path)
       assert result == %{cmd: :file_create, src_path: path}
     end
   end
@@ -19,7 +19,7 @@ defmodule Rfx.Change.Req.FileTest do
     test "returns :ok" do
       path1 = Tst.gen_file("content 1")
       path2 = Tst.gen_file("content 2")
-      assert {:ok, result} = File.new(cmd: :file_move, src_path: path1, tgt_path: path2)
+      assert {:ok, result} = FileReq.new(cmd: :file_move, src_path: path1, tgt_path: path2)
       assert result == %{cmd: :file_move, src_path: path1, tgt_path: path2}
     end
   end
@@ -28,7 +28,7 @@ defmodule Rfx.Change.Req.FileTest do
     @tag :pending
     test "returns :ok" do
       path = Tst.gen_file("content ok")
-      assert {:ok, result} = File.new(cmd: :file_delete, src_path: path)
+      assert {:ok, result} = FileReq.new(cmd: :file_delete, src_path: path)
       assert result == %{cmd: :file_delete, src_path: path}
     end
   end
@@ -38,7 +38,7 @@ defmodule Rfx.Change.Req.FileTest do
     test "returns :ok" do
       path1 = Tst.gen_dir()
       path2 = Tst.gen_dir()
-      assert {:ok, result} = File.new(cmd: :dir_move, src_path: path1, tgt_path: path2)
+      assert {:ok, result} = FileReq.new(cmd: :dir_move, src_path: path1, tgt_path: path2)
       assert result == %{cmd: :dir_move, src_path: path1, tgt_path: path2}
     end
   end
@@ -47,7 +47,7 @@ defmodule Rfx.Change.Req.FileTest do
     @tag :pending
     test "returns :ok" do
       path = Tst.gen_dir()
-      assert {:ok, result} = File.new(cmd: :dir_create, src_path: path)
+      assert {:ok, result} = FileReq.new(cmd: :dir_create, src_path: path)
       assert result == %{cmd: :dir_create, src_path: path}
     end
   end
@@ -56,7 +56,7 @@ defmodule Rfx.Change.Req.FileTest do
     @tag :pending
     test "returns :ok" do
       path = Tst.gen_dir()
-      assert {:ok, result} = File.new(cmd: :dir_delete, src_path: path)
+      assert {:ok, result} = FileReq.new(cmd: :dir_delete, src_path: path)
       assert result == %{cmd: :dir_delete, src_path: path}
     end
   end

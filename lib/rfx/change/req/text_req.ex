@@ -1,4 +1,4 @@
-defmodule Rfx.Change.Req.Text do
+defmodule Rfx.Change.Req.TextReq do
 
   @moduledoc """
   Change.Req.Text struct and support functions.

@@ -46,7 +46,7 @@ defmodule Rfx.Ops.Module.RenameModule do
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Req.new(edit: [file_path: file_path, diff: diff]) 
+      diff -> Req.new(text_req: [file_path: file_path, diff: diff]) 
     end
     [result] |> Enum.reject(&is_nil/1)
   end
@@ -57,7 +57,7 @@ defmodule Rfx.Ops.Module.RenameModule do
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Req.new(edit: [edit_source: old_source, diff: diff])
+      diff -> Req.new(text_req: [edit_source: old_source, diff: diff])
     end
     [result] |> Enum.reject(&is_nil/1)
   end
