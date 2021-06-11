@@ -23,12 +23,13 @@ defmodule Rfx.Util.Source do
   def diff(old_source, new_source), do: diff({old_source, new_source})
 
   def diff({src1, src2}) do
-    path1 = @base_diff <> "/src1_" <> Str.rand_str()
-    path2 = @base_diff <> "/src2_" <> Str.rand_str()
+    rand = Str.rand_str()
+    path1 = @base_diff <> "/src1_" <> rand
+    path2 = @base_diff <> "/src2_" <> rand
 
     File.mkdir(@base_diff)
-    File.write(path1, src1)
-    File.write(path2, src2)
+    File.write(path1, src1 |> terminate_nl())
+    File.write(path2, src2 |> terminate_nl())
     {diff, _} = System.cmd("diff", [path1, path2])
     File.rm(path1)
     File.rm(path2)
@@ -50,11 +51,6 @@ defmodule Rfx.Util.Source do
     {new_src, _} = System.cmd("patch", opts)
     File.rm(spath)
     File.rm(dpath)
-    # IO.inspect spath
-    # IO.inspect dpath
-    # IO.inspect source, label: "SOURCE"
-    # IO.inspect diff, label: "DIFF"
-    # IO.inspect new_src, label: "ZZZ"
     new_src
   end
 
