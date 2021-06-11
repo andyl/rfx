@@ -93,11 +93,8 @@ defmodule Rfx.Edit.Credo.MultiAlias2Test do
       root = Tst.gen_proj("mix new")
       proj = root |> String.split("/") |> Enum.reverse() |> Enum.at(0)
       file = root <> "/lib/#{proj}.ex"
-      code = File.read!(file) |> Code.format_string!() |> IO.iodata_to_binary()
-      new_code = MultiAlias.edit(code) |> String.replace("\\n", "\n") |> Code.format_string!() |> IO.iodata_to_binary()
-      File.write("/tmp/one.ex", code)
-      File.write("/tmp/two.ex", new_code)
-
+      code = File.read!(file) 
+      new_code = MultiAlias.edit(code) 
       assert code == new_code
     end
   end
