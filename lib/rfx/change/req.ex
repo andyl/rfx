@@ -7,8 +7,8 @@ defmodule Rfx.Change.Req do
   part of a refactoring operation.
 
   The `Change.Req` struct has two elements:
-  - *edit* (`Rfx.Req.Edit`) - the edit request 
-  - *filesys* (`Rfx.Req.Filesys`) - the filesys request (create, move, delete)
+  - *text* (`Rfx.Req.Text`) - the text edit request 
+  - *file* (`Rfx.Req.File`) - the file system request (create, move, delete)
 
   A Change.Req struct may contain an *edit* element, or a *filesys* element, or both.
 
@@ -26,26 +26,26 @@ defmodule Rfx.Change.Req do
   Create a new `Req`
   """
   def new(edit: editargs) do
-    case Req.Edit.new(editargs) do
+    case Req.Text.new(editargs) do
       {:ok, result} -> {:ok, %Req{edit: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
 
   def new(filesys: fileargs) do
-    case Req.Filesys.new(fileargs) do
+    case Req.File.new(fileargs) do
       {:ok, result} -> {:ok, %Req{filesys: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
 
   def new(edit: editargs, filesys: fsargs) do
-   edit_result = case Req.Edit.new(editargs) do
+   edit_result = case Req.Text.new(editargs) do
       {:ok, result} -> {true, result}
       {:error, msg} -> {false, msg}
     end
 
-    file_result = case Req.Filesys.new(fsargs) do
+    file_result = case Req.File.new(fsargs) do
       {:ok, result} -> {true, result}
       {:error, msg} -> {false, msg}
     end

@@ -1,7 +1,7 @@
-defmodule Rfx.Change.Req.EditTest do
+defmodule Rfx.Change.Req.TextTest do
   use ExUnit.Case
 
-  alias Rfx.Change.Req.Edit
+  alias Rfx.Change.Req.Text
 
   # ----- Construction -----
   
@@ -10,7 +10,7 @@ defmodule Rfx.Change.Req.EditTest do
     test "returns :ok with valid file" do
       path = Tst.gen_file("content ok")
       diff = "diff ok"
-      assert {:ok, result} = Edit.new(file_path: path, diff: diff)
+      assert {:ok, result} = Text.new(file_path: path, diff: diff)
       assert result == %{file_path: path, diff: diff}
     end
 
@@ -18,7 +18,7 @@ defmodule Rfx.Change.Req.EditTest do
     test "returns :error with missing file" do
       path = "/tmp/missing.ex"
       diff = "diff ok"
-      assert {:error, _} = Edit.new(file_path: path, diff: diff)
+      assert {:error, _} = Text.new(file_path: path, diff: diff)
     end
   end
 
@@ -27,7 +27,7 @@ defmodule Rfx.Change.Req.EditTest do
     test "returns :ok" do
       content = "content ok"
       diff = "diff ok"
-      assert {:ok, result} = Edit.new(edit_source: content, diff: diff)
+      assert {:ok, result} = Text.new(edit_source: content, diff: diff)
       assert result == %{edit_source: content, diff: diff}
     end
   end
