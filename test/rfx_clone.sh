@@ -5,17 +5,11 @@
 # - Hopefully makes it easier to reproduce bugs and failing tests.
 # 
 # Workflow:
-#     > #
-#     > # download the clone script
 #     > wget https://raw.githubusercontent.com/andyl/rfx/master/test/rfx_clone.sh
 #     > chmod a+rx ./rfx_clone.sh
-#     > #
-#     > # run the clone script
-#     > ./rfx_clone.sh <SHA>
-#     > #
-#     > # run the failing test
+#     > ./rfx_clone.sh <your_sha>
 #     > cd rfx
-#     > mix test test/edit/credo/multi_alias_test.exs:48   # fill in your own path...
+#     > mix test <your_test_path>
 # 
 # Notes:
 # - this is only tested on Ubuntu 20.04
