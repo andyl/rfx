@@ -1,50 +1,11 @@
-defmodule Rfx.Ops.Credo.MultiAlias do
+defmodule Rfx.Ops.Proto.CommentAdd do
 
   @behaviour Rfx.Ops
 
   @moduledoc """
-  Refactoring Operations to automatically apply the Credo `multi-alias`
-  recommendation.
+  Walks the source code and adds a comment line to every target.
 
-  Walks the source code and expands instances of multi-alias syntax.
-
-  ## Examples
-
-  Basic transformation...
-
-       iex> source = "alias Foo.{Bar, Baz.Qux}"
-       ...>
-       ...> expected = """
-       ...> alias Foo.Bar
-       ...> alias Foo.Baz.Qux
-       ...> """ |> String.trim()
-       ...>
-       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
-       expected
-
-  Preserving comments...
-
-       iex> source = """
-       ...> # Multi alias example
-       ...> alias Foo.{ # Opening the multi alias
-       ...>   Bar, # Here is Bar
-       ...>   # Here come the Baz
-       ...>   Baz.Qux # With a Qux!
-       ...> }
-       ...> """ |> String.trim()
-       ...>
-       ...> expected = """
-       ...> # Multi alias example
-       ...> # Opening the multi alias
-       ...> # Here is Bar
-       ...> alias Foo.Bar
-       ...> # Here come the Baz
-       ...> # With a Qux!
-       ...> alias Foo.Baz.Qux
-       ...> """ |> String.trim()
-       ...>
-       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
-       expected
+  This is a prototype operation used for demos and integration testing.
 
   """
 
@@ -81,15 +42,6 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     [result] |> Enum.reject(&is_nil/1)
   end
 
-
-  @doc """
-  Applies the `multi_alias` transformation to an Elixir source code file.
-
-  - reads the file
-  - applies the `multi_alias` transformation to the source
-  - return a changelist
-  """
-
   @impl true
   def cl_file(file_path: file_path) do
     cl_code(file_path: file_path)
@@ -99,13 +51,6 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   def cl_file(file_path) do
     cl_code(file_path: file_path)
   end
-
-  @doc """
-  Applies the `multi_alias` transformation to every source file in an Elixir project.
-
-  - walk the project directory, and for each source code file:
-  - read the file
-  """
 
   @impl true
   def cl_project(project_root: project_root) do
@@ -138,6 +83,8 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   # ----- Edit -----
   
   @impl true
-  defdelegate edit(source_code), to: Rfx.Edit.Credo.MultiAlias1
+
+  defdelegate edit(source_code), to: Rfx.Edit.Proto.CommentAdd
+  defdelegate edit(source_code, opts), to: Rfx.Edit.Proto.CommentAdd
 
 end

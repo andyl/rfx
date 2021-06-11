@@ -23,12 +23,13 @@ defmodule Rfx.Util.Source do
   def diff(old_source, new_source), do: diff({old_source, new_source})
 
   def diff({src1, src2}) do
-    path1 = @base_diff <> "/src1_" <> Str.rand_str()
-    path2 = @base_diff <> "/src2_" <> Str.rand_str()
+    rand = Str.rand_str()
+    path1 = @base_diff <> "/src1_" <> rand
+    path2 = @base_diff <> "/src2_" <> rand
 
     File.mkdir(@base_diff)
-    File.write(path1, src1)
-    File.write(path2, src2)
+    File.write(path1, src1 |> terminate_nl())
+    File.write(path2, src2 |> terminate_nl())
     {diff, _} = System.cmd("diff", [path1, path2])
     File.rm(path1)
     File.rm(path2)
@@ -39,19 +40,25 @@ defmodule Rfx.Util.Source do
   Returns modified source, given old source text, and a diff text.
   """
   def patch(source, diff) do
-    spath = @base_diff <> "/patch_src_"  <> Str.rand_str()
-    dpath = @base_diff <> "/patch_diff_" <> Str.rand_str()
+    ext = Str.rand_str()
+    spath = @base_diff <> "/patch_src_" <> ext
+    dpath = @base_diff <> "/patch_dif_" <> ext
 
     File.mkdir(@base_diff)
     File.write(spath, source)
-    File.write(dpath, diff)
-    opts = [spath, dpath, "-o", "-"] #, "2>", "/dev/null"]
-    {new_src, _} = System.cmd("patch", opts, stderr_to_stdout: true)
+    File.write(dpath, diff |> terminate_nl())
+    opts = [spath, dpath, "-s", "-o", "-"]
+    {new_src, _} = System.cmd("patch", opts)
     File.rm(spath)
     File.rm(dpath)
     new_src
-    |> String.split("\n")
-    |> List.delete_at(0)
-    |> Enum.join("\n")
   end
+
+  defp terminate_nl(string) do
+    case Regex.match?(~r/\n$/, string) do
+      true -> string
+      false -> string <> "\n"
+    end
+  end
+
 end

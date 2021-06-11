@@ -1,4 +1,9 @@
 defmodule Rfx.Edit.Credo.MultiAlias2 do
+  @moduledoc """
+  This code was lifted from @doorgan's "MultiAlias" notebook that he published
+  after the release of Sourceror 0.6.0.
+  """
+
   @behaviour Rfx.Edit
 
   @impl true

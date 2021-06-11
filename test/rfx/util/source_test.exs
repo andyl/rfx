@@ -9,17 +9,18 @@ defmodule Rfx.SourceTest do
       old = """
       a
       b
-      """
+      """ 
       new = """
       a
       b
       c
-      """
+      """ 
       expected = """
       2a3
       > c
-      """
+      """ 
       diff = Source.diff(old, new)
+
       assert diff == expected
     end
   end

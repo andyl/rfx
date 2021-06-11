@@ -11,7 +11,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   @base_expected """
   alias Foo.Bar
   alias Foo.Baz.Qux
-  """ |> String.trim()
+  """ 
 
   @base_diff """
   1c1,2
@@ -19,14 +19,11 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   ---
   > alias Foo.Bar
   > alias Foo.Baz.Qux
-  \\ No newline at end of file
-
-  """ |> String.trim()
+  """ 
 
   doctest MultiAlias
 
   describe "#rfx_code with source code" do
-    @tag :pending
     test "expected fields" do
       [changereq | _] = MultiAlias.cl_code(@base_source)
       refute changereq |> Map.get(:filesys)
@@ -35,23 +32,20 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       assert changereq |> Map.get(:edit) |> Map.get(:edit_source)
     end
 
-    @tag :pending
     test "diff generation" do
       [changereq | _] = MultiAlias.cl_code(@base_source)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
-    @tag :pending
     test "patching" do
       [changereq | _] = MultiAlias.cl_code(@base_source)
       code = Map.get(changereq, :edit) |> Map.get(:edit_source)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff)
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
 
-    @tag :pending
     test "no change required source" do
       changelist = MultiAlias.cl_code(@base_expected) 
       assert changelist == []
@@ -60,7 +54,6 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   end
 
   describe "#rfx_code with source file" do
-    @tag :pending
     test "expected fields for source file" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = MultiAlias.cl_code(file_path: file)
@@ -70,25 +63,22 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       assert changereq |> Map.get(:edit) |> Map.get(:file_path)
     end
 
-    @tag :pending
     test "diff generation" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = MultiAlias.cl_code(file_path: file)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
-    @tag :pending
     test "patching" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = MultiAlias.cl_code(file_path: file)
       code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
 
-    @tag :pending
     test "no change required code" do
       file = Tst.gen_file(@base_expected)
       assert [] == MultiAlias.cl_code(file_path: file)
@@ -100,9 +90,8 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       proj = root |> String.split("/") |> Enum.reverse() |> Enum.at(0)
       file = root <> "/lib/#{proj}.ex"
       {:ok, code} = File.read(file)
-      IO.inspect code
       [changelist | _] = MultiAlias.cl_code(code)
-      IO.inspect changelist |> Map.get(:edit) |> Map.get(:edit_source)
+      changelist |> Map.get(:edit) |> Map.get(:edit_source)
       assert [] == MultiAlias.cl_code(code)
     end
 
@@ -117,14 +106,12 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   end
 
   describe "#rfx_file! with source file" do
-    @tag :pending
     test "changelist length" do
       file = Tst.gen_file(@base_source)
       changelist = MultiAlias.cl_file(file)
       assert length(changelist) == 1
     end
 
-    @tag :pending
     test "changereq fields" do
       file = Tst.gen_file(@base_source)
       [changereq| _ ] = MultiAlias.cl_file(file)
@@ -134,27 +121,24 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       assert changereq |> Map.get(:edit) |> Map.get(:file_path)
     end
 
-    @tag :pending
     test "diff generation" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = MultiAlias.cl_file(file)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
-    @tag :pending
     test "patching" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = MultiAlias.cl_file(file)
       code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end
   end
 
   describe "#rfx_file! with keyword list" do
-    @tag :pending
     test "changelist length" do
       file = Tst.gen_file(@base_source)
       changelist = MultiAlias.cl_file(file_path: file)
@@ -167,10 +151,10 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
     test "changelist length" do
       root_dir = Tst.gen_proj("mix new")
       changelist = MultiAlias.cl_project(root_dir)
-      assert length(changelist) == 5
+      IO.inspect changelist
+      assert length(changelist) == 1
     end
 
-    @tag :pending
     test "changereq fields" do
       file = Tst.gen_file(@base_source)
       [changereq| _ ] = MultiAlias.cl_file(file)
@@ -180,20 +164,18 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       assert changereq |> Map.get(:edit) |> Map.get(:file_path)
     end
 
-    @tag :pending
     test "diff generation" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = MultiAlias.cl_file(file)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
-    @tag :pending
     test "patching" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = MultiAlias.cl_file(file)
       code = Map.get(changereq, :edit) |> Map.get(:file_path) |> File.read() |> elem(1)
-      diff = Map.get(changereq, :edit) |> Map.get(:diff) |> String.trim()
+      diff = Map.get(changereq, :edit) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
     end

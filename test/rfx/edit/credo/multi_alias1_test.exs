@@ -23,7 +23,6 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
       assert actual == @base_expected
     end
 
-    @tag :pending
     test "preserves comments" do
       source = """
       # Multi alias example
@@ -52,13 +51,9 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
 
       actual = MultiAlias.edit(source)
 
-      IO.puts "--\n" <> expected
-      IO.puts "--\n" <> actual
-
       assert actual == expected
     end
 
-    @tag :pending
     test "does not misplace comments above or below" do
       source = """
       # A
@@ -90,21 +85,49 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
 
     @tag :pending
     test "using generated project" do
-      root = Tst.gen_proj("mix new")
-      proj = root |> String.split("/") |> Enum.reverse() |> Enum.at(0)
-      file = root <> "/lib/#{proj}.ex"
-      code = File.read!(file) |> Code.format_string!() |> IO.iodata_to_binary()
-      new_code = MultiAlias.edit(code) |> String.replace("\\n", "\n") |> Code.format_string!() |> IO.iodata_to_binary()
-      File.write("/tmp/one.ex", code)
-      File.write("/tmp/two.ex", new_code)
+      proj_root = Tst.gen_proj("mix new")
+      proj_name = proj_root |> String.split("/") |> Enum.reverse() |> Enum.at(0)
+      test_file = proj_root <> "/lib/#{proj_name}.ex"
+      test_code = File.read!(test_file) 
+      new_code = MultiAlias.edit(test_code)
 
-      IO.puts "---\n" <> code
-      IO.puts "---\n" <> new_code
-      IO.inspect "---\n" <> code
-      IO.inspect "---\n" <> new_code
+      IO.puts "---"
+      IO.puts test_code
+      IO.puts "---"
+      IO.puts new_code
+      IO.puts "---"
 
-      assert code == new_code
+      assert test_code == new_code
+    end
+
+    @tag :pending
+    test "using string-literal boilerplate code" do
+      input_code = ~s'''
+      module DemoMod do
+        @moduledoc """
+        Documentation for `DemoMod`.
+        """
+
+        @doc """
+        Hello world.
+
+        ## Examples
+        
+        iex> Wkid.hello()
+        :world
+        """
+        
+        def hello do
+          :world  
+        end
+      end
+      '''
+
+      output_code = MultiAlias.edit(input_code)
+
+      IO.puts "OUTPUT CODE\nBUG: exceped newlines\n" <> output_code
+
+      assert output_code == input_code
     end
   end
-
 end
