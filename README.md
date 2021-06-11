@@ -34,6 +34,11 @@ Function Operations:
 - [ ] extract variable
 - [ ] inline variable
 
+Filesystem Operations:
+
+- [ ] move directory
+- [ ] move file
+
 PhxGen Operations:
 
 - [ ] add route
