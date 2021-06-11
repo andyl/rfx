@@ -85,6 +85,5 @@ defmodule Rfx.Ops.Proto.NoOp do
   @impl true
 
   defdelegate edit(source_code), to: Rfx.Edit.Proto.NoOp
-  defdelegate edit(source_code, opts), to: Rfx.Edit.Proto.NoOp
 
 end
