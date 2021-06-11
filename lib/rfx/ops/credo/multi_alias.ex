@@ -12,39 +12,39 @@ defmodule Rfx.Ops.Credo.MultiAlias do
 
   Basic transformation...
 
-       # iex> source = "alias Foo.{Bar, Baz.Qux}"
-       # ...>
-       # ...> expected = """
-       # ...> alias Foo.Bar
-       # ...> alias Foo.Baz.Qux
-       # ...> """ |> String.trim()
-       # ...>
-       # ...> Rfx.Ops.Credo.MultiAlias.edit(source)
-       # expected
+       iex> source = "alias Foo.{Bar, Baz.Qux}"
+       ...>
+       ...> expected = """
+       ...> alias Foo.Bar
+       ...> alias Foo.Baz.Qux
+       ...> """ |> String.trim()
+       ...>
+       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
+       expected
 
   Preserving comments...
 
-       # iex> source = """
-       # ...> # Multi alias example
-       # ...> alias Foo.{ # Opening the multi alias
-       # ...>   Bar, # Here is Bar
-       # ...>   # Here come the Baz
-       # ...>   Baz.Qux # With a Qux!
-       # ...> }
-       # ...> """ |> String.trim()
-       # ...>
-       # ...> expected = """
-       # ...> # Here is Bar
-       # ...> # Multi alias example
-       # ...> # Opening the multi alias
-       # ...> alias Foo.Bar
-       # ...> # Here come the Baz
-       # ...> # With a Qux!
-       # ...> alias Foo.Baz.Qux
-       # ...> """ |> String.trim()
-       # ...>
-       # ...> Rfx.Ops.Credo.MultiAlias.edit(source)
-       # expected
+       iex> source = """
+       ...> # Multi alias example
+       ...> alias Foo.{ # Opening the multi alias
+       ...>   Bar, # Here is Bar
+       ...>   # Here come the Baz
+       ...>   Baz.Qux # With a Qux!
+       ...> }
+       ...> """ |> String.trim()
+       ...>
+       ...> expected = """
+       ...> # Multi alias example
+       ...> # Opening the multi alias
+       ...> # Here is Bar
+       ...> alias Foo.Bar
+       ...> # Here come the Baz
+       ...> # With a Qux!
+       ...> alias Foo.Baz.Qux
+       ...> """ |> String.trim()
+       ...>
+       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
+       expected
 
   """
 
