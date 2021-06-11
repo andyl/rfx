@@ -102,7 +102,7 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
 
     @tag :pending
     test "using string-literal boilerplate code" do
-      input_code = ~s'''
+      input_code = ~S'''
       module DemoMod do
         @moduledoc """
         Documentation for `DemoMod`.
@@ -121,11 +121,12 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
           :world  
         end
       end
-      '''
+      ''' |> Code.format_string!() |> IO.iodata_to_binary()
 
-      output_code = MultiAlias.edit(input_code)
+      output_code = MultiAlias.edit(input_code) |> Code.format_string!() |> IO.iodata_to_binary()
 
-      IO.puts "OUTPUT CODE\nBUG: exceped newlines\n" <> output_code
+      IO.puts "\nINPUT CODE \n" <> input_code
+      IO.puts "\nOUTPUT CODE\nBUG: parens around module name\n" <> output_code
 
       assert output_code == input_code
     end
