@@ -6,7 +6,6 @@ defmodule Rfx.Change.Req.FileReqTest do
   # ----- Construction -----
 
   describe "file_create constructor" do
-    @tag :pending
     test "returns :ok" do
       path = Tst.gen_file("content ok")
       assert {:ok, result} = FileReq.new(cmd: :file_create, src_path: path)
@@ -15,7 +14,6 @@ defmodule Rfx.Change.Req.FileReqTest do
   end
 
   describe "file_move constructor" do
-    @tag :pending
     test "returns :ok" do
       path1 = Tst.gen_file("content 1")
       path2 = Tst.gen_file("content 2")
@@ -25,7 +23,6 @@ defmodule Rfx.Change.Req.FileReqTest do
   end
 
   describe "file_delete constructor" do
-    @tag :pending
     test "returns :ok" do
       path = Tst.gen_file("content ok")
       assert {:ok, result} = FileReq.new(cmd: :file_delete, src_path: path)
@@ -34,7 +31,6 @@ defmodule Rfx.Change.Req.FileReqTest do
   end
 
   describe "dir_move constructor" do
-    @tag :pending
     test "returns :ok" do
       path1 = Tst.gen_dir()
       path2 = Tst.gen_dir()
@@ -44,7 +40,6 @@ defmodule Rfx.Change.Req.FileReqTest do
   end
 
   describe "dir_create constructor" do
-    @tag :pending
     test "returns :ok" do
       path = Tst.gen_dir()
       assert {:ok, result} = FileReq.new(cmd: :dir_create, src_path: path)
@@ -53,7 +48,6 @@ defmodule Rfx.Change.Req.FileReqTest do
   end
 
   describe "dir_delete constructor" do
-    @tag :pending
     test "returns :ok" do
       path = Tst.gen_dir()
       assert {:ok, result} = FileReq.new(cmd: :dir_delete, src_path: path)

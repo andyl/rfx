@@ -83,7 +83,6 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
       assert actual == expected
     end
 
-    @tag :pending
     test "using generated project" do
       proj_root = Tst.gen_proj("mix new")
       proj_name = proj_root |> String.split("/") |> Enum.reverse() |> Enum.at(0)
@@ -91,16 +90,9 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
       test_code = File.read!(test_file) 
       new_code = MultiAlias.edit(test_code)
 
-      IO.puts "---"
-      IO.puts test_code
-      IO.puts "---"
-      IO.puts new_code
-      IO.puts "---"
-
-      assert test_code == new_code
+      assert test_code == new_code <> "\n"
     end
 
-    @tag :pending
     test "using string-literal boilerplate code" do
       input_code = ~S'''
       module DemoMod do
@@ -124,9 +116,6 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
       ''' |> Code.format_string!() |> IO.iodata_to_binary()
 
       output_code = MultiAlias.edit(input_code) |> Code.format_string!() |> IO.iodata_to_binary()
-
-      IO.puts "\nINPUT CODE \n" <> input_code
-      IO.puts "\nOUTPUT CODE\nBUG: parens around module name\n" <> output_code
 
       assert output_code == input_code
     end

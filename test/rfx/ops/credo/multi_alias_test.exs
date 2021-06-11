@@ -84,18 +84,14 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       assert [] == MultiAlias.cl_code(file_path: file)
     end
 
-    @tag :pending
     test "no change required ingested code" do
       root = Tst.gen_proj("mix new")
       proj = root |> String.split("/") |> Enum.reverse() |> Enum.at(0)
       file = root <> "/lib/#{proj}.ex"
       {:ok, code} = File.read(file)
-      [changelist | _] = MultiAlias.cl_code(code)
-      changelist |> Map.get(:text_req) |> Map.get(:edit_source)
       assert [] == MultiAlias.cl_code(code)
     end
 
-    @tag :pending
     test "no change required file" do
       root_dir = Tst.gen_proj("mix new")
       proj = root_dir |> String.split("/") |> Enum.reverse() |> Enum.at(0)
@@ -147,12 +143,10 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   end
 
   describe "#rfx_project!" do
-    @tag :pending
     test "changelist length" do
       root_dir = Tst.gen_proj("mix new")
       changelist = MultiAlias.cl_project(root_dir)
-      IO.inspect changelist
-      assert length(changelist) == 1
+      assert length(changelist) == 0
     end
 
     test "changereq fields" do
