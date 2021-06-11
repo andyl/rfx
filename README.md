@@ -49,8 +49,8 @@ Credo Operations:
 
 Prototype Operations:
 
-- [x] comment add (`Rfx.Ops.Proto.ContentAdd`)
-- [x] comment del (`Rfx.Ops.Proto.ContentDel`)
+- [x] comment add (`Rfx.Ops.Proto.CommentAdd`)
+- [x] comment del (`Rfx.Ops.Proto.CommentDel`)
 - [x] no-op (`Rfx.Ops.Proto.NoOp`)
 
 Rfx Operations depend on the excellent
