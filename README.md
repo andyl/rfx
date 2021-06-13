@@ -3,9 +3,9 @@
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
 
-**NOTE** at the moment this code does not work!  We're sorting out the programming
-interfaces and project organization.  Once this is done, we'll build out the
-refactoring operations step by step.
+**NOTE** at the moment this code does not work!  We're sorting out the
+programming interfaces and project organization.  Once this is done, we'll
+build the refactoring operations step by step.
 
 To get started with this pre-release code, clone the repo, then run `> mix test
 --exclude pending`.
@@ -133,10 +133,10 @@ Rfx Operations are meant to be embedded into editors, tools and end-user
 applications:
 
 - Tests, Elixir Scripts and LiveNotebooks
+- Generators (eg phx.gen, phx.gen.auth)
 - Mix tasks (see the experimental [rfx_tasks](https://github.andyl/rfx_tasks))
 - CLI (see the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
-- Generators (eg phx.gen, phx.gen.auth)
-- Editor Plugins
+- Editor Plugins (see the experimental [rfx_nvim](https://github.com/andyl/rfx_nvim))
 - ElixirLs
 - Credo
 
