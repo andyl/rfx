@@ -25,6 +25,7 @@ defmodule Rfx.MixProject do
     [
       # {:sourceror, "~> 0.6"},
       {:sourceror, github: "doorgan/sourceror"},
+      {:jason, "~> 1.2"},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
       {:mix_test_interactive, "~> 1.0", only: :dev, runtime: false},
     ]
