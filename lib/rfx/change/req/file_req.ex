@@ -63,7 +63,7 @@ defmodule Rfx.Change.Req.FileReq do
   # ----- Application -----
 
   def apply!(%{cmd: :file_create, src_path: srcpath}) do
-    File.touch(srcpath)
+    File.touch(srcpath) 
   end
 
   def apply!(%{cmd: :file_move, src_path: srcpath, tgt_path: tgtpath}) do

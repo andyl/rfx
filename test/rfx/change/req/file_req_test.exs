@@ -59,4 +59,71 @@ defmodule Rfx.Change.Req.FileReqTest do
   
   # ----- Application -----
 
+  describe ":file_create" do
+    test "create a file" do
+      path = Tst.rand_fn()
+      refute File.exists?(path)
+      result = %{cmd: :file_create, src_path: path} |> FileReq.apply!()
+      assert File.exists?(path)
+      assert result == :ok
+    end
+  end
+
+  describe ":file_move" do
+    test "move a file" do
+      path1 = Tst.gen_file("ok")
+      path2 = Tst.rand_fn()
+      assert File.exists?(path1)
+      refute File.exists?(path2)
+      result = %{cmd: :file_move, src_path: path1, tgt_path: path2} |> FileReq.apply!()
+      refute File.exists?(path1)
+      assert File.exists?(path2)
+      assert result == :ok
+    end
+  end
+
+  describe ":file_delete" do
+    test "delete a file" do
+      path1 = Tst.gen_file("ok")
+      assert File.exists?(path1)
+      result = %{cmd: :file_delete, src_path: path1} |> FileReq.apply!()
+      refute File.exists?(path1)
+      assert result == :ok
+    end
+  end
+
+  describe ":dir_create" do
+    test "create a dir" do
+      path = Tst.rand_dn()
+      refute File.exists?(path)
+      result = %{cmd: :dir_create, src_path: path} |> FileReq.apply!()
+      assert File.exists?(path)
+      assert result == :ok
+    end
+  end
+
+  describe ":dir_move" do
+    test "move a dir" do
+      path1 = Tst.gen_dir()
+      path2 = Tst.rand_dn()
+      assert File.exists?(path1)
+      refute File.exists?(path2)
+      result = %{cmd: :dir_move, src_path: path1, tgt_path: path2} |> FileReq.apply!()
+      refute File.exists?(path1)
+      assert File.exists?(path2)
+      assert result == :ok
+    end
+  end
+
+  describe ":dir_delete" do
+    test "delete a dir" do
+      path1 = Tst.gen_dir()
+      assert File.exists?(path1)
+      result = %{cmd: :dir_delete, src_path: path1} |> FileReq.apply!()
+      refute File.exists?(path1)
+      assert result == :ok
+    end
+  end
+
+
 end

@@ -31,11 +31,11 @@ defmodule Tst do
     base_dir() <> "/" <> dname
   end
 
-  defp rand_fn do
+  def rand_fn do
     base_dir() <> "/" <> Str.rand_str() <> ".ex"
   end
 
-  defp rand_dn do
+  def rand_dn do
     base_dir() <> "/" <> Str.rand_str()
   end
 

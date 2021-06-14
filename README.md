@@ -119,11 +119,6 @@ RenameModule.cl_file(input_file_name, new_name: "MyNewName")
 RenameModule.cl_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
 |> Change.List.to_patch()
 #> {:ok, list of patchfile_strings}
-
-# return a json string
-RenameModule.cl_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
-|> Change.List.to_json()
-#> {:ok, list of json_strings}
 ```
 
 ## Clients 
