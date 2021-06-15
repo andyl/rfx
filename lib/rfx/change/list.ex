@@ -9,27 +9,9 @@ defmodule Rfx.Change.List do
 
   alias Rfx.Change
 
-  def to_patch(changelist) do
-    changelist
-    |> Enum.map(&Change.Req.to_patch(&1))
-  end
-
-  def to_string([change]) do
-    change |> Change.Req.to_string()
-  end
-
-  def to_string(_) do
-    raise "to_string only works on atomic changes"
-  end
-
-  def to_json(changelist) do
-    changelist
-    |> Enum.map(&Change.Req.to_json(&1))
-  end
-
-  def to_lsp(changelist) do
-    changelist
-    |> Enum.map(&Change.Req.to_lsp(&1))
+  def to_string(changelist) do
+    changelist 
+    |> Enum.map(&Change.Req.to_string/1)
   end
 
   def apply!(changelist) do

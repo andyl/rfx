@@ -20,6 +20,8 @@ defmodule Rfx.Change.Req do
   defstruct [:text_req, :file_req]
 
   alias Rfx.Change.Req
+  alias Rfx.Change.Req.TextReq
+  alias Rfx.Change.Req.FileReq
 
   # ----- Construction -----
   
@@ -27,26 +29,26 @@ defmodule Rfx.Change.Req do
   Create a new `Req`
   """
   def new(text_req: editargs) do
-    case Req.TextReq.new(editargs) do
+    case TextReq.new(editargs) do
       {:ok, result} -> {:ok, %Req{text_req: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
 
   def new(file_req: fileargs) do
-    case Req.FileReq.new(fileargs) do
+    case FileReq.new(fileargs) do
       {:ok, result} -> {:ok, %Req{file_req: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
 
   def new(text_req: editargs, file_req: fsargs) do
-   edit_result = case Req.TextReq.new(editargs) do
+   edit_result = case TextReq.new(editargs) do
       {:ok, result} -> {true, result}
       {:error, msg} -> {false, msg}
     end
 
-    file_result = case Req.FileReq.new(fsargs) do
+    file_result = case FileReq.new(fsargs) do
       {:ok, result} -> {true, result}
       {:error, msg} -> {false, msg}
     end
@@ -61,26 +63,46 @@ defmodule Rfx.Change.Req do
 
   # ----- Conversion -----
   
-  def to_patch(_change) do
-    :ok
+  def to_string(%Req{text_req: editargs, file_req: fileargs}) do
+    %Req{
+      text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs)),
+      file_req: fileargs
+    }
   end
 
-  def to_string(_change) do
-    :ok
+  def to_string(text_req: editargs) do
+    %Req{
+      text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs))
+    }
   end
 
-  def to_json(_change) do
-    :ok
-  end
-
-  def to_lsp(_change) do
-    :ok 
+  def to_string(file_req: fileargs) do
+    %Req{
+      file_req: fileargs 
+    }
   end
 
   # ----- Application -----
   
-  def apply!(_change) do
-    :ok
+  def apply!(%Req{text_req: editargs, file_req: nil}) do
+    %Req{
+      text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
+      file_req: nil
+    }
   end
-  
+
+  def apply!(%Req{file_req: fileargs, text_req: nil}) do
+    %Req{
+      file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs)),
+      text_req: nil
+    }
+  end
+
+  def apply!(%Req{text_req: editargs, file_req: fileargs}) do
+    %Req{
+      text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
+      file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs))
+    }
+  end
+
 end

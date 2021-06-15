@@ -18,9 +18,6 @@ defmodule Rfx.Change.Req.FileReq do
   - :dir_move
   - :dir_delete
 
-  Change.Req.FileReq must have:
-  - either *edit_path* or *edit_source*
-  - *diff*
   """
   
   # @enforce_keys [:cmd, :src_path]
@@ -65,7 +62,28 @@ defmodule Rfx.Change.Req.FileReq do
 
   # ----- Application -----
 
-  def apply! do
+  def apply!(%{cmd: :file_create, src_path: srcpath}) do
+    File.touch(srcpath) 
+  end
+
+  def apply!(%{cmd: :file_move, src_path: srcpath, tgt_path: tgtpath}) do
+    File.rename(srcpath, tgtpath)
+  end
+
+  def apply!(%{cmd: :file_delete, src_path: srcpath}) do
+    File.rm(srcpath)
+  end
+
+  def apply!(%{cmd: :dir_create, src_path: srcpath}) do
+    File.mkdir(srcpath)
+  end
+
+  def apply!(%{cmd: :dir_move, src_path: srcpath, tgt_path: tgtpath}) do
+    File.rename(srcpath, tgtpath)
+  end
+
+  def apply!(%{cmd: :dir_delete, src_path: srcpath}) do
+    File.rmdir(srcpath)
   end
 
 end

@@ -3,9 +3,9 @@
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
 
-**NOTE** at the moment this code does not work!  We're sorting out the programming
-interfaces and project organization.  Once this is done, we'll build out the
-refactoring operations step by step.
+**NOTE** at the moment this code does not work!  We're sorting out the
+programming interfaces and project organization.  Once this is done, we'll
+build the refactoring operations step by step.
 
 To get started with this pre-release code, clone the repo, then run `> mix test
 --exclude pending`.
@@ -73,7 +73,6 @@ Rfx provides helper functions to manipulate changelists:
 
 ```elixir
 Rfx.Change.List.to_string(changelist) #> Returns the modified source code
-Rfx.Change.List.to_json(changelist)   #> Returns a JSON data structure
 Rfx.Change.List.to_patch(changelist)  #> Returns a unix-standard patchfile
 Rfx.Change.List.to_lsp(changelist)    #> Returns a data structure for LSP
 Rfx.Change.List.to_pr(changelist)     #> Returns a pull-request data structure
@@ -120,11 +119,6 @@ RenameModule.cl_file(input_file_name, new_name: "MyNewName")
 RenameModule.cl_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
 |> Change.List.to_patch()
 #> {:ok, list of patchfile_strings}
-
-# return a json string
-RenameModule.cl_subapp(subapp_dir, old_module: "OldModule", new_module: "NewModule") 
-|> Change.List.to_json()
-#> {:ok, list of json_strings}
 ```
 
 ## Clients 
@@ -133,10 +127,10 @@ Rfx Operations are meant to be embedded into editors, tools and end-user
 applications:
 
 - Tests, Elixir Scripts and LiveNotebooks
+- Generators (eg phx.gen, phx.gen.auth)
 - Mix tasks (see the experimental [rfx_tasks](https://github.andyl/rfx_tasks))
 - CLI (see the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
-- Generators (eg phx.gen, phx.gen.auth)
-- Editor Plugins
+- Editor Plugins (see the experimental [rfx_nvim](https://github.com/andyl/rfx_nvim))
 - ElixirLs
 - Credo
 

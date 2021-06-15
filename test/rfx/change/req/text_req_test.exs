@@ -33,4 +33,23 @@ defmodule Rfx.Change.Req.TextReqTest do
   
   # ----- Application -----
 
+  describe "apply with file_path" do
+    test "description" do
+      path = Tst.gen_file(":ok") 
+      text_req = Rfx.Ops.Proto.CommentAdd.cl_file(file_path: path) 
+               |> List.first()
+               |> Map.get(:text_req)
+      {:ok, message} = text_req |> TextReq.apply!() 
+      assert message
+    end
+  end
+
+  describe "apply with edit_source" do
+    source = ":ok"
+    text_req = Rfx.Ops.Proto.CommentAdd.cl_code(source_code: source) 
+               |> List.first()
+               |> Map.get(:text_req)
+    {:error, message} = text_req |> TextReq.apply!() 
+    assert message
+  end
 end

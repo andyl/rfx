@@ -13,8 +13,10 @@ defmodule Rfx.Change.Req.TextReq do
   `edit[:diff]`.
   """
 
+  alias Rfx.Util.Source
+
   # ----- Construction -----
-  
+
   def new(file_path: path, diff: diff) do
     valid_struct = %{file_path: path, diff: diff}
     case File.exists?(path) do
@@ -28,11 +30,31 @@ defmodule Rfx.Change.Req.TextReq do
     {:ok, valid_struct}
   end
 
+  # ----- Application -----
+  
+  def apply!(%{file_path: path, diff: diff}) do
+    new_source = path
+                 |> File.read!()
+                 |> Source.patch(diff)
+    File.write(path, new_source)
+    {:ok, "File #{path} updated with new content"}
+  end
+
+  def apply!(%{edit_source: _source, diff: _}) do
+    {:error, "Can only apply changes to a file."}
+  end
+
   # ----- Conversion -----
 
-  # ----- Application -----
+  def to_string(%{file_path: path, diff: diff}) do
+    path 
+    |> File.read!()
+    |> Source.patch(diff)
+  end
 
-  def apply! do
+  def to_string(%{edit_source: source, diff: diff}) do
+    source 
+    |> Source.patch(diff)
   end
 
 end
