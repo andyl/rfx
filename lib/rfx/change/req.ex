@@ -65,14 +65,14 @@ defmodule Rfx.Change.Req do
   
   def to_string(%Req{text_req: editargs, file_req: fileargs}) do
     %Req{
-      text_req: editargs |> Map.put(:result, TextReq.to_string(editargs)),
+      text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs)),
       file_req: fileargs
     }
   end
 
   def to_string(text_req: editargs) do
     %Req{
-      text_req: editargs |> Map.put(:result, TextReq.to_string(editargs))
+      text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs))
     }
   end
 
@@ -84,22 +84,24 @@ defmodule Rfx.Change.Req do
 
   # ----- Application -----
   
+  def apply!(%Req{text_req: editargs, file_req: nil}) do
+    %Req{
+      text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
+      file_req: nil
+    }
+  end
+
+  def apply!(%Req{file_req: fileargs, text_req: nil}) do
+    %Req{
+      file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs)),
+      text_req: nil
+    }
+  end
+
   def apply!(%Req{text_req: editargs, file_req: fileargs}) do
     %Req{
-      text_req: editargs |> Map.put(:result, TextReq.apply!(editargs)),
-      file_req: fileargs |> Map.put(:result, FileReq.apply!(fileargs))
-    }
-  end
-
-  def apply!(text_req: editargs) do
-    %Req{
-      text_req: editargs |> Map.put(:result, TextReq.apply!(editargs))
-    }
-  end
-
-  def apply!(file_req: fileargs) do
-    %Req{
-      file_req: fileargs |> Map.put(:result, FileReq.apply!(fileargs))
+      text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
+      file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs))
     }
   end
 

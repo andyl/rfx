@@ -63,7 +63,7 @@ defmodule Rfx.Change.Req.FileReqTest do
     test "create a file" do
       path = Tst.rand_fn()
       refute File.exists?(path)
-      result = %{cmd: :file_create, src_path: path} |> FileReq.apply!()
+      result = %{cmd: :file_create, src_path: path} |> FileReq.apply!() 
       assert File.exists?(path)
       assert result == :ok
     end
@@ -124,6 +124,5 @@ defmodule Rfx.Change.Req.FileReqTest do
       assert result == :ok
     end
   end
-
 
 end

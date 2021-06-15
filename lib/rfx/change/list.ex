@@ -9,16 +9,6 @@ defmodule Rfx.Change.List do
 
   alias Rfx.Change
 
-  # def to_patch(changelist) do
-  #   changelist
-  #   |> Enum.map(&Change.Req.to_patch(&1))
-  # end
-
-  # def to_lsp(changelist) do
-  #   changelist
-  #   |> Enum.map(&Change.Req.to_lsp(&1))
-  # end
-
   def to_string(changelist) do
     changelist 
     |> Enum.map(&Change.Req.to_string/1)
