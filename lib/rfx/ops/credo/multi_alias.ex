@@ -51,27 +51,17 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   alias Rfx.Util.Source
   alias Rfx.Change.Req
 
+  # ----- Argspec -----
+
+  @impl true
+  def argspec do
+    []
+  end
+
   # ----- Changelists -----
 
   @impl true
-  def cl_code(source_code: source) do
-    cl_code(source)
-  end
-
-  @impl true
-  def cl_code(file_path: file_path) do
-    old_source = File.read!(file_path)
-    new_source = edit(old_source)
-    {:ok, result} = case Source.diff(old_source, new_source) do
-      "" -> {:ok, nil}
-      nil -> {:ok, nil}
-      diff -> Req.new(text_req: [file_path: file_path, diff: diff]) 
-    end
-    [result] |> Enum.reject(&is_nil/1)
-  end
-
-  @impl true
-  def cl_code(old_source) do
+  def cl_code(old_source, _args \\ []) do
     new_source = edit(old_source)
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
@@ -91,13 +81,9 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   """
 
   @impl true
-  def cl_file(file_path: file_path) do
-    cl_code(file_path: file_path)
-  end
-
-  @impl true
-  def cl_file(file_path) do
-    cl_code(file_path: file_path)
+  def cl_file(file_path, _args \\ []) do
+    # cl_code(file_path: file_path)
+    :ok
   end
 
   @doc """
@@ -108,7 +94,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   """
 
   @impl true
-  def cl_project(project_root: project_root) do
+  def cl_project(project_root, _args \\ []) do
     project_root
     |> Rfx.Util.Filesys.project_files()
     |> Enum.map(&cl_file/1)
@@ -117,12 +103,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   end
 
   @impl true
-  def cl_project(project_root) do
-    cl_project(project_root: project_root)
-  end
-
-  @impl true
-  def cl_subapp(subapp_root: subapp_root) do
+  def cl_subapp(subapp_root, _args \\ []) do
     subapp_root
     |> Rfx.Util.Filesys.subapp_files()
     |> Enum.map(&cl_file/1)
@@ -131,8 +112,15 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   end
 
   @impl true
-  def cl_subapp(subapp_root) do
-    cl_subapp(subapp_root: subapp_root)
+  def cl_tmpfile(file_path, _args \\ []) do
+    old_source = File.read!(file_path)
+    new_source = edit(old_source)
+    {:ok, result} = case Source.diff(old_source, new_source) do
+      "" -> {:ok, nil}
+      nil -> {:ok, nil}
+      diff -> Req.new(text_req: [file_path: file_path, diff: diff]) 
+    end
+    [result] |> Enum.reject(&is_nil/1)
   end
 
   # ----- Edit -----

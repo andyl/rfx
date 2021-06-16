@@ -10,6 +10,10 @@ build the refactoring operations step by step.
 To get started with this pre-release code, clone the repo, then run `> mix test
 --exclude pending`.
 
+Rfx depends on the excellent
+[Sourceror](http://github.com/doorgan/sourceror) written by
+[@doorgan](http://github.com/doorgan).
+
 ## Ops Modules
 
 Project Operations:
@@ -56,9 +60,7 @@ Prototype Operations:
 - [x] comment del (`Rfx.Ops.Proto.CommentDel`)
 - [x] no-op (`Rfx.Ops.Proto.NoOp`)
 
-Rfx Operations depend on the excellent
-[Sourceror](http://github.com/doorgan/sourceror) written by
-[@doorgan](http://github.com/doorgan).
+See `Rfx.Catalog` to get a complete list of operations.
 
 ## Change Lists
 
@@ -72,11 +74,11 @@ A *change request* struct has elements for *text edits* and *file actions*
 Rfx provides helper functions to manipulate changelists:
 
 ```elixir
-Rfx.Change.List.to_string(changelist) #> Returns the modified source code
-Rfx.Change.List.to_patch(changelist)  #> Returns a unix-standard patchfile
-Rfx.Change.List.to_lsp(changelist)    #> Returns a data structure for LSP
-Rfx.Change.List.to_pr(changelist)     #> Returns a pull-request data structure
-Rfx.Change.List.apply!(changelist)    #> Applies the changereqs to the filesystem
+Rfx.Change.Listcast.to_string(changelist) #> Returns the modified source code
+Rfx.Change.Listcast.to_patch(changelist)  #> Returns a unix-standard patchfile
+Rfx.Change.Listcast.to_lsp(changelist)    #> Returns a data structure for LSP
+Rfx.Change.Listcast.to_pr(changelist)     #> Returns a pull-request data structure
+Rfx.Change.Listcast.apply!(changelist)    #> Applies the changereqs to the filesystem
 ```
 
 ## Code Organization
@@ -88,6 +90,7 @@ behavior.  A refactoring operation may be applied to different scopes:
 - Scope2: a single file
 - Scope3: an entire project
 - Scope4: an umbrella sub-application
+- Scope5: a temp file
 
 Each scope will generate a different set of change requests.  Consider for
 example the operation `Rfx.Ops.Module.RenameModule`.
@@ -98,6 +101,7 @@ example the operation `Rfx.Ops.Module.RenameModule`.
 | Scope2 `file`    | 1                               | Edit src & docs | Rename Src file        |
 | Scope3 `project` | 1 for each related project file | Edit src & docs | Rename Src & Test file |
 | Scope4 `subapp`  | 1 for each related subapp file  | Edit src & docs | Rename Src & Test file |
+| Scope5 `tmpfile` | 1                               | Edit src & docs | NA                     |
 
 Here's a pseudo-code example:
 

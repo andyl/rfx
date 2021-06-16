@@ -6,31 +6,47 @@ defmodule Rfx.Ops do
   Each operation has an `edit` function which returned edited source code.  
 
   Each operation has functions that return a `Rfx.Change.List` for each Scope:
-  `cl_code`, `cl_file`, `cl_project`, `cl_subapp`.
+  `cl_code`, `cl_file`, `cl_project`, `cl_subapp`, `cl_tmpfile`.
 
   """
 
+  # ----- Changelists -----
+  
   @doc """
   Generate a changelist for a piece of code.
   """
-  @callback cl_code(any()) :: any()
+  @callback cl_code(String.t(), any()) :: any()
 
   @doc """
   Generate a changelist for a file.
   """
-  @callback cl_file(any()) :: any()
+  @callback cl_file(String.t(), any()) :: any()
 
   @doc """
   Generate a changelist for a project.
   """
-  @callback cl_project(any()) :: any()
+  @callback cl_project(String.t(), any()) :: any()
 
   @doc """
   Generate a changelist for a subapp.
 
   Only works within Umbrella applications.
   """
-  @callback cl_subapp(any()) :: any()
+  @callback cl_subapp(String.t(), any()) :: any()
+
+  @doc """
+  Generate a changelist for a tmpfile.
+  """
+  @callback cl_tmpfile(String.t(), any()) :: any()
+
+  # ----- Arguments -----
+
+  @doc """
+  Returns argspec for the operation.
+  """
+  @callback argspec() :: any()
+
+  # ----- Edit -----
   
   @doc """
   Edit a piece of code, using Sourceror rules.
