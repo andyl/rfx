@@ -58,7 +58,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     []
   end
 
-  # ----- Changelists -----
+  # ----- Changesets -----
 
   @impl true
   def cl_code(old_source, _args \\ []) do
@@ -71,27 +71,11 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     [result] |> Enum.reject(&is_nil/1)
   end
 
-
-  @doc """
-  Applies the `multi_alias` transformation to an Elixir source code file.
-
-  - reads the file
-  - applies the `multi_alias` transformation to the source
-  - return a changelist
-  """
-
   @impl true
   def cl_file(file_path, _args \\ []) do
-    # cl_code(file_path: file_path)
-    :ok
+    file_path
+    |> cl_code()
   end
-
-  @doc """
-  Applies the `multi_alias` transformation to every source file in an Elixir project.
-
-  - walk the project directory, and for each source code file:
-  - read the file
-  """
 
   @impl true
   def cl_project(project_root, _args \\ []) do
@@ -105,23 +89,15 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   @impl true
   def cl_subapp(subapp_root, _args \\ []) do
     subapp_root
-    |> Rfx.Util.Filesys.subapp_files()
-    |> Enum.map(&cl_file/1)
-    |> List.flatten()
-    |> Enum.reject(&is_nil/1)
+    |> cl_project()
   end
 
   @impl true
   def cl_tmpfile(file_path, _args \\ []) do
-    old_source = File.read!(file_path)
-    new_source = edit(old_source)
-    {:ok, result} = case Source.diff(old_source, new_source) do
-      "" -> {:ok, nil}
-      nil -> {:ok, nil}
-      diff -> Req.new(text_req: [file_path: file_path, diff: diff]) 
-    end
-    [result] |> Enum.reject(&is_nil/1)
+    file_path 
+    |> cl_file()
   end
+
 
   # ----- Edit -----
   

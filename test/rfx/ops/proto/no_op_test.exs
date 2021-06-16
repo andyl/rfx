@@ -9,7 +9,7 @@ defmodule Rfx.Ops.Proto.NoOpTest do
 
   doctest NoOp
 
-  describe "#cl_code with source code" do
+  describe "#cl_code" do
     test "changelist length" do
       assert [] = NoOp.cl_code(@base_source)
     end
