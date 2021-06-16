@@ -39,7 +39,7 @@ defmodule Rfx.Change.Req.TextReqTest do
       text_req = Rfx.Ops.Proto.CommentAdd.cl_file(path) 
                |> List.first()
                |> Map.get(:text_req)
-      {:ok, message} = text_req |> IO.inspect() |> TextReq.apply!() 
+      {:ok, message} = text_req |> TextReq.apply!() 
       assert message
     end
   end

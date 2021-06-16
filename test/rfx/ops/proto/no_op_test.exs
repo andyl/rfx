@@ -35,17 +35,17 @@ defmodule Rfx.Ops.Proto.NoOpTest do
 
     test "expected fields for source file" do
       file = Tst.gen_file(@base_source)
-      assert [] = NoOp.cl_code(file_path: file)
+      assert [] = NoOp.cl_file(file)
     end
 
     test "diff generation" do
       file = Tst.gen_file(@base_source)
-      assert [] = NoOp.cl_code(file_path: file)
+      assert [] = NoOp.cl_file(file)
     end
 
     test "patching" do
       file = Tst.gen_file(@base_source)
-      assert [] = NoOp.cl_code(file_path: file)
+      assert [] = NoOp.cl_file(file)
     end
   end
 

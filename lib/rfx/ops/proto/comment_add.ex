@@ -34,8 +34,14 @@ defmodule Rfx.Ops.Proto.CommentAdd do
 
   @impl true
   def cl_file(file_path, _args \\ []) do
-    file_path
-    |> cl_code()
+    old_source = File.read!(file_path)
+    new_source = edit(old_source)
+    {:ok, result} = case Source.diff(old_source, new_source) do
+      "" -> {:ok, nil}
+      nil -> {:ok, nil}
+      diff -> Req.new(text_req: [file_path: file_path, diff: diff])
+    end
+    [result] |> Enum.reject(&is_nil/1)
   end
 
   @impl true
