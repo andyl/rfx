@@ -47,8 +47,8 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
     end
 
     test "no change required source" do
-      changelist = MultiAlias.cl_code(@base_expected) 
-      assert changelist == []
+      changeset = MultiAlias.cl_code(@base_expected) 
+      assert changeset == []
     end
 
   end
@@ -96,16 +96,16 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
       root_dir = Tst.gen_proj("mix new")
       proj = root_dir |> String.split("/") |> Enum.reverse() |> Enum.at(0)
       file = root_dir <> "/lib/#{proj}.ex"
-      changelist = MultiAlias.cl_code(file_path: file)
-      assert changelist == []
+      changeset = MultiAlias.cl_code(file_path: file)
+      assert changeset == []
     end
   end
 
   describe "#rfx_file! with source file" do
-    test "changelist length" do
+    test "changeset length" do
       file = Tst.gen_file(@base_source)
-      changelist = MultiAlias.cl_file(file)
-      assert length(changelist) == 1
+      changeset = MultiAlias.cl_file(file)
+      assert length(changeset) == 1
     end
 
     test "changereq fields" do
@@ -135,18 +135,18 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   end
 
   describe "#rfx_file! with keyword list" do
-    test "changelist length" do
+    test "changeset length" do
       file = Tst.gen_file(@base_source)
-      changelist = MultiAlias.cl_file(file_path: file)
-      assert length(changelist) == 1
+      changeset = MultiAlias.cl_file(file_path: file)
+      assert length(changeset) == 1
     end
   end
 
   describe "#rfx_project!" do
-    test "changelist length" do
+    test "changeset length" do
       root_dir = Tst.gen_proj("mix new")
-      changelist = MultiAlias.cl_project(root_dir)
-      assert length(changelist) == 0
+      changeset = MultiAlias.cl_project(root_dir)
+      assert length(changeset) == 0
     end
 
     test "changereq fields" do
