@@ -17,4 +17,11 @@ defmodule Rfx.Catalog do
   def all do
     Rfx.Util.Introspect.modules_belonging_to_namespace("Rfx.Ops.")
   end
+
+  @doc """
+  Select Rfx operations in a given namespace.
+  """
+  def select(namespace) do
+    Rfx.Util.Introspect.modules_belonging_to_namespace("Rfx.Ops." <> namespace)
+  end
 end

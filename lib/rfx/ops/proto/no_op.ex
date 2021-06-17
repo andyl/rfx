@@ -16,7 +16,10 @@ defmodule Rfx.Ops.Proto.NoOp do
 
   @impl true
   def argspec do
-    []
+    [
+      about: "Prototype Operation: NoOp",
+      status: :experimental
+    ] 
   end
 
   # ----- Changesets -----

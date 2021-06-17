@@ -55,7 +55,12 @@ defmodule Rfx.Ops.Credo.MultiAlias do
 
   @impl true
   def argspec do
-    []
+    [
+      key: :credo_multi_alias,
+      name: "credo.multi_alias",
+      about: "Refactoring Operations for Elixir",
+      status: :experimental
+    ] 
   end
 
   # ----- Changesets -----
