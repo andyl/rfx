@@ -2,6 +2,7 @@ defmodule Rfx.Change.Req.FileReqTest do
   use ExUnit.Case
 
   alias Rfx.Change.Req.FileReq
+  alias Rfx.Util.Tst
 
   # ----- Construction -----
 

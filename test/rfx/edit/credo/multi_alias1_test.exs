@@ -2,6 +2,7 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
   use ExUnit.Case
 
   alias Rfx.Edit.Credo.MultiAlias1, as: MultiAlias
+  alias Rfx.Edit.Tst
   
   @base_source """
   alias Foo.{Bar, Baz.Qux}

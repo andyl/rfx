@@ -3,6 +3,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
 
   alias Rfx.Ops.Proto.CommentDel
   alias Rfx.Util.Source
+  alias Rfx.Util.Tst
 
   @base_source """
   # TestComment

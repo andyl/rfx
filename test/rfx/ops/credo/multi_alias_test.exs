@@ -3,6 +3,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
 
   alias Rfx.Ops.Credo.MultiAlias
   alias Rfx.Util.Source
+  alias Rfx.Util.Tst
 
   @base_source """
   alias Foo.{Bar, Baz.Qux}
@@ -54,11 +55,11 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
   end
 
   describe "#rfx_file! with source file" do
-    # test "changeset length" do
-    #   file = Tst.gen_file(@base_source)
-    #   changeset = MultiAlias.cl_file(file)
-    #   assert length(changeset) == 1
-    # end
+    test "changeset length" do
+      file = Tst.gen_file(@base_source)
+      changeset = MultiAlias.cl_file(file)
+      assert length(changeset) == 1
+    end
 
     # test "changereq fields" do
     #   file = Tst.gen_file(@base_source)

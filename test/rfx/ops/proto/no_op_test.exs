@@ -2,6 +2,7 @@ defmodule Rfx.Ops.Proto.NoOpTest do
   use ExUnit.Case
 
   alias Rfx.Ops.Proto.NoOp
+  alias Rfx.Util.Tst
 
   @base_source """
   InputSource

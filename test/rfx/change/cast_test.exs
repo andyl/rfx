@@ -2,6 +2,7 @@ defmodule Rfx.Change.CastTest do
   use ExUnit.Case
 
   alias Rfx.Change.Cast
+  alias Rfx.Util.Tst
 
   describe "#apply!" do
     test "with cl_file" do
