@@ -134,7 +134,7 @@ applications:
 - Generators (eg phx.gen, phx.gen.auth)
 - CLI (see the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
 - Editor Plugins (see the experimental [rfx_nvim](https://github.com/andyl/rfx_nvim))
-- Mix tasks (see the experimental [rfx_tasks](https://github.andyl/rfx_tasks))
+- Mix tasks 
 - ElixirLs
 - Credo
 
