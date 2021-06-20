@@ -3,6 +3,7 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
 
   alias Rfx.Ops.Proto.CommentAdd
   alias Rfx.Util.Source
+  alias Rfx.Util.Tst
 
   @base_source """
   x = 1
@@ -58,7 +59,7 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
 
     test "expected fields for source file" do
       file = Tst.gen_file(@base_source)
-      [changereq | _] = CommentAdd.cl_code(file_path: file)
+      [changereq | _] = CommentAdd.cl_file(file)
       refute changereq |> Map.get(:file_req)
       assert changereq |> Map.get(:text_req)
       assert changereq |> Map.get(:text_req) |> Map.get(:diff)
@@ -67,14 +68,14 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
 
     test "diff generation" do
       file = Tst.gen_file(@base_source)
-      [changereq | _] = CommentAdd.cl_code(file_path: file)
+      [changereq | _] = CommentAdd.cl_file(file)
       diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       assert diff == @base_diff
     end
 
     test "patching" do
       file = Tst.gen_file(@base_source)
-      [changereq | _] = CommentAdd.cl_code(file_path: file)
+      [changereq | _] = CommentAdd.cl_file(file)
       code = Map.get(changereq, :text_req) |> Map.get(:file_path) |> File.read() |> elem(1)
       diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
@@ -118,7 +119,7 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
   describe "#cl_file with keyword list" do
     test "changelist length" do
       file = Tst.gen_file(@base_source)
-      changelist = CommentAdd.cl_file(file_path: file)
+      changelist = CommentAdd.cl_file(file)
       assert length(changelist) == 1
     end
   end

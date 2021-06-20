@@ -2,11 +2,12 @@ defmodule Rfx.Change.ReqTest do
   use ExUnit.Case
 
   alias Rfx.Change.Req
+  alias Rfx.Util.Tst
 
-  describe "#apply! with file_path" do
-    test "description" do
+  describe "#apply!" do
+    test "using cl_file" do
       path = Tst.gen_file(":ok") 
-      req = Rfx.Ops.Proto.CommentAdd.cl_file(file_path: path) 
+      req = Rfx.Ops.Proto.CommentAdd.cl_file(path) 
             |> List.first() 
       result = req |> Req.apply!()
       assert result
@@ -15,10 +16,10 @@ defmodule Rfx.Change.ReqTest do
     end
   end
 
-  describe "#to_string with file_path" do
-    test "description" do
+  describe "#to_string" do
+    test "using cl_file" do
       path = Tst.gen_file(":ok") 
-      req = Rfx.Ops.Proto.CommentAdd.cl_file(file_path: path) 
+      req = Rfx.Ops.Proto.CommentAdd.cl_file(path) 
             |> List.first() 
       result = req |> Req.to_string()  
       assert result
@@ -27,9 +28,9 @@ defmodule Rfx.Change.ReqTest do
   end
 
   describe "chaining helpers" do
-    test "description" do
+    test "using cl_file" do
       path = Tst.gen_file(":ok") 
-      req = Rfx.Ops.Proto.CommentAdd.cl_file(file_path: path) 
+      req = Rfx.Ops.Proto.CommentAdd.cl_file(path) 
             |> List.first() 
       result = req |> Req.to_string() |> Req.apply!()
       assert result 

@@ -2,9 +2,10 @@ defmodule Rfx.Change.Req.TextReqTest do
   use ExUnit.Case
 
   alias Rfx.Change.Req.TextReq
+  alias Rfx.Util.Tst
 
   # ----- Construction -----
-  
+
   describe "file constructor" do
     test "returns :ok with valid file" do
       path = Tst.gen_file("content ok")
@@ -36,7 +37,7 @@ defmodule Rfx.Change.Req.TextReqTest do
   describe "apply with file_path" do
     test "description" do
       path = Tst.gen_file(":ok") 
-      text_req = Rfx.Ops.Proto.CommentAdd.cl_file(file_path: path) 
+      text_req = Rfx.Ops.Proto.CommentAdd.cl_file(path) 
                |> List.first()
                |> Map.get(:text_req)
       {:ok, message} = text_req |> TextReq.apply!() 
@@ -46,7 +47,7 @@ defmodule Rfx.Change.Req.TextReqTest do
 
   describe "apply with edit_source" do
     source = ":ok"
-    text_req = Rfx.Ops.Proto.CommentAdd.cl_code(source_code: source) 
+    text_req = Rfx.Ops.Proto.CommentAdd.cl_code(source) 
                |> List.first()
                |> Map.get(:text_req)
     {:error, message} = text_req |> TextReq.apply!() 

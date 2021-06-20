@@ -12,27 +12,34 @@ defmodule Rfx.Ops.Proto.NoOp do
   alias Rfx.Util.Source
   alias Rfx.Change.Req
 
-  # ----- Changelists -----
+  # ----- Argspec -----
 
   @impl true
-  def cl_code(source_code: source) do
-    cl_code(source)
+  def argspec do
+    [
+      about: "Prototype Operation: NoOp",
+      status: :experimental, 
+      options: [
+        old_name: [
+          short: "-o",
+          long: "--old_name",
+          value_name: "OLD_NAME",
+          help: "Old Module Name"
+        ],
+        new_name: [
+          short: "-n",
+          long: "--new_name",
+          value_name: "NEW_NAME",
+          help: "New Module Name"
+        ]
+      ]
+    ] 
   end
 
-  @impl true
-  def cl_code(file_path: file_path) do
-    old_source = File.read!(file_path)
-    new_source = edit(old_source)
-    {:ok, result} = case Source.diff(old_source, new_source) do
-      "" -> {:ok, nil}
-      nil -> {:ok, nil}
-      diff -> Req.new(text_req: [file_path: file_path, diff: diff]) 
-    end
-    [result] |> Enum.reject(&is_nil/1)
-  end
+  # ----- Changesets -----
 
   @impl true
-  def cl_code(old_source) do
+  def cl_code(old_source, _args \\ []) do
     new_source = edit(old_source)
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
@@ -43,17 +50,19 @@ defmodule Rfx.Ops.Proto.NoOp do
   end
 
   @impl true
-  def cl_file(file_path: file_path) do
-    cl_code(file_path: file_path)
+  def cl_file(file_path, _args \\ []) do
+    old_source = File.read!(file_path)
+    new_source = edit(old_source)
+    {:ok, result} = case Source.diff(old_source, new_source) do
+      "" -> {:ok, nil}
+      nil -> {:ok, nil}
+      diff -> Req.new(text_req: [file_path: file_path, diff: diff])
+    end
+    [result] |> Enum.reject(&is_nil/1)
   end
 
   @impl true
-  def cl_file(file_path) do
-    cl_code(file_path: file_path)
-  end
-
-  @impl true
-  def cl_project(project_root: project_root) do
+  def cl_project(project_root, _args \\ []) do
     project_root
     |> Rfx.Util.Filesys.project_files()
     |> Enum.map(&cl_file/1)
@@ -62,22 +71,15 @@ defmodule Rfx.Ops.Proto.NoOp do
   end
 
   @impl true
-  def cl_project(project_root) do
-    cl_project(project_root: project_root)
-  end
-
-  @impl true
-  def cl_subapp(subapp_root: subapp_root) do
+  def cl_subapp(subapp_root, _args \\ []) do
     subapp_root
-    |> Rfx.Util.Filesys.subapp_files()
-    |> Enum.map(&cl_file/1)
-    |> List.flatten()
-    |> Enum.reject(&is_nil/1)
+    |> cl_project()
   end
 
   @impl true
-  def cl_subapp(subapp_root) do
-    cl_subapp(subapp_root: subapp_root)
+  def cl_tmpfile(file_path, _args \\ []) do
+    file_path
+    |> cl_file()
   end
 
   # ----- Edit -----

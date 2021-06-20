@@ -33,27 +33,35 @@ defmodule Rfx.Ops.Module.RenameModule do
   alias Rfx.Util.Source
   alias Rfx.Change.Req
 
-  # ----- Changelists -----
-
-  @doc """
-  ClCode
-  """
+  # ----- Argspec -----
 
   @impl true
-  def cl_code(file_path: file_path, old_name: old_name, new_name: new_name) do
-    old_source = File.read!(file_path)
-    new_source = edit(old_source, old_name: old_name, new_name: new_name)
-    {:ok, result} = case Source.diff(old_source, new_source) do
-      "" -> {:ok, nil}
-      nil -> {:ok, nil}
-      diff -> Req.new(text_req: [file_path: file_path, diff: diff]) 
-    end
-    [result] |> Enum.reject(&is_nil/1)
+  def argspec do
+    [
+      about: "Prototype Operation: Delete Comment",
+      status: :experimental,
+      options: [
+        old_name: [
+          short: "-o",
+          long: "--old_name",
+          value_name: "OLD_NAME",
+          help: "Old Module Name"
+        ],
+        new_name: [
+          short: "-n",
+          long: "--new_name",
+          value_name: "NEW_NAME",
+          help: "New Module Name"
+        ]
+      ]
+    ] 
   end
 
+  # ----- Changesets -----
+
   @impl true
-  def cl_code(source_code: old_source, old_name: old_name, new_name: new_name) do
-    new_source = edit(old_source, old_name: old_name, new_name: new_name)
+  def cl_code(old_source, args =  [old_name: _, new_name: _]) do
+    new_source = edit(old_source, args)
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
@@ -62,54 +70,31 @@ defmodule Rfx.Ops.Module.RenameModule do
     [result] |> Enum.reject(&is_nil/1)
   end
 
-  @doc """
-  ClFile
-  """
-
   @impl true
-  def cl_file(file_path: file_path) do
-    cl_code(file_path: file_path)
+  def cl_file(file_path, args = [old_name: _, new_name: _]) do
+    file_path
+    |> cl_code(args)
   end
 
   @impl true
-  def cl_file(file_path) do
-    cl_code(file_path: file_path)
-  end
-
-  @doc """
-  ClProject
-  """
-
-  @impl true
-  def cl_project(project_root: project_root) do
+  def cl_project(project_root, args = [old_name: _, new_name: _]) do
     project_root
     |> Rfx.Util.Filesys.project_files()
-    |> Enum.map(&cl_file/1)
+    |> Enum.map(&(cl_file(&1, args)))
     |> List.flatten()
     |> Enum.reject(&is_nil/1)
   end
 
   @impl true
-  def cl_project(project_root) do
-    cl_project(project_root: project_root)
-  end
-
-  @doc """
-  ClSubapp
-  """
-
-  @impl true
-  def cl_subapp(subapp_root: subapp_root) do
+  def cl_subapp(subapp_root, args = [old_name: _, new_name: _]) do
     subapp_root
-    |> Rfx.Util.Filesys.subapp_files()
-    |> Enum.map(&cl_file/1)
-    |> List.flatten()
-    |> Enum.reject(&is_nil/1)
+    |> cl_project(args)
   end
 
   @impl true
-  def cl_subapp(subapp_root) do
-    cl_subapp(subapp_root: subapp_root)
+  def cl_tmpfile(file_path, args = [old_name: _, new_name: _]) do
+    file_path 
+    |> cl_file(args)
   end
 
   # ----- Edit -----

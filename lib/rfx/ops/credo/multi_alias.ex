@@ -51,27 +51,22 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   alias Rfx.Util.Source
   alias Rfx.Change.Req
 
-  # ----- Changelists -----
+  # ----- Argspec -----
 
   @impl true
-  def cl_code(source_code: source) do
-    cl_code(source)
+  def argspec do
+    [
+      key: :credo_multi_alias,
+      name: "credo.multi_alias",
+      about: "Refactoring Operations for Elixir",
+      status: :experimental
+    ] 
   end
 
-  @impl true
-  def cl_code(file_path: file_path) do
-    old_source = File.read!(file_path)
-    new_source = edit(old_source)
-    {:ok, result} = case Source.diff(old_source, new_source) do
-      "" -> {:ok, nil}
-      nil -> {:ok, nil}
-      diff -> Req.new(text_req: [file_path: file_path, diff: diff]) 
-    end
-    [result] |> Enum.reject(&is_nil/1)
-  end
+  # ----- Changesets -----
 
   @impl true
-  def cl_code(old_source) do
+  def cl_code(old_source, _args \\ []) do
     new_source = edit(old_source)
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
@@ -81,34 +76,20 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     [result] |> Enum.reject(&is_nil/1)
   end
 
-
-  @doc """
-  Applies the `multi_alias` transformation to an Elixir source code file.
-
-  - reads the file
-  - applies the `multi_alias` transformation to the source
-  - return a changelist
-  """
-
   @impl true
-  def cl_file(file_path: file_path) do
-    cl_code(file_path: file_path)
+  def cl_file(file_path, _args \\ []) do
+    old_source = File.read!(file_path)
+    new_source = edit(old_source)
+    {:ok, result} = case Source.diff(old_source, new_source) do
+      "" -> {:ok, nil}
+      nil -> {:ok, nil}
+      diff -> Req.new(text_req: [file_path: file_path, diff: diff])
+    end
+    [result] |> Enum.reject(&is_nil/1)
   end
 
   @impl true
-  def cl_file(file_path) do
-    cl_code(file_path: file_path)
-  end
-
-  @doc """
-  Applies the `multi_alias` transformation to every source file in an Elixir project.
-
-  - walk the project directory, and for each source code file:
-  - read the file
-  """
-
-  @impl true
-  def cl_project(project_root: project_root) do
+  def cl_project(project_root, _args \\ []) do
     project_root
     |> Rfx.Util.Filesys.project_files()
     |> Enum.map(&cl_file/1)
@@ -117,23 +98,17 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   end
 
   @impl true
-  def cl_project(project_root) do
-    cl_project(project_root: project_root)
-  end
-
-  @impl true
-  def cl_subapp(subapp_root: subapp_root) do
+  def cl_subapp(subapp_root, _args \\ []) do
     subapp_root
-    |> Rfx.Util.Filesys.subapp_files()
-    |> Enum.map(&cl_file/1)
-    |> List.flatten()
-    |> Enum.reject(&is_nil/1)
+    |> cl_project()
   end
 
   @impl true
-  def cl_subapp(subapp_root) do
-    cl_subapp(subapp_root: subapp_root)
+  def cl_tmpfile(file_path, _args \\ []) do
+    file_path 
+    |> cl_file()
   end
+
 
   # ----- Edit -----
   
