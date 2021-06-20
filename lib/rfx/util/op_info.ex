@@ -5,9 +5,7 @@ defmodule Rfx.Util.OpInfo do
     |> to_string()
     |> String.replace("Rfx.Ops.", "")
     |> String.replace("Elixir.", "")
-    |> String.split(".")
-    |> Enum.map(&Macro.underscore/1)
-    |> Enum.join("_")
+    |> String.replace(".", "_")
     |> String.to_atom()
   end
 
