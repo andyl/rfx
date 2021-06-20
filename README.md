@@ -14,11 +14,6 @@ To get started with this pre-release code, clone the repo, then run `> mix test
 
 See `Rfx.Catalog` for a complete list of operations.
 
-Project Operations:
-
-- [ ] add dependency 
-- [ ] increment version
-
 Module Operations:
 
 - [ ] rename module (`Rfx.Ops.Module.RenameModule`)
@@ -47,6 +42,11 @@ PhxGen Operations:
 PhxGenAuth Operations:
 
 - [ ] add controller
+
+Project Operations:
+
+- [ ] add dependency 
+- [ ] increment version
 
 Credo Operations:
 
