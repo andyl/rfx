@@ -71,6 +71,37 @@ Posts, discussions and tools:
 - Python: [AST Patching (Hacker News)](https://news.ycombinator.com/item?id=27419237)
 - Javascript: [AST Explorer](https://astexplorer.net/)
 
+## Prior Work
+
+Rfx builds on a history of prior work by the Elixir community:
+
+- [Elixir Macros and Metaprogramming][macros] - Elixir Macros and
+  Metaprogramming work with the Basic AST, and give superpowers to extend the
+  language.
+- [AST Ninja][astn] - AST Ninja is a handy online tool to easily convert Elixir
+  code to a Basic AST.
+- [Refactoring Problems][as_talk] - In his [2019 talk][as_talk]
+  ([slides][as_slides]), [Arjan Scherpenisse][asgh] gives an excellent AST
+  tutorial, and identifies roadblocks to implement Refactoring.  Key problem:
+  the Basic AST does not capture comments.
+- [Sourceror][sourceror] - As of Elixir 1.13 (and backported to Elixir 1.10),
+  [Dorgan][dorgangh] made critical contributions to enable Refactoring.  The
+  first is new generator functions for the Elixir standard library:
+  [Code.string_to_quoted_with_comments/2][stqwc] and
+  [Code.quoted_to_algebra/2][qta].  These allow generation of an Annotated AST
+  which preserves comments.  The second is a new library [Sourceror][sourceror]
+  which provides tooling to manipulate the Annotated AST.
+
+[macros]: https://www.google.com/search?q=elixir+macros+metaprogramming&oq=elixir+macros+metaprogramming&aqs=chrome.0.69i59j69i64j69i60.6516j0j1&sourceid=chrome&ie=UTF-8
+[astn]: http://ast.ninja
+[asgh]: https://github.com/arjan 
+[as_talk]: https://www.youtube.com/watch?v=aM0BLWgr0g4&t=117s
+[as_slides]: https://docs.google.com/presentation/d/15_xKuL_H4Eu-EkGarxVixCk192858avE1ef1gmcVKoc/edit#slide=id.g552f9bdc39_0_0
+[sourceror]: https://github.com/doorgan/sourceror
+[dorgangh]: https://github.com/doorgan
+[stqwc]: https://hexdocs.pm/elixir/master/Code.html#quoted_to_algebra/2
+[qta]: https://hexdocs.pm/elixir/master/Code.html#string_to_quoted_with_comments/2
+
 ## Elixir AST Tooling
 
 **This section is a work in progress!!**
@@ -110,35 +141,4 @@ Each tool uses different methods to convert between source code and AST.
     # TBD
     # Document Algebra to Code
     # TBD
-
-Rfx builds on a history of prior work by the Elixir community:
-
-- [Elixir Macros and Metaprogramming][macros] - Elixir Macros and
-  Metaprogramming work with the Basic AST, and give superpowers to extend the
-  language.
-- [AST Ninja][astn] - AST Ninja is a handy online tool to easily convert Elixir
-  code to a Basic AST.
-- [Refactoring Problems][as_talk] - In his [2019 talk][as_talk]
-  ([slides][as_slides]), [Arjan Scherpenisse][asgh] gives an excellent AST
-  tutorial, and identifies roadblocks to implement Refactoring.  Key problem:
-  the Basic AST does not capture comments.
-- [Sourceror][sourceror] - As of Elixir 1.13 (and backported to Elixir 1.10),
-  [Dorgan][dorgangh] made critical contributions to enable Refactoring.  The
-  first is new generator functions for the Elixir standard library:
-  [Code.string_to_quoted_with_comments/2][stqwc] and
-  [Code.quoted_to_algebra/2][qta].  These allow generation of an Annotated AST
-  which preserves comments.  The second is a new library [Sourceror][sourceror]
-  which provides tooling to manipulate the Annotated AST.
-
-[macros]: https://www.google.com/search?q=elixir+macros+metaprogramming&oq=elixir+macros+metaprogramming&aqs=chrome.0.69i59j69i64j69i60.6516j0j1&sourceid=chrome&ie=UTF-8
-[astn]: http://ast.ninja
-[asgh]: https://github.com/arjan 
-[as_talk]: https://www.youtube.com/watch?v=aM0BLWgr0g4&t=117s
-[as_slides]: https://docs.google.com/presentation/d/15_xKuL_H4Eu-EkGarxVixCk192858avE1ef1gmcVKoc/edit#slide=id.g552f9bdc39_0_0
-[sourceror]: https://github.com/doorgan/sourceror
-[dorgangh]: https://github.com/doorgan
-[stqwc]: https://hexdocs.pm/elixir/master/Code.html#quoted_to_algebra/2
-[qta]: https://hexdocs.pm/elixir/master/Code.html#string_to_quoted_with_comments/2
-
-
 
