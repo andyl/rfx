@@ -58,10 +58,9 @@ defmodule Rfx.Change.Req.FileReq do
     {:ok, valid_struct}
   end
 
-  # ----- Conversion -----
-
   # ----- Application -----
 
+  # MOVE TO Rfx.Change.Apply
   def apply!(%{cmd: :file_create, src_path: srcpath}) do
     File.touch(srcpath) 
   end

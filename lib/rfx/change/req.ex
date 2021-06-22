@@ -6,9 +6,10 @@ defmodule Rfx.Change.Req do
   A datastructure that represents the atomic refactoring changes to be made as
   part of a refactoring operation.
 
-  The `Change.Req` struct has two elements:
-  - *text_req* (`Rfx.Req.TextReq`) - the text edit request 
-  - *file_req* (`Rfx.Req.FileReq`) - the file system request (create, move, delete)
+  The `Change.Req` struct has three elements:
+  - *text_req* (`Rfx.Change.Req.TextReq`) - the text edit request 
+  - *file_req* (`Rfx.Change.Req.FileReq`) - the file system request (create, move, delete)
+  - *log* - (`Rfx.Change.Log`) - a log of change events (apply, cast)
 
   A Change.Req struct may contain an *text_req* element, or a *file_req*
   element, or both.
@@ -17,7 +18,7 @@ defmodule Rfx.Change.Req do
   applied first, then the *file_req* element.
   """
 
-  defstruct [:text_req, :file_req]
+  defstruct [:text_req, :file_req, :log]
 
   alias Rfx.Change.Req
   alias Rfx.Change.Req.TextReq
@@ -84,6 +85,9 @@ defmodule Rfx.Change.Req do
 
   # ----- Application -----
   
+  # Move all these to Rfx.Apply
+  # TextReq.apply! and FileReq.apply! need to be moved to Rfx.Apply (private functions)
+
   def apply!(%Req{text_req: editargs, file_req: nil}) do
     %Req{
       text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),

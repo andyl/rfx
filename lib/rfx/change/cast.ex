@@ -1,5 +1,7 @@
 defmodule Rfx.Change.Cast do
   
+  # OLD - instead use Rfx.Change.cast(changeset, type)
+  
   @moduledoc """
   Contains helper functions that operate on changeset.  
 
@@ -17,6 +19,9 @@ defmodule Rfx.Change.Cast do
   def apply!(changeset) do
     changeset
     |> Enum.map(&Change.Req.apply!(&1))
+  end
+
+  def types do
   end
 
 end
