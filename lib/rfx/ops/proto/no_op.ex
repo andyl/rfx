@@ -17,22 +17,9 @@ defmodule Rfx.Ops.Proto.NoOp do
   @impl true
   def argspec do
     [
-      about: "Prototype Operation: NoOp",
+      about: "NoOp - Use for Testing",
       status: :experimental, 
-      options: [
-        old_name: [
-          short: "-o",
-          long: "--old_name",
-          value_name: "OLD_NAME",
-          help: "Old Module Name"
-        ],
-        new_name: [
-          short: "-n",
-          long: "--new_name",
-          value_name: "NEW_NAME",
-          help: "New Module Name"
-        ]
-      ]
+      options: []
     ] 
   end
 

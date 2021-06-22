@@ -22,7 +22,7 @@ defmodule Rfx.Ops.Proto.CommentDel do
   @impl true
   def argspec do
     [
-      about: "Prototype Operation: Delete Comment",
+      about: "Delete Test Comment",
       status: :experimental
     ] 
   end

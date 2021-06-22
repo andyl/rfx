@@ -58,7 +58,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     [
       key: :credo_multi_alias,
       name: "credo.multi_alias",
-      about: "Refactoring Operations for Elixir",
+      about: "Apply multi_alias transformation",
       status: :experimental
     ] 
   end

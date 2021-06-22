@@ -17,7 +17,7 @@ defmodule Rfx.Ops.Proto.CommentAdd do
   @impl true
   def argspec do
     [
-      about: "Prototype Operation: Add Comment",
+      about: "Add Test Comment",
       status: :experimental
     ] 
   end

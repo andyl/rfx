@@ -38,7 +38,7 @@ defmodule Rfx.Ops.Module.RenameModule do
   @impl true
   def argspec do
     [
-      about: "Prototype Operation: Delete Comment",
+      about: "Rename Module",
       status: :experimental,
       options: [
         old_name: [
