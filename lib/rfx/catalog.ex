@@ -11,17 +11,32 @@ defmodule Rfx.Catalog do
   The Catalog is used by `rfx_cli` to generate option lists.
   """
 
+  alias Rfx.Util.Introspect
+
   @doc """
   Return a list of all Rfx.Ops modules available in the Beam.
   """
   def all do
-    Rfx.Util.Introspect.modules_belonging_to_namespace("Rfx.Ops.")
+    Introspect.modules_belonging_to_namespace("Rfx.Ops.")
+    raw_ops()
+    |> Enum.filter(&has_argspec?/1)
   end
 
   @doc """
   Select Rfx operations in a given namespace.
   """
-  def select(namespace) do
-    Rfx.Util.Introspect.modules_belonging_to_namespace("Rfx.Ops." <> namespace)
+  def select(namespace \\ "") do
+    raw_ops(namespace)
+    |> Enum.filter(&has_argspec?/1)
   end
+
+  def raw_ops(namespace \\ "") do
+    Introspect.modules_belonging_to_namespace("Rfx.Ops." <> namespace)
+  end
+
+  defp has_argspec?(module) do
+    module
+    |> Introspect.has_function?({:argspec, 0})
+  end
+
 end
