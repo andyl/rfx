@@ -34,6 +34,12 @@ Filesystem Operations:
 - [ ] move directory (`Rfx.Ops.Filesys.MvDir`)
 - [ ] move file (`Rfx.Ops.Filesys.MvFile`)
 
+Surface Operations:
+
+- [ ] rename component
+- [ ] rename property
+- [ ] rename named-slot
+
 PhxGen Operations:
 
 - [ ] add route
