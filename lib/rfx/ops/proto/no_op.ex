@@ -10,7 +10,7 @@ defmodule Rfx.Ops.Proto.NoOp do
   """
 
   alias Rfx.Util.Source
-  alias Rfx.Change.Req
+  alias Rfx.Change.Request
 
   # ----- Argspec -----
 
@@ -31,7 +31,7 @@ defmodule Rfx.Ops.Proto.NoOp do
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Req.new(text_req: [edit_source: old_source, diff: diff])
+      diff -> Request.new(text_req: [edit_source: old_source, diff: diff])
     end
     [result] |> Enum.reject(&is_nil/1)
   end
@@ -43,7 +43,7 @@ defmodule Rfx.Ops.Proto.NoOp do
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Req.new(text_req: [file_path: file_path, diff: diff])
+      diff -> Request.new(text_req: [file_path: file_path, diff: diff])
     end
     [result] |> Enum.reject(&is_nil/1)
   end

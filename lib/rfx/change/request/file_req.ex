@@ -1,4 +1,4 @@
-defmodule Rfx.Change.Req.FileReq do
+defmodule Rfx.Change.Request.FileReq do
   
   @moduledoc """
   Change.Req.FileReq struct and support functions.

@@ -1,4 +1,4 @@
-defmodule Rfx.Change.Req do
+defmodule Rfx.Change.Request do
 
   @moduledoc """
   ChangeReq struct and support functions.
@@ -20,9 +20,9 @@ defmodule Rfx.Change.Req do
 
   defstruct [:text_req, :file_req, :log]
 
-  alias Rfx.Change.Req
-  alias Rfx.Change.Req.TextReq
-  alias Rfx.Change.Req.FileReq
+  alias Rfx.Change.Request
+  alias Rfx.Change.Request.TextReq
+  alias Rfx.Change.Request.FileReq
 
   # ----- Construction -----
   
@@ -31,14 +31,14 @@ defmodule Rfx.Change.Req do
   """
   def new(text_req: editargs) do
     case TextReq.new(editargs) do
-      {:ok, result} -> {:ok, %Req{text_req: result}}
+      {:ok, result} -> {:ok, %Request{text_req: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
 
   def new(file_req: fileargs) do
     case FileReq.new(fileargs) do
-      {:ok, result} -> {:ok, %Req{file_req: result}}
+      {:ok, result} -> {:ok, %Request{file_req: result}}
       {:error, msg} -> {:error, msg}
     end 
   end
@@ -55,7 +55,7 @@ defmodule Rfx.Change.Req do
     end
 
     case {edit_result, file_result} do
-      {{true, edit_result}, {true, file_result}} -> {:ok, %Req{text_req: edit_result, file_req: file_result}}
+      {{true, edit_result}, {true, file_result}} -> {:ok, %Request{text_req: edit_result, file_req: file_result}}
       {{true, _}, {false, msg}} -> {:error, msg}
       {{false, msg}, {true, _}} -> {:error, msg}
       {{false, msg1}, {false, msg2}} -> {:error, Enum.join([msg1, msg2], ", ")}
@@ -64,21 +64,21 @@ defmodule Rfx.Change.Req do
 
   # ----- Conversion -----
   
-  def to_string(%Req{text_req: editargs, file_req: fileargs}) do
-    %Req{
+  def to_string(%Request{text_req: editargs, file_req: fileargs}) do
+    %Request{
       text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs)),
       file_req: fileargs
     }
   end
 
   def to_string(text_req: editargs) do
-    %Req{
+    %Request{
       text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs))
     }
   end
 
   def to_string(file_req: fileargs) do
-    %Req{
+    %Request{
       file_req: fileargs 
     }
   end
@@ -88,22 +88,22 @@ defmodule Rfx.Change.Req do
   # Move all these to Rfx.Apply
   # TextReq.apply! and FileReq.apply! need to be moved to Rfx.Apply (private functions)
 
-  def apply!(%Req{text_req: editargs, file_req: nil}) do
-    %Req{
+  def apply!(%Request{text_req: editargs, file_req: nil}) do
+    %Request{
       text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
       file_req: nil
     }
   end
 
-  def apply!(%Req{file_req: fileargs, text_req: nil}) do
-    %Req{
+  def apply!(%Request{file_req: fileargs, text_req: nil}) do
+    %Request{
       file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs)),
       text_req: nil
     }
   end
 
-  def apply!(%Req{text_req: editargs, file_req: fileargs}) do
-    %Req{
+  def apply!(%Request{text_req: editargs, file_req: fileargs}) do
+    %Request{
       text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
       file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs))
     }

@@ -1,7 +1,7 @@
-defmodule Rfx.Change.Req.TextReqTest do
+defmodule Rfx.Change.Request.TextReqTest do
   use ExUnit.Case
 
-  alias Rfx.Change.Req.TextReq
+  alias Rfx.Change.Request.TextReq
   alias Rfx.Util.Tst
 
   # ----- Construction -----
