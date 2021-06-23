@@ -11,8 +11,22 @@ defmodule Rfx.Change.Request do
   - *file_req* (`Rfx.Change.Req.FileReq`) - the file system request (create, move, delete)
   - *log* - (`Rfx.Change.Log`) - a log of change events (apply, cast)
 
-  A Change.Req struct may contain an *text_req* element, or a *file_req*
-  element, or both.
+  A Change.Request struct may contain a *text_req* element, a *file_req* element, a
+  *log* element, or all.
+
+  The request struct looks like this:
+
+      %Change.Request{
+        file_req: %{file request properties...},
+        text_req: %{text request properties...},
+        log: %{
+          apply: [text: result, file: <result>],
+          convert: %{
+            to_string: "string",
+            to_lsp: %{struct consumed by ElixirLS}
+          }
+        }
+      }
 
   Note that when a Req is applied to the filesystem, the *text_req* element is
   applied first, then the *file_req* element.
@@ -27,7 +41,7 @@ defmodule Rfx.Change.Request do
   # ----- Construction -----
   
   @doc """
-  Create a new `Req`
+  Create a new `Request`
   """
   def new(text_req: editargs) do
     case TextReq.new(editargs) do
@@ -62,50 +76,46 @@ defmodule Rfx.Change.Request do
     end 
   end
 
-  # ----- Conversion -----
+  # ----- Convert -----
   
-  def to_string(%Request{text_req: editargs, file_req: fileargs}) do
-    %Request{
-      text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs)),
-      file_req: fileargs
-    }
+  def convert(changereq, type) do
+    mod = Rfx.Catalog.ConvCat.select_conv(type) |> List.first()
+    mod.changereq(changereq)
   end
 
-  def to_string(text_req: editargs) do
-    %Request{
-      text_req: editargs |> Map.put(:output_to_string, TextReq.to_string(editargs))
-    }
+  def convert!(changereq, type) do
+    convert(changereq, type)
   end
 
-  def to_string(file_req: fileargs) do
-    %Request{
-      file_req: fileargs 
-    }
-  end
-
-  # ----- Application -----
+  # ----- Apply -----
   
-  # Move all these to Rfx.Apply
-  # TextReq.apply! and FileReq.apply! need to be moved to Rfx.Apply (private functions)
-
-  def apply!(%Request{text_req: editargs, file_req: nil}) do
+  def apply!(%Request{text_req: editargs, file_req: nil, log: log}) do
+    result = [text: TextReq.apply!(editargs), file: nil]
+    newlog = (log || %{}) |> Map.merge(%{apply: result})
     %Request{
-      text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
-      file_req: nil
+      text_req: editargs,
+      file_req: nil, 
+      log: newlog
     }
   end
 
-  def apply!(%Request{file_req: fileargs, text_req: nil}) do
+  def apply!(%Request{file_req: fileargs, text_req: nil, log: log}) do
+    result = [text: nil, file: FileReq.apply!(fileargs)]
+    newlog = (log || %{}) |> Map.merge(%{apply: result})
     %Request{
       file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs)),
-      text_req: nil
+      text_req: nil,
+      log: newlog
     }
   end
 
-  def apply!(%Request{text_req: editargs, file_req: fileargs}) do
+  def apply!(%Request{text_req: editargs, file_req: fileargs, log: log}) do
+    result = [text: TextReq.apply!(editargs), file: FileReq.apply!(fileargs)]
+    newlog = (log || %{}) |> Map.merge(%{apply: result})
     %Request{
-      text_req: editargs |> Map.put(:output_apply!, TextReq.apply!(editargs)),
-      file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs))
+      text_req: editargs,
+      file_req: fileargs,
+      log: newlog
     }
   end
 
