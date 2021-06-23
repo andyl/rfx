@@ -45,13 +45,15 @@ defmodule Rfx.Ops.Module.RenameModule do
           short: "-o",
           long: "--old_name",
           value_name: "OLD_NAME",
-          help: "Old Module Name"
+          help: "Old Module Name",
+          required: true
         ],
         new_name: [
           short: "-n",
           long: "--new_name",
           value_name: "NEW_NAME",
-          help: "New Module Name"
+          help: "New Module Name",
+          required: true
         ]
       ]
     ] 

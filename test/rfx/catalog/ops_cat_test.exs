@@ -36,7 +36,7 @@ defmodule Rfx.Catalog.OpsCatTest do
     test "with arg" do
       list = OpsCat.select_ops("Proto")
       assert list
-      assert list |> length() == 3
+      assert list |> length() == 4
     end
   end
 end
