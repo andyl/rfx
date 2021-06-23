@@ -49,7 +49,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   """
 
   alias Rfx.Util.Source
-  alias Rfx.Change.Req
+  alias Rfx.Change.Request
 
   # ----- Argspec -----
 
@@ -58,7 +58,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     [
       key: :credo_multi_alias,
       name: "credo.multi_alias",
-      about: "Refactoring Operations for Elixir",
+      about: "Apply multi_alias transformation",
       status: :experimental
     ] 
   end
@@ -71,7 +71,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Req.new(text_req: [edit_source: old_source, diff: diff])
+      diff -> Request.new(text_req: [edit_source: old_source, diff: diff])
     end
     [result] |> Enum.reject(&is_nil/1)
   end
@@ -83,7 +83,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Req.new(text_req: [file_path: file_path, diff: diff])
+      diff -> Request.new(text_req: [file_path: file_path, diff: diff])
     end
     [result] |> Enum.reject(&is_nil/1)
   end

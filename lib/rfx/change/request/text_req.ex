@@ -1,4 +1,4 @@
-defmodule Rfx.Change.Req.TextReq do
+defmodule Rfx.Change.Request.TextReq do
 
   @moduledoc """
   Change.Req.Text struct and support functions.
@@ -46,6 +46,7 @@ defmodule Rfx.Change.Req.TextReq do
 
   # ----- Conversion -----
 
+  # OLD - MOVE TO Rfx.Change.Cast
   def to_string(%{file_path: path, diff: diff}) do
     path 
     |> File.read!()

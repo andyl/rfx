@@ -31,14 +31,14 @@ defmodule Rfx.Ops.Module.RenameModule do
   """
 
   alias Rfx.Util.Source
-  alias Rfx.Change.Req
+  alias Rfx.Change.Request
 
   # ----- Argspec -----
 
   @impl true
   def argspec do
     [
-      about: "Prototype Operation: Delete Comment",
+      about: "Rename Module",
       status: :experimental,
       options: [
         old_name: [
@@ -65,7 +65,7 @@ defmodule Rfx.Ops.Module.RenameModule do
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Req.new(text_req: [edit_source: old_source, diff: diff])
+      diff -> Request.new(text_req: [edit_source: old_source, diff: diff])
     end
     [result] |> Enum.reject(&is_nil/1)
   end

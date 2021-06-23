@@ -3,16 +3,15 @@
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
 
-**NOTE** at the moment this code does not work!  We're sorting out the
-programming interfaces and project organization.  Once this is done, we'll
-build the refactoring operations step by step.
+**NOTE** at the moment this code is under heavy development!  It will change
+rapidly, and there will be bugs!
 
 To get started with this pre-release code, clone the repo, then run `> mix test
 --exclude pending`.
 
 ## Ops Modules
 
-See `Rfx.Catalog` for a complete list of operations.
+See `Rfx.Catalog.OpsCat` for a complete list of operations.
 
 Module Operations:
 
@@ -71,20 +70,27 @@ Rfx Operations depend on the excellent
 ## Change Sets
 
 Each operation returns a *change set* (`Rfx.Change.Set`) with a list of of
-*change requests* (`Rfx.Change.Req`).  The *change set* is a data structure that
-describes all the refactoring changes to be made for an operation.
+*change requests* (`Rfx.Change.Request`).  The *change set* is a data structure
+that describes all the refactoring changes to be made for an operation.
 
 A *change request* struct has elements for *text edits* and *file actions*
 (create, rename, delete).
 
-Rfx provides helper functions to manipulate changesets:
+## Helper Functions
+
+Rfx provides a catalog of conversion functions to annotate changesets:
 
 ```elixir
-Rfx.Change.Cast.to_string(changeset) #> Returns the modified source code
-Rfx.Change.Cast.to_patch(changeset)  #> Returns a unix-standard patchfile
-Rfx.Change.Cast.to_lsp(changeset)    #> Returns a data structure for LSP
-Rfx.Change.Cast.to_pr(changeset)     #> Returns a pull-request data structure
-Rfx.Change.Cast.apply!(changeset)    #> Applies the changereqs to the filesystem
+Rfx.Change.Set.convert(changeset, :to_string)    #> Returns the modified source code
+Rfx.Change.Set.convert(changeset, :to_patchfile) #> Returns a unix-standard patchfile
+Rfx.Change.Set.convert(changeset, :to_lsp)       #> Returns a data structure for LSP
+Rfx.Change.Set.convert(changeset, to_pr)         #> Returns a pull-request data structure
+```
+
+Rfx provides an `apply` function that applies the change requests to the filesystem.
+
+```elixir
+Rfx.Change.Set.apply!(changeset)                 #> Applies the changereqs to the filesystem
 ```
 
 ## Code Organization
