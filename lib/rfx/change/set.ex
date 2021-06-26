@@ -16,7 +16,7 @@ defmodule Rfx.Change.Set do
 
   def apply(changeset) do
     changeset
-    |> Enum.map(&Rfx.Change.Request.apply/1)
+    |> Enum.map(&Rfx.Change.Request.apply!/1)
   end
 
   def apply!(changeset) do

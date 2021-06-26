@@ -6,12 +6,16 @@ code.
 **NOTE** at the moment this code is under heavy development!  It will change
 rapidly, and there will be bugs!
 
+Rfx operations are meant to be embedded into editors, tools and end-user
+applications.  See the experimental companion project
+[rfxi](https://github.com/andyl/rfxi) for an example.
+
 To get started with this pre-release code, clone the repo, then run `> mix test
 --exclude pending`.
 
 ## Ops Modules
 
-See `Rfx.Catalog.OpsCat` for a complete list of operations.
+See `Rfx.Catalog.OpsCat` for a current catalog of Operations.
 
 Module Operations:
 
@@ -33,6 +37,10 @@ Filesystem Operations:
 - [ ] move directory (`Rfx.Ops.Filesys.MvDir`)
 - [ ] move file (`Rfx.Ops.Filesys.MvFile`)
 
+Credo Operations:
+
+- [x] multi-alias (`Rfx.Ops.Credo.MultiAlias`)
+
 Surface Operations:
 
 - [ ] rename component
@@ -53,10 +61,6 @@ Project Operations:
 - [ ] add dependency 
 - [ ] increment version
 
-Credo Operations:
-
-- [x] multi-alias (`Rfx.Ops.Credo.MultiAlias`)
-
 Prototype Operations:
 
 - [x] comment add (`Rfx.Ops.Proto.CommentAdd`)
@@ -76,18 +80,18 @@ that describes all the refactoring changes to be made for an operation.
 A *change request* struct has elements for *text edits* and *file actions*
 (create, rename, delete).
 
-## Helper Functions
+## Converter Functions
 
-Rfx provides a catalog of conversion functions to annotate changesets:
+Rfx provides an extensible catalog of converter functions:
 
 ```elixir
 Rfx.Change.Set.convert(changeset, :to_string)    #> Returns the modified source code
 Rfx.Change.Set.convert(changeset, :to_patchfile) #> Returns a unix-standard patchfile
 Rfx.Change.Set.convert(changeset, :to_lsp)       #> Returns a data structure for LSP
-Rfx.Change.Set.convert(changeset, to_pr)         #> Returns a pull-request data structure
+Rfx.Change.Set.convert(changeset, :to_pr)        #> Returns a pull-request data structure
 ```
 
-Rfx provides an `apply` function that applies the change requests to the filesystem.
+Rfx also provides a function that applies the change requests to the filesystem.
 
 ```elixir
 Rfx.Change.Set.apply!(changeset)                 #> Applies the changereqs to the filesystem
@@ -144,7 +148,7 @@ applications:
 
 - Tests, Elixir Scripts and LiveNotebooks
 - Generators (eg phx.gen, phx.gen.auth)
-- CLI (see the experimental [rfx_cli](https://github.com/andyl/rfx_cli))
+- CLI (see the experimental [rfxi](https://github.com/andyl/rfxi))
 - Editor Plugins (see the experimental [rfx_nvim](https://github.com/andyl/rfx_nvim))
 - Mix tasks 
 - ElixirLs
