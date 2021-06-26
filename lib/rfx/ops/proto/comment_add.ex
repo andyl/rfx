@@ -36,13 +36,13 @@ defmodule Rfx.Ops.Proto.CommentAdd do
   end
 
   @impl true
-  def cl_file(file_path, _args \\ []) do
-    old_source = File.read!(file_path)
+  def cl_file(input_file, _args \\ []) do
+    old_source = File.read!(input_file)
     new_source = edit(old_source)
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Request.new(text_req: [file_path: file_path, diff: diff])
+      diff -> Request.new(text_req: [input_file: input_file, diff: diff])
     end
     [result] |> Enum.reject(&is_nil/1)
   end
@@ -63,13 +63,13 @@ defmodule Rfx.Ops.Proto.CommentAdd do
   end
 
   @impl true
-  def cl_tmpfile(file_path, _args \\ []) do
-    old_source = File.read!(file_path)
+  def cl_tmpfile(input_file, _args \\ []) do
+    old_source = File.read!(input_file)
     new_source = edit(old_source)
     {:ok, result} = case Source.diff(old_source, new_source) do
       "" -> {:ok, nil}
       nil -> {:ok, nil}
-      diff -> Request.new(text_req: [file_path: file_path, diff: diff]) 
+      diff -> Request.new(text_req: [input_file: input_file, diff: diff]) 
     end
     [result] |> Enum.reject(&is_nil/1)
   end

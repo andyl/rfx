@@ -17,8 +17,8 @@ defmodule Rfx.Change.Request.TextReq do
 
   # ----- Construction -----
 
-  def new(file_path: path, diff: diff) do
-    valid_struct = %{file_path: path, diff: diff}
+  def new(input_file: path, diff: diff) do
+    valid_struct = %{input_file: path, diff: diff}
     case File.exists?(path) do
       true ->  {:ok, valid_struct}
       _ -> {:error, "No file #{path}"}
@@ -32,7 +32,7 @@ defmodule Rfx.Change.Request.TextReq do
 
   # ----- Application -----
   
-  def apply!(%{file_path: path, diff: diff}) do
+  def apply!(%{input_file: path, diff: diff}) do
     new_source = path
                  |> File.read!()
                  |> Source.patch(diff)
@@ -46,7 +46,7 @@ defmodule Rfx.Change.Request.TextReq do
 
   # ----- Conversion -----
 
-  def to_string(%{file_path: path, diff: diff}) do
+  def to_string(%{input_file: path, diff: diff}) do
     path 
     |> File.read!()
     |> Source.patch(diff)

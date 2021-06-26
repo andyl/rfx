@@ -17,7 +17,7 @@ defmodule Rfx.Change.Convert.ToString do
     Map.merge(changereq, %{log: newlog})
   end
 
-  defp gen_string(%{file_path: path, diff: diff}) do
+  defp gen_string(%{input_file: path, diff: diff}) do
     path 
     |> File.read!()
     |> Source.patch(diff)

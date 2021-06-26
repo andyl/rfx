@@ -63,7 +63,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
       refute changereq |> Map.get(:file_req)
       assert changereq |> Map.get(:text_req)
       assert changereq |> Map.get(:text_req) |> Map.get(:diff)
-      assert changereq |> Map.get(:text_req) |> Map.get(:file_path)
+      assert changereq |> Map.get(:text_req) |> Map.get(:input_file)
     end
 
     test "diff generation" do
@@ -77,7 +77,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
     test "patching" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = CommentDel.cl_file(file)
-      code = Map.get(changereq, :text_req) |> Map.get(:file_path) |> File.read() |> elem(1)
+      code = Map.get(changereq, :text_req) |> Map.get(:input_file) |> File.read() |> elem(1)
       diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected
@@ -97,7 +97,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
       refute changereq |> Map.get(:file_req)
       assert changereq |> Map.get(:text_req)
       assert changereq |> Map.get(:text_req) |> Map.get(:diff)
-      assert changereq |> Map.get(:text_req) |> Map.get(:file_path)
+      assert changereq |> Map.get(:text_req) |> Map.get(:input_file)
     end
 
     test "diff generation" do
@@ -110,7 +110,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
     test "patching" do
       file = Tst.gen_file(@base_source)
       [changereq | _] = CommentDel.cl_file(file)
-      code = Map.get(changereq, :text_req) |> Map.get(:file_path) |> File.read() |> elem(1)
+      code = Map.get(changereq, :text_req) |> Map.get(:input_file) |> File.read() |> elem(1)
       diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected

@@ -3,12 +3,12 @@
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
 
-**NOTE** at the moment this code is under heavy development!  It will change
-rapidly, and there will be bugs!
+**NOTE** This code is under heavy development!  It will change rapidly!  There
+will be bugs!
 
 Rfx operations are meant to be embedded into editors, tools and end-user
-applications.  See the experimental companion project
-[rfxi](https://github.com/andyl/rfxi) for an example.
+applications.  See the experimental app [rfxi](https://github.com/andyl/rfxi)
+for an example.
 
 To get started with this pre-release code, clone the repo, then run `> mix test
 --exclude pending`.

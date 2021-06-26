@@ -73,8 +73,8 @@ defmodule Rfx.Ops.Module.RenameModule do
   end
 
   @impl true
-  def cl_file(file_path, args = [old_name: _, new_name: _]) do
-    file_path
+  def cl_file(input_file, args = [old_name: _, new_name: _]) do
+    input_file
     |> cl_code(args)
   end
 
@@ -94,8 +94,8 @@ defmodule Rfx.Ops.Module.RenameModule do
   end
 
   @impl true
-  def cl_tmpfile(file_path, args = [old_name: _, new_name: _]) do
-    file_path 
+  def cl_tmpfile(input_file, args = [old_name: _, new_name: _]) do
+    input_file 
     |> cl_file(args)
   end
 

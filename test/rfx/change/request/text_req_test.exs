@@ -10,14 +10,14 @@ defmodule Rfx.Change.Request.TextReqTest do
     test "returns :ok with valid file" do
       path = Tst.gen_file("content ok")
       diff = "diff ok"
-      assert {:ok, result} = TextReq.new(file_path: path, diff: diff)
-      assert result == %{file_path: path, diff: diff}
+      assert {:ok, result} = TextReq.new(input_file: path, diff: diff)
+      assert result == %{input_file: path, diff: diff}
     end
 
     test "returns :error with missing file" do
       path = "/tmp/missing.ex"
       diff = "diff ok"
-      assert {:error, _} = TextReq.new(file_path: path, diff: diff)
+      assert {:error, _} = TextReq.new(input_file: path, diff: diff)
     end
   end
 
@@ -34,7 +34,7 @@ defmodule Rfx.Change.Request.TextReqTest do
   
   # ----- Application -----
 
-  describe "apply with file_path" do
+  describe "apply with input_file" do
     test "description" do
       path = Tst.gen_file(":ok") 
       text_req = Rfx.Ops.Proto.CommentAdd.cl_file(path) 
