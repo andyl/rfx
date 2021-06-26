@@ -26,7 +26,7 @@ defmodule Rfx.Change.Convert.ToUpcase do
     |> String.upcase()
   end
 
-  defp gen_string(%{edit_source: source, diff: diff}) do
+  defp gen_string(%{input_text: source, diff: diff}) do
     source 
     |> Source.patch(diff)
     |> String.upcase()

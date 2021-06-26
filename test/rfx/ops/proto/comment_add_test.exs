@@ -32,7 +32,7 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
       refute changereq |> Map.get(:file_req)
       assert changereq |> Map.get(:text_req)
       assert changereq |> Map.get(:text_req) |> Map.get(:diff)
-      assert changereq |> Map.get(:text_req) |> Map.get(:edit_source)
+      assert changereq |> Map.get(:text_req) |> Map.get(:input_text)
     end
 
     test "diff generation" do
@@ -43,7 +43,7 @@ defmodule Rfx.Ops.Proto.CommentAddTest do
 
     test "patching" do
       [changereq | _] = CommentAdd.cl_code(@base_source)
-      code = Map.get(changereq, :text_req) |> Map.get(:edit_source)
+      code = Map.get(changereq, :text_req) |> Map.get(:input_text)
       diff = Map.get(changereq, :text_req) |> Map.get(:diff) 
       new_code = Source.patch(code, diff)
       assert new_code == @base_expected

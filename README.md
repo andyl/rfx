@@ -134,7 +134,7 @@ Mix.install([ {:rfx, github: "andyl/rfx"} ])
 # [
 #   %Rfx.Change.Request{
 #     file_req: nil,
-#     text_req: %{diff: "0a1\n> # TestComment\n", edit_source: "x = 1"},
+#     text_req: %{diff: "0a1\n> # TestComment\n", input_text: "x = 1"},
 #     log: %{convert: %{to_string: "# TestComment\nx = 1"}}
 #   }
 # ]

@@ -25,8 +25,8 @@ defmodule Rfx.Change.Request.TextReqTest do
     test "returns :ok" do
       content = "content ok"
       diff = "diff ok"
-      assert {:ok, result} = TextReq.new(edit_source: content, diff: diff)
-      assert result == %{edit_source: content, diff: diff}
+      assert {:ok, result} = TextReq.new(input_text: content, diff: diff)
+      assert result == %{input_text: content, diff: diff}
     end
   end
   
@@ -45,7 +45,7 @@ defmodule Rfx.Change.Request.TextReqTest do
     end
   end
 
-  describe "apply with edit_source" do
+  describe "apply with input_text" do
     source = ":ok"
     text_req = Rfx.Ops.Proto.CommentAdd.cl_code(source) 
                |> List.first()

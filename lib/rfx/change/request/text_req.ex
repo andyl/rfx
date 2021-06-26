@@ -6,7 +6,7 @@ defmodule Rfx.Change.Request.TextReq do
   Edit elements - source file and diff.
 
   Change.Req.Text must have:
-  - either *edit_path* or *edit_source*
+  - either *edit_path* or *input_text*
   - *diff*
 
   Not using a struct here for now, in order to use the shorthand access syntax
@@ -25,8 +25,8 @@ defmodule Rfx.Change.Request.TextReq do
     end
   end
 
-  def new(edit_source: source, diff: diff) do
-    valid_struct = %{edit_source: source, diff: diff}
+  def new(input_text: source, diff: diff) do
+    valid_struct = %{input_text: source, diff: diff}
     {:ok, valid_struct}
   end
 
@@ -40,20 +40,19 @@ defmodule Rfx.Change.Request.TextReq do
     {:ok, "File #{path} updated with new content"}
   end
 
-  def apply!(%{edit_source: _source, diff: _}) do
+  def apply!(%{input_text: _source, diff: _}) do
     {:error, "Can only apply changes to a file."}
   end
 
   # ----- Conversion -----
 
-  # OLD - MOVE TO Rfx.Change.Cast
   def to_string(%{file_path: path, diff: diff}) do
     path 
     |> File.read!()
     |> Source.patch(diff)
   end
 
-  def to_string(%{edit_source: source, diff: diff}) do
+  def to_string(%{input_text: source, diff: diff}) do
     source 
     |> Source.patch(diff)
   end

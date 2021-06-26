@@ -26,7 +26,7 @@ defmodule Rfx.Change.Convert.ToDowncase do
     |> String.downcase()
   end
 
-  defp gen_string(%{edit_source: source, diff: diff}) do
+  defp gen_string(%{input_text: source, diff: diff}) do
     source 
     |> Source.patch(diff)
     |> String.downcase()
