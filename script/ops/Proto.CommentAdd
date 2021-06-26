@@ -1,0 +1,9 @@
+#!/usr/bin/env elixir
+
+Mix.install([ {:rfx, github: "andyl/rfx"} ])
+
+"x = 1"
+|> Rfx.Ops.Proto.CommentAdd.cl_code()
+|> Rfx.Change.Set.convert(:to_string)
+|> IO.inspect()
+
