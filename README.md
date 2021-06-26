@@ -9,8 +9,8 @@ Rfx operations are meant to be embedded into editors, tools and end-user
 applications.  See the experimental [rfxi](https://github.com/andyl/rfxi) for
 an application example.
 
-To get started with this pre-release code, clone the repo, then run `> mix test
---exclude pending`.
+To get started with this pre-release code, clone the repo, then run `> mix
+test`.
 
 ## Ops Modules
 
@@ -49,10 +49,6 @@ Surface Operations:
 PhxGen Operations:
 
 - [ ] add route
-- [ ] add controller
-
-PhxGenAuth Operations:
-
 - [ ] add controller
 
 Project Operations:
@@ -141,7 +137,7 @@ Mix.install([ {:rfx, github: "andyl/rfx"} ])
 
 ## Clients 
 
-Rfx Operations are intended for use in a variety of tools and applications:
+Rfx Operations are intended for use in developer tools:
 
 - Elixir Scripts and Livebooks (examples in `rfx/scripts` and `rfx/notebooks`)
 - CLI (see the experimental [rfxi](https://github.com/andyl/rfxi))
