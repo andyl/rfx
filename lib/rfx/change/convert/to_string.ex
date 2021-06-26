@@ -1,7 +1,5 @@
 defmodule Rfx.Change.Convert.ToString do
 
-  # NEW
-
   alias Rfx.Util.Source
 
   def changelist(changelist) when is_list(changelist) do

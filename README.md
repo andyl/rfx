@@ -119,26 +119,25 @@ example the operation `Rfx.Ops.Module.RenameModule`.
 | Scope4 `subapp`  | 1 for each related subapp file  | Edit src & docs | Rename Src & Test file |
 | Scope5 `tmpfile` | 1                               | Edit src & docs | NA                     |
 
-Here's a pseudo-code example:
+Here's a code example:
 
 ```elixir
-alias Rfx.Ops.Module.RenameModule
-alias Rfx.Change
+#!/usr/bin/env elixir
 
-# return edited source code
-RenameModule.cl_code(input_code) 
-| > Change.Cast.to_string()
-#> {:ok, edited_source_code_string}
+Mix.install([ {:rfx, github: "andyl/rfx"} ])
 
-# write changes to file system
-RenameModule.cl_file(input_file_name, new_name: "MyNewName") 
-|> Change.Cast.apply!()
-#> :ok  
+"x = 1"
+|> Rfx.Ops.Proto.CommentAdd.cl_code()
+|> Rfx.Change.Set.convert(:to_string)
+|> IO.inspect()
 
-# return a unix patchfile string
-RenameModule.cl_project(project_dir, old_module: "OldModule", new_module: "NewModule") 
-|> Change.Cast.to_patch()
-#> {:ok, list of patchfile_strings}
+# [
+#   %Rfx.Change.Request{
+#     file_req: nil,
+#     text_req: %{diff: "0a1\n> # TestComment\n", edit_source: "x = 1"},
+#     log: %{convert: %{to_string: "# TestComment\nx = 1"}}
+#   }
+# ]
 ```
 
 ## Clients 
