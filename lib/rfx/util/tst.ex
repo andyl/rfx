@@ -39,5 +39,18 @@ defmodule Rfx.Util.Tst do
     base_dir() <> "/" <> Str.rand_str()
   end
 
+  defmacro edit_tst(examples, module) do
+    quote do
+      Enum.each unquote(examples), fn({testcase, original, expected}) ->
+        @testcase testcase
+        @original original
+        @expected expected |> String.trim()
+        test "#{@testcase}" do
+          assert @expected == apply(unquote(module), :edit, [@original])
+        end
+      end
+    end
+  end
+
 end
 

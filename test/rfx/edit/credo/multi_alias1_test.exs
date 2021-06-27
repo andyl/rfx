@@ -3,29 +3,28 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
 
   alias Rfx.Edit.Credo.MultiAlias1, as: MultiAlias
   alias Rfx.Util.Tst
-  
-  @base_source """
-  alias Foo.{Bar, Baz.Qux}
-  """
 
-  @base_expected """
-  alias Foo.Bar
-  alias Foo.Baz.Qux
-  """ |> String.trim()
+  require Tst
 
-  describe "#edit" do
-    test "expands multi alias" do
-      actual = MultiAlias.edit(@base_source)
-      assert actual == @base_expected
-    end
-
-    test "no change required" do
-      actual = MultiAlias.edit(@base_expected)
-      assert actual == @base_expected
-    end
-
-    test "preserves comments" do
-      source = """
+  examples = [
+    {
+      ~S(expand multi-alias),
+      ~S'''
+      alias Foo.{Bar, Baz.Qux}
+      ''', 
+      ~S'''
+      alias Foo.Bar
+      alias Foo.Baz.Qux
+      '''
+    },
+    {
+      ~S(no change expected),
+      "asdf",
+      "asdf"
+    },
+    {
+      ~S(preserve comments),
+      ~S'''
       # Multi alias example
       alias Foo.{ # Opening the multi alias
         Bar, # Here is Bar
@@ -34,29 +33,22 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
         }
 
       # End of the demo :)
-      """
+      ''', 
+      ~S'''
+      # Multi alias example
+      # Opening the multi alias
+      # Here is Bar
+      alias Foo.Bar
+      # Here come the Baz
+      # With a Qux!
+      alias Foo.Baz.Qux
 
-      expected =
-        """
-        # Multi alias example
-        # Opening the multi alias
-        # Here is Bar
-        alias Foo.Bar
-        # Here come the Baz
-        # With a Qux!
-        alias Foo.Baz.Qux
-
-        # End of the demo :)
-        """
-        |> String.trim()
-
-      actual = MultiAlias.edit(source)
-
-      assert actual == expected
-    end
-
-    test "does not misplace comments above or below" do
-      source = """
+      # End of the demo :)
+      '''
+    },
+    {
+      ~S(does not misplace comments above or below),
+      ~S'''
       # A
       :a
 
@@ -64,25 +56,24 @@ defmodule Rfx.Edit.Credo.MultiAlias1Test do
       Qux}
 
       :b # B
-      """
+      ''',
+      ~S''' 
+      # A
+      :a
 
-      expected = """
-        # A
-        :a
+      alias Foo.Bar
+      alias Foo.Baz
+      alias Foo.Qux
 
-        alias Foo.Bar
-        alias Foo.Baz
-        alias Foo.Qux
+      # B
+      :b
+      '''
+    }
+  ]
 
-        # B
-        :b
-        """
-        |> String.trim()
+  describe "#edit examples" do
 
-      actual = MultiAlias.edit(source)
-
-      assert actual == expected
-    end
+    Tst.edit_tst(examples, MultiAlias)
 
     test "using generated project" do
       proj_root = Tst.gen_proj("mix new")
