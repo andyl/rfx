@@ -20,7 +20,6 @@ defmodule Rfx.Ops.Proto.MvFile do
       status: :experimental, 
       options: [
         new_path: [
-          short: "-n",
           long: "--new_path",
           value_name: "NEW_PATH",
           help: "New File PATH",

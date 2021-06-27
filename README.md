@@ -14,7 +14,7 @@ test`.
 
 ## Ops Modules
 
-See `Rfx.Catalog.OpsCat` for a current catalog of Operations.
+See `Rfx.Catalog.OpsCat` for a live catalog of Operations.
 
 Module Operations:
 
