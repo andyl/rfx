@@ -90,7 +90,8 @@ Rfx builds on a history of prior work by the Elixir community:
   [Code.string_to_quoted_with_comments/2][stqwc] and
   [Code.quoted_to_algebra/2][qta].  These allow generation of an Annotated AST
   which preserves comments.  The second is a new library [Sourceror][sourceror]
-  which provides tooling to manipulate the Annotated AST.
+  which provides tooling to manipulate the Annotated AST.  Sourceror is
+  featured on the Thinking Elixir Podcast [Episode #054][thinkx].
 
 [macros]: https://www.google.com/search?q=elixir+macros+metaprogramming&oq=elixir+macros+metaprogramming&aqs=chrome.0.69i59j69i64j69i60.6516j0j1&sourceid=chrome&ie=UTF-8
 [astn]: http://ast.ninja
@@ -101,6 +102,7 @@ Rfx builds on a history of prior work by the Elixir community:
 [dorgangh]: https://github.com/doorgan
 [stqwc]: https://hexdocs.pm/elixir/master/Code.html#quoted_to_algebra/2
 [qta]: https://hexdocs.pm/elixir/master/Code.html#string_to_quoted_with_comments/2
+[thinkx]: https://thinkingelixir.com/podcast-episodes/054-ast-parsing-using-sourceror-with-lucas-san-roman/
 
 ## Elixir AST Tooling
 
