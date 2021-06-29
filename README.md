@@ -3,14 +3,16 @@
 Rfx provides a catalog of automated refactoring operations for Elixir source
 code.  
 
-Rfx operations are meant to be embedded into editors, tools and end-user
-applications.  See the experimental [rfxi](https://github.com/andyl/rfxi) for
-an application example.
+Rfx operations are meant to be embedded into editors, tools and end-user apps.
+See the experimental [rfxi](https://github.com/andyl/rfxi) for an example app.
+Rfx depends on the excellent [Sourceror][srcr] to manipulate AST code and
+comments.
 
 To get started with this pre-release code, clone the repo, then run `> mix
-test`.
+test`.  **NOTE** this code is under heavy development - expect rapid changes
+and bugs!
 
-**NOTE** This code is under heavy development!  Expect rapid changes and bugs!
+[srcr]: http://github.com/doorgan/sourceror
 
 ## Ops Modules
 
@@ -61,10 +63,6 @@ Prototype Operations:
 - [x] comment add (`Rfx.Ops.Proto.CommentAdd`)
 - [x] comment del (`Rfx.Ops.Proto.CommentDel`)
 - [x] no-op (`Rfx.Ops.Proto.NoOp`)
-
-Rfx Operations depend on the excellent
-[Sourceror](http://github.com/doorgan/sourceror) written by
-[@doorgan](http://github.com/doorgan).
 
 ## Change Sets
 
