@@ -90,7 +90,7 @@ defmodule Rfx.Change.Request do
   # ----- Apply -----
   
   def apply!(%Request{text_req: editargs, file_req: nil, log: log}) do
-    result = [text: TextReq.apply!(editargs), file: nil]
+    result = %{text: TextReq.apply!(editargs), file: nil}
     newlog = (log || %{}) |> Map.merge(%{apply: result})
     %Request{
       text_req: editargs,
@@ -100,7 +100,7 @@ defmodule Rfx.Change.Request do
   end
 
   def apply!(%Request{file_req: fileargs, text_req: nil, log: log}) do
-    result = [text: nil, file: FileReq.apply!(fileargs)]
+    result = %{text: nil, file: FileReq.apply!(fileargs)}
     newlog = (log || %{}) |> Map.merge(%{apply: result})
     %Request{
       file_req: fileargs |> Map.put(:output_apply!, FileReq.apply!(fileargs)),
@@ -110,7 +110,7 @@ defmodule Rfx.Change.Request do
   end
 
   def apply!(%Request{text_req: editargs, file_req: fileargs, log: log}) do
-    result = [text: TextReq.apply!(editargs), file: FileReq.apply!(fileargs)]
+    result = %{text: TextReq.apply!(editargs), file: FileReq.apply!(fileargs)}
     newlog = (log || %{}) |> Map.merge(%{apply: result})
     %Request{
       text_req: editargs,

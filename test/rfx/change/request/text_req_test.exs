@@ -17,7 +17,7 @@ defmodule Rfx.Change.Request.TextReqTest do
     test "returns :error with missing file" do
       path = "/tmp/missing.ex"
       diff = "diff ok"
-      assert {:error, _} = TextReq.new(input_file: path, diff: diff)
+      assert %{error: _} = TextReq.new(input_file: path, diff: diff)
     end
   end
 
@@ -50,7 +50,7 @@ defmodule Rfx.Change.Request.TextReqTest do
     text_req = Rfx.Ops.Proto.CommentAdd.cl_code(source) 
                |> List.first()
                |> Map.get(:text_req)
-    {:error, message} = text_req |> TextReq.apply!() 
+    %{error: message} = text_req |> TextReq.apply!() 
     assert message
   end
 end

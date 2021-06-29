@@ -21,7 +21,7 @@ defmodule Rfx.Change.Request.TextReq do
     valid_struct = %{input_file: path, diff: diff}
     case File.exists?(path) do
       true ->  {:ok, valid_struct}
-      _ -> {:error, "No file #{path}"}
+      _ -> %{error: "No file #{path}"}
     end
   end
 
@@ -41,7 +41,7 @@ defmodule Rfx.Change.Request.TextReq do
   end
 
   def apply!(%{input_text: _source, diff: _}) do
-    {:error, "Can only apply changes to a file."}
+    %{error: "Can only apply changes to a file."}
   end
 
   # ----- Conversion -----
