@@ -1,5 +1,11 @@
 defmodule Rfx.Util.Str do
 
+  @moduledoc false
+
+  def purge(string, regex) do
+    Regex.replace(regex, string, "")
+  end
+
   def rand_str(length \\ 4) do
     Stream.repeatedly(&rchar/0) |> Enum.take(length) |> Enum.join()
   end
