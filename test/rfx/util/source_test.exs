@@ -9,16 +9,13 @@ defmodule Rfx.SourceTest do
       old = """
       a
       b
-      """ 
+      """
       new = """
       a
       b
       c
-      """ 
-      expected = """
-      2a3
-      > c
-      """ 
+      """
+      expected = [%Diff.Insert{element: ["\n", "c"], index: 3, length: 2}]
       diff = Source.diff(old, new)
 
       assert diff == expected
@@ -31,10 +28,7 @@ defmodule Rfx.SourceTest do
       a
       b
       """
-      diff = """
-      2a3
-      > c
-      """
+      diff = [%Diff.Insert{element: ["\n", "c"], index: 3, length: 2}]
       expected = """
       a
       b
