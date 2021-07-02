@@ -6,6 +6,10 @@ defmodule Rfx.Util.Str do
     Regex.replace(regex, string, "")
   end
 
+  # def replace(string, regex, new_string) do
+  #   Regex.replace(regex, string, "# \\1")
+  # end
+
   def rand_str(length \\ 4) do
     Stream.repeatedly(&rchar/0) |> Enum.take(length) |> Enum.join()
   end
