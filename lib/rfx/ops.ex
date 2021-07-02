@@ -42,9 +42,9 @@ defmodule Rfx.Ops do
   # ----- Arguments -----
 
   @doc """
-  Returns argspec for the operation.
+  Returns propspec for the operation.
   """
-  @callback argspec() :: any()
+  @callback propspec() :: any()
 
   # ----- Edit -----
   

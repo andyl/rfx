@@ -14,7 +14,7 @@ defmodule Rfx.Ops.Credo.IoInspectDelete do
   # ----- Argspec -----
 
   @impl true
-  def argspec do
+  def propspec do
     [
       key: :credo_multi_alias,
       name: "credo.multi_alias",

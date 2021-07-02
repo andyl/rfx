@@ -36,7 +36,7 @@ defmodule Rfx.Ops.Module.RenameModule do
   # ----- Argspec -----
 
   @impl true
-  def argspec do
+  def propspec do
     [
       about: "Rename Module",
       status: :experimental,

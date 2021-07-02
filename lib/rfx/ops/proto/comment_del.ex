@@ -20,7 +20,7 @@ defmodule Rfx.Ops.Proto.CommentDel do
   # ----- Argspec -----
 
   @impl true
-  def argspec do
+  def propspec do
     [
       about: "Delete Test Comment",
       status: :experimental

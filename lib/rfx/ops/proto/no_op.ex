@@ -15,7 +15,7 @@ defmodule Rfx.Ops.Proto.NoOp do
   # ----- Argspec -----
 
   @impl true
-  def argspec do
+  def propspec do
     [
       about: "NoOp - Use for Testing",
       status: :experimental, 

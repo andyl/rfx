@@ -19,7 +19,7 @@ defmodule Rfx.Catalog.OpsCat do
   """
   def all_ops do
     raw_ops()
-    |> Enum.filter(&has_argspec?/1)
+    |> Enum.filter(&has_propspec?/1)
     |> Enum.filter(&lib_module?/1)
   end
 
@@ -28,7 +28,7 @@ defmodule Rfx.Catalog.OpsCat do
   """
   def select_ops(namespace \\ "") do
     raw_ops(namespace)
-    |> Enum.filter(&has_argspec?/1)
+    |> Enum.filter(&has_propspec?/1)
     |> Enum.filter(&lib_module?/1)
   end
 
@@ -47,9 +47,9 @@ defmodule Rfx.Catalog.OpsCat do
     |> lib_module?()
   end
 
-  defp has_argspec?(module) do
+  defp has_propspec?(module) do
     module
-    |> Introspect.has_function?({:argspec, 0})
+    |> Introspect.has_function?({:propspec, 0})
   end
 
 end
