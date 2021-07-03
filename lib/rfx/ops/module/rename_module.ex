@@ -1,8 +1,5 @@
 defmodule Rfx.Ops.Module.RenameModule do
 
-  # TODO: test text editing
-  # TODO: add file renaming
-
   @behaviour Rfx.Ops
 
   @moduledoc """

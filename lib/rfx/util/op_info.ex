@@ -1,5 +1,7 @@
 defmodule Rfx.Util.OpInfo do
 
+  @moduledoc false
+
   def key(modname) do
     modname
     |> to_string()

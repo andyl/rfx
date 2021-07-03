@@ -2,6 +2,9 @@
 # https://elixirforum.com/t/load-all-modules-implementing-a-behaviour-in-escript/33348/4?u=andyl
 
 defmodule Rfx.Util.Introspect do
+
+  @moduledoc false
+
   def modules_belonging_to_namespace(namespace)
       when is_binary(namespace) do
     :code.all_available()

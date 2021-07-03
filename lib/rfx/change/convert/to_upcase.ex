@@ -1,6 +1,6 @@
 defmodule Rfx.Change.Convert.ToUpcase do
 
-  # NEW
+  @moduledoc false
 
   alias Rfx.Util.Source
 

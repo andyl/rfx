@@ -3,7 +3,8 @@ defmodule Rfx.Edit.Credo.IoInspectDelete do
   @moduledoc """
   Deletes `IO.inspect` statements.
 
-  Uses a simple regex based editor.
+  Uses a simple regex based editor, as a placeholder to be replaced with a
+  proper Sourceror-based editor.
   """
 
   @behaviour Rfx.Edit

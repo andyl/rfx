@@ -8,12 +8,32 @@ defmodule Rfx.Edit.Credo.IoInspectDeleteTest do
 
   examples = [
     {
-      ~S(IO Inspect in Pipeline),
+      ~S(in pipeline),
       ~S'''
       asdf() |> IO.inspect() |> qwer()
       ''', 
       ~S'''
       asdf() |> qwer()
+      '''
+    },
+    {
+      ~S(standalone, with variable),
+      ~S'''
+      IO.inspect("asdf")
+      ''', 
+      ~S'''
+      '''
+    },
+    {
+      ~S(stacked, with label),
+      ~S'''
+      "asdf"
+      |> IO.inspect(label: "HELLO")
+      |> qwer()
+      ''', 
+      ~S'''
+      "asdf"
+      |> qwer()
       '''
     },
     {

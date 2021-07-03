@@ -1,7 +1,7 @@
-defmodule Rfx.Edit.Credo.IoInspectComment do
+defmodule Rfx.Edit.Credo.IoInspectUncomment do
 
   @moduledoc """
-  Comments `IO.inspect` statements.
+  UnComments `IO.inspect` statements.
 
   Uses a simple regex based editor.
   """
@@ -17,8 +17,8 @@ defmodule Rfx.Edit.Credo.IoInspectComment do
   Uses a simple regex based editor.
   """
   def edit(source) do
-    regex = ~r/^( *)(\|> IO.inspect([^\|]*))/
-    pattern = "\\1# \\2"
+    regex = ~r/^( *)#( *\|> IO.inspect([^\|]*))/
+    pattern = "\\1\\2"
     source
     |> String.split("\n")
     |> Enum.map(&(Str.replace(&1, regex, pattern)))

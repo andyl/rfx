@@ -1,7 +1,7 @@
-defmodule Rfx.Edit.Credo.IoInspectCommentTest do
+defmodule Rfx.Edit.Credo.IoInspectUncommentTest do
   use ExUnit.Case
 
-  alias Rfx.Edit.Credo.IoInspectComment
+  alias Rfx.Edit.Credo.IoInspectUncomment
   alias Rfx.Util.Tst
 
   require Tst
@@ -11,12 +11,12 @@ defmodule Rfx.Edit.Credo.IoInspectCommentTest do
       ~S(IO Inspect in Pipeline),
       ~S'''
       asdf() 
-      |> IO.inspect() 
+      # |> IO.inspect() 
       |> qwer()
       ''', 
       ~S'''
       asdf() 
-      # |> IO.inspect() 
+       |> IO.inspect() 
       |> qwer()
       '''
     },
@@ -30,7 +30,7 @@ defmodule Rfx.Edit.Credo.IoInspectCommentTest do
 
   describe "#edit examples" do
 
-    Tst.edit_tst(examples, IoInspectComment)
+    Tst.edit_tst(examples, IoInspectUncomment)
 
   end
 end
