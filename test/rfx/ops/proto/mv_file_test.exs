@@ -2,7 +2,6 @@ defmodule Rfx.Ops.Proto.MvFileTest do
   use ExUnit.Case
 
   alias Rfx.Ops.Proto.MvFile
-  # alias Rfx.Util.Tst
 
   @base_source """
   InputSource

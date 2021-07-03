@@ -1,7 +1,7 @@
 defmodule Rfx.Edit.Module.RenameModuleTest do
   use ExUnit.Case
 
-  # TODO: add tests
+  # add tests
 
   # alias Rfx.Ops.Module.RenameModule
   # alias Rfx.Util.Source

@@ -39,12 +39,12 @@ defmodule Rfx.Ops do
   """
   @callback cl_tmpfile(String.t(), any()) :: any()
 
-  # ----- Arguments -----
+  # ----- Properties -----
 
   @doc """
-  Returns argspec for the operation.
+  Returns propspec for the operation.
   """
-  @callback argspec() :: any()
+  @callback propspec() :: any()
 
   # ----- Edit -----
   

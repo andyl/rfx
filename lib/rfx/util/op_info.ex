@@ -1,5 +1,7 @@
 defmodule Rfx.Util.OpInfo do
 
+  @moduledoc false
+
   def key(modname) do
     modname
     |> to_string()
@@ -19,8 +21,8 @@ defmodule Rfx.Util.OpInfo do
     |> Enum.join(".")
   end
 
-  def argspec(modname) do
-    apply(modname, :argspec, [])
+  def propspec(modname) do
+    apply(modname, :propspec, [])
   end
 
   def info(modname) do

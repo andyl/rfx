@@ -1,5 +1,9 @@
 defmodule Rfx.Util.Tst do
 
+  @moduledoc """
+  Helper functions used for testing.
+  """
+
   @base_dir "/tmp/rfx_test_files"
 
   alias Rfx.Util.Str
@@ -43,7 +47,7 @@ defmodule Rfx.Util.Tst do
     quote do
       Enum.each unquote(examples), fn({testcase, original, expected}) ->
         @testcase testcase
-        @original original
+        @original original |> String.trim()
         @expected expected |> String.trim()
         test "#{@testcase}" do
           assert @expected == apply(unquote(module), :edit, [@original])
