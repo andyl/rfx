@@ -7,7 +7,7 @@ defmodule Rfx.Catalog.OpsCatTest do
 
   alias Rfx.Catalog.OpsCat
 
-  describe "#raw_ops\1" do
+  describe "#raw_ops/1" do
     test "basic operation" do
       list = OpsCat.raw_ops()
       assert list 
@@ -16,7 +16,7 @@ defmodule Rfx.Catalog.OpsCatTest do
     end
   end
 
-  describe "#all\0" do
+  describe "#all/0" do
     test "basic operation" do
       list = OpsCat.all_ops()
       assert list
@@ -25,7 +25,24 @@ defmodule Rfx.Catalog.OpsCatTest do
     end
   end
 
-  describe "#select_ops\1" do
+  describe "#find_by_prop/2" do
+    test "with results" do
+      result = OpsCat.find_by_prop(:status, :experimental)
+      assert result 
+    end
+
+    test "with no results" do
+      result = OpsCat.find_by_prop(:status, :unknown)
+      assert result == []
+    end
+
+    test "with missing key" do
+      result = OpsCat.find_by_prop(:missing_key, :unknown)
+      assert result == []
+    end
+  end
+
+  describe "#select_ops/1" do
     test "without arg" do
       list = OpsCat.select_ops()
       assert list

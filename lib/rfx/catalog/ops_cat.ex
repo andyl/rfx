@@ -32,6 +32,14 @@ defmodule Rfx.Catalog.OpsCat do
     |> Enum.filter(&lib_module?/1)
   end
 
+  @doc """
+  Select Rfx Operations by property.
+  """
+  def find_by_prop(key, value) do 
+    all_ops()
+    |> Enum.filter(&(has_prop?(&1, key, value))) 
+  end
+
   def raw_ops(namespace \\ "") do
     Introspect.modules_belonging_to_namespace("Rfx.Ops." <> namespace)
   end
@@ -50,6 +58,11 @@ defmodule Rfx.Catalog.OpsCat do
   defp has_propspec?(module) do
     module
     |> Introspect.has_function?({:propspec, 0})
+  end
+
+  defp has_prop?(module, key, val) do
+    actual_val = apply(module, :propspec, []) |> Keyword.get(key, nil)
+    val == actual_val
   end
 
 end
