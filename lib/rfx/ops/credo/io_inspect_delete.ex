@@ -21,7 +21,7 @@ defmodule Rfx.Ops.Credo.IoInspectDelete do
       name: "credo.io_inspect_delete",
       about: "Delete `IO.inspect` statements",
       status: :experimental, 
-      credo_check: "Credo.Check.Warning.IoInspect"
+      credo_check: Credo.Check.Warning.IoInspect
     ] 
   end
 

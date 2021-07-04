@@ -21,7 +21,7 @@ defmodule Rfx.Ops.Credo.IoInspectUncomment do
       name: "credo.io_inspect_uncomment",
       about: "Uncomment `IO.inspect` statements",
       status: :experimental, 
-      credo_check: "Credo.Check.Warning.IoInspect"
+      credo_check: Credo.Check.Warning.IoInspect
     ] 
   end
 
