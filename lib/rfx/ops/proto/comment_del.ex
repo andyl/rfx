@@ -17,7 +17,7 @@ defmodule Rfx.Ops.Proto.CommentDel do
   alias Rfx.Util.Source
   alias Rfx.Change.Request
 
-  # ----- Argspec -----
+  # ----- Propspec -----
 
   @impl true
   def propspec do

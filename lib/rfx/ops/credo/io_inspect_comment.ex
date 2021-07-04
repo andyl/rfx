@@ -1,4 +1,4 @@
-defmodule Rfx.Ops.Credo.IoInspectDelete do
+defmodule Rfx.Ops.Credo.IoInspectComment do
 
   @behaviour Rfx.Ops
 
@@ -6,7 +6,7 @@ defmodule Rfx.Ops.Credo.IoInspectDelete do
   Refactoring Operations to automatically apply the Credo `IO.Inspect`
   recommendation.
 
-  This one deletes the `IO.inspect` statements.
+  This one comments out the `IO.inspect` statements.
   """
 
   alias Rfx.Util.Source
@@ -17,9 +17,9 @@ defmodule Rfx.Ops.Credo.IoInspectDelete do
   @impl true
   def propspec do
     [
-      key: :credo_io_inspect_delete,
-      name: "credo.io_inspect_delete",
-      about: "Delete `IO.inspect` statements",
+      key: :credo_io_inspect_comment,
+      name: "credo.io_inspect_comment",
+      about: "Comment `IO.inspect` statements",
       status: :experimental, 
       credo_check: "Credo.Check.Warning.IoInspect"
     ] 
@@ -75,6 +75,6 @@ defmodule Rfx.Ops.Credo.IoInspectDelete do
   # ----- Edit -----
   
   @impl true
-  defdelegate edit(source_code), to: Rfx.Edit.Credo.IoInspectDelete
+  defdelegate edit(source_code), to: Rfx.Edit.Credo.IoInspectComment
 
 end

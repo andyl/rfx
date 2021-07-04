@@ -11,7 +11,7 @@ defmodule Rfx.Ops.Proto.MvFile do
 
   alias Rfx.Change.Request
 
-  # ----- Argspec -----
+  # ----- Propspec -----
 
   @impl true
   def propspec do

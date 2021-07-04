@@ -30,7 +30,7 @@ defmodule Rfx.Ops.Module.RenameModule do
   alias Rfx.Util.Source
   alias Rfx.Change.Request
 
-  # ----- Argspec -----
+  # ----- Propspec -----
 
   @impl true
   def propspec do

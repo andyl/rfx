@@ -51,7 +51,7 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   alias Rfx.Util.Source
   alias Rfx.Change.Request
 
-  # ----- Argspec -----
+  # ----- Propspec -----
 
   @impl true
   def propspec do
