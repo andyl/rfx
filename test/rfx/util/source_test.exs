@@ -4,38 +4,26 @@ defmodule Rfx.SourceTest do
 
   alias Rfx.Util.Source
 
-  describe "#diff" do
-    test "creating a diff" do
-      old = """
-      a
-      b
-      """
-      new = """
-      a
-      b
-      c
-      """
-      expected = [%Diff.Insert{element: ["\n", "c"], index: 3, length: 2}]
-      diff = Source.diff(old, new)
+  describe "diff with json from Jason for" do
+    names = ["insert", "delete", "insert_and_delete"]
+    data = Enum.into(names, [], fn name ->
+        {map, _} = Code.eval_file("test/rfx/util/testdata/#{name}_test.exs")
+        map
+      end
+    )
 
-      assert diff == expected
-    end
-  end
+    Enum.each data, fn input ->
+      @name input.name
+      @new input.new
+      @old input.old
 
-  describe "#patch" do
-    test "using a patch" do
-      old = """
-      a
-      b
-      """
-      diff = [%Diff.Insert{element: ["\n", "c"], index: 3, length: 2}]
-      expected = """
-      a
-      b
-      c
-      """
-      new = Source.patch(old, diff)
-      assert new == expected
+      test "#{@name}" do
+        diff_as_json = Source.diff(@old, @new)
+        |> Jason.encode!()
+        diff = diff_as_json |> Jason.decode!()
+
+        assert @new == Source.patch(@old, diff)
+      end
     end
   end
 end
