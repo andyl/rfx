@@ -6,6 +6,7 @@ defmodule Rfx.SourceTest do
 
   describe "diff with json from Jason for" do
     names = ["insert", "delete", "insert_and_delete"]
+    # names = ["insert_and_delete"]
     data = Enum.into(names, [], fn name ->
         {map, _} = Code.eval_file("test/rfx/util/testdata/#{name}_test.exs")
         map
@@ -22,7 +23,7 @@ defmodule Rfx.SourceTest do
         |> Jason.encode!()
         diff = diff_as_json |> Jason.decode!()
 
-        assert @new == Source.patch(@old, diff)
+        assert @new == Source.patch(diff)
       end
     end
   end
