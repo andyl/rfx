@@ -10,6 +10,21 @@ defmodule Rfx.Ops do
 
   """
 
+  # FUTURE: 
+  # - add a 'use' macro with default methods
+  # - reduce boilerplate for developers
+  # - rename methods: cl_* to rfx_*
+  # - introduce "Operation Types"
+  #
+  # 1) edit only
+  # 2) rename file and test
+  # 3) delete file and test 
+  # 4) create file and test 
+  # 5) rename file 
+  # 6) delete file 
+  # 7) create file 
+  # 8) custom 
+    
   # ----- Changelists -----
   
   @doc """
