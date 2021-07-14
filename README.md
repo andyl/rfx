@@ -144,6 +144,17 @@ Rfx Operations are intended for use in developer tools:
 - ElixirLs
 - Credo
 
+## Support
+
+To ask questions:
+- use the [issue tracker][trk]
+- use the [#refactoring channel][slk] on Elixir Slack
+
+[trk]: https://github.com/andyl/rfx/issues
+[slk]: https://app.slack.com/client/T03EPRA2X/C026XK7QF60/thread/C068BRD62-1613670248.042000
+
+Developers welcome!
+
 ## Installation
 
 ```elixir
