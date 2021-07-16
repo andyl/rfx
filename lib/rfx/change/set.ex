@@ -1,5 +1,7 @@
 defmodule Rfx.Change.Set do
 
+  @moduledoc false
+
   # ----- Convert -----
   
   def convert(changeset, type) do

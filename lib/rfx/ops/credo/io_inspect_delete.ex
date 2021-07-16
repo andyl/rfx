@@ -1,50 +1,10 @@
-defmodule Rfx.Ops.Credo.MultiAlias do
+defmodule Rfx.Ops.Credo.IoInspectDelete do
 
   @behaviour Rfx.Ops
 
   @moduledoc """
-  Refactoring Operations to automatically apply the Credo `multi-alias`
+  Refactoring Operations to automatically apply the Credo `IO.Inspect Delete`
   recommendation.
-
-  Walks the source code and expands instances of multi-alias syntax.
-
-  ## Examples
-
-  Basic transformation...
-
-       iex> source = "alias Foo.{Bar, Baz.Qux}"
-       ...>
-       ...> expected = """
-       ...> alias Foo.Bar
-       ...> alias Foo.Baz.Qux
-       ...> """ |> String.trim()
-       ...>
-       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
-       expected
-
-  Preserving comments...
-
-       iex> source = """
-       ...> # Multi alias example
-       ...> alias Foo.{ # Opening the multi alias
-       ...>   Bar, # Here is Bar
-       ...>   # Here come the Baz
-       ...>   Baz.Qux # With a Qux!
-       ...> }
-       ...> """ |> String.trim()
-       ...>
-       ...> expected = """
-       ...> # Multi alias example
-       ...> # Opening the multi alias
-       ...> # Here is Bar
-       ...> alias Foo.Bar
-       ...> # Here come the Baz
-       ...> # With a Qux!
-       ...> alias Foo.Baz.Qux
-       ...> """ |> String.trim()
-       ...>
-       ...> Rfx.Ops.Credo.MultiAlias.edit(source)
-       expected
 
   """
 
@@ -59,7 +19,8 @@ defmodule Rfx.Ops.Credo.MultiAlias do
       key: :credo_multi_alias,
       name: "credo.multi_alias",
       about: "Apply multi_alias transformation",
-      status: :experimental
+      status: :experimental, 
+      credo_check: "Credo.Check.Warning.IoInspect"
     ] 
   end
 
@@ -113,6 +74,6 @@ defmodule Rfx.Ops.Credo.MultiAlias do
   # ----- Edit -----
   
   @impl true
-  defdelegate edit(source_code), to: Rfx.Edit.Credo.MultiAlias1
+  defdelegate edit(source_code), to: Rfx.Edit.Credo.IoInspectDelete
 
 end

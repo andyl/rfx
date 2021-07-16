@@ -14,7 +14,7 @@ defmodule Rfx.Ops.Proto.MvFile do
   # ----- Argspec -----
 
   @impl true
-  def argspec do
+  def propspec do
     [
       about: "MvFile - Use for Testing",
       status: :experimental, 

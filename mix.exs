@@ -28,6 +28,7 @@ defmodule Rfx.MixProject do
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
       {:mix_test_interactive, "~> 1.0", only: :dev, runtime: false},
       {:jason, "~> 1.2", only: [:dev, :test]},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end
 

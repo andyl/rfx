@@ -1,6 +1,8 @@
 defmodule Rfx.Edit.Credo.MultiAlias1 do
   @behaviour Rfx.Edit
 
+  @moduledoc false
+
   @impl true
   def edit(source) do
     source

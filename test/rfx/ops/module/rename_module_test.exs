@@ -9,7 +9,6 @@ defmodule Rfx.Ops.Module.RenameModuleTest do
   """
 
   @infile "/tmp/bing.ex"
-  # @outfile "/tmp/bong.ex"
   @args [old_name: "Bing", new_name: "Bong"]
 
   describe "#cl_code" do

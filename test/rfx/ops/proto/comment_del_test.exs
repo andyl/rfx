@@ -24,7 +24,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
   describe "#cl_code with source code" do
     test "changelist length" do
       changelist = CommentDel.cl_code(@base_source)
-      assert length(changelist) == 1
+      assert [_single_item] = changelist
     end
 
     test "expected fields" do
@@ -54,7 +54,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
     test "changelist length" do
       file = Tst.gen_file(@base_source)
       changelist = CommentDel.cl_file(file)
-      assert length(changelist) == 1
+      assert [_single_item] = changelist
     end
 
     test "expected fields for source file" do
@@ -88,7 +88,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
     test "changelist length" do
       file = Tst.gen_file(@base_source)
       changelist = CommentDel.cl_file(file)
-      assert length(changelist) == 1
+      assert [_single_item] = changelist
     end
 
     test "changereq fields" do
@@ -121,7 +121,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
     test "changelist length" do
       file = Tst.gen_file(@base_source)
       changelist = CommentDel.cl_file(file)
-      assert length(changelist) == 1
+      assert [_single_item] = changelist
     end
   end
 
@@ -129,7 +129,7 @@ defmodule Rfx.Ops.Proto.CommentDelTest do
     test "changelist length" do
       root_dir = Tst.gen_proj("mix new")
       changelist = CommentDel.cl_project(root_dir)
-      assert length(changelist) == 0
+      assert Enum.empty?(changelist) 
     end
   end
 end

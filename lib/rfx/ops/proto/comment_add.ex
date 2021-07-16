@@ -15,7 +15,7 @@ defmodule Rfx.Ops.Proto.CommentAdd do
   # ----- Argspec -----
 
   @impl true
-  def argspec do
+  def propspec do
     [
       about: "Add Test Comment",
       status: :experimental

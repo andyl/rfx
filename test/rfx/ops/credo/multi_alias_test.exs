@@ -58,7 +58,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
     test "changeset length" do
       file = Tst.gen_file(@base_source)
       changeset = MultiAlias.cl_file(file)
-      assert length(changeset) == 1
+      assert [_single_item] = changeset
     end
 
     test "changereq fields" do
@@ -91,7 +91,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
     test "changeset length" do
       file = Tst.gen_file(@base_source)
       changeset = MultiAlias.cl_file(file)
-      assert length(changeset) == 1
+      assert [_single_item] = changeset
     end
   end
 
@@ -99,7 +99,7 @@ defmodule Rfx.Ops.Credo.MultiAliasTest do
     test "changeset length" do
       root_dir = Tst.gen_proj("mix new")
       changeset = MultiAlias.cl_project(root_dir)
-      assert length(changeset) == 0
+      assert Enum.empty?(changeset)
     end
 
     test "changereq fields" do
