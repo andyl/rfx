@@ -3,10 +3,6 @@ defmodule Rfx.Util.Source do
   A utility module for source code manipulation.
   """
 
-  alias Rfx.Util.Str
-
-  @base_diff "/tmp/rfx_base_diff"
-
   @doc """
   Returns updated text, edited according to the Sourceror edit function.
   """
@@ -23,35 +19,30 @@ defmodule Rfx.Util.Source do
   def diff(old_source, new_source), do: diff({old_source, new_source})
 
   def diff({src1, src2}) do
-    rand = Str.rand_str()
-    path1 = @base_diff <> "/src1_" <> rand
-    path2 = @base_diff <> "/src2_" <> rand
-
-    File.mkdir(@base_diff)
-    File.write(path1, src1 |> Str.terminate_nl())
-    File.write(path2, src2 |> Str.terminate_nl())
-    {diff, _} = System.cmd("diff", [path1, path2])
-    File.rm(path1)
-    File.rm(path2)
-    diff
+    String.myers_difference(src1, src2)
+    |> convert_keyword_list_to_nested_list()
   end
 
   @doc """
   Returns modified source, given old source text, and a diff text.
   """
-  def patch(source, diff) do
-    ext = Str.rand_str()
-    spath = @base_diff <> "/patch_src_" <> ext
-    dpath = @base_diff <> "/patch_dif_" <> ext
-
-    File.mkdir(@base_diff)
-    File.write(spath, source)
-    File.write(dpath, diff |> Str.terminate_nl())
-    opts = [spath, dpath, "-s", "-o", "-"]
-    {new_src, _} = System.cmd("patch", opts)
-    File.rm(spath)
-    File.rm(dpath)
-    new_src
+  #TODO: remove patch/2 since diff contains all info needed.
+  def patch(_source, diff), do: patch(diff)
+  def patch(diff) do
+    Enum.reduce diff, "", fn(nested_list, acc) ->
+      process(nested_list, acc)
+    end
   end
 
+  defp convert_keyword_list_to_nested_list(list) do
+    Enum.into(list, [], fn tuple ->
+      {k, v} = tuple
+      [k, v]
+    end)
+  end
+
+  defp process(["eq", value], acc), do: acc <> value
+  defp process(["ins", value], acc), do: acc <> value
+  defp process(x, acc) when is_atom(x), do: process(Atom.to_string(x), acc)
+  defp process(_, acc), do: acc
 end
